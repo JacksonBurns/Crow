@@ -1,0 +1,38 @@
+FIXED/IMPROVED:
+
+KNOWN BUGS:
+-When HTE breaks down during run and files are generated from multiple runs, SeqLine in
+XML file starts counting over again, throwing off my system
+-Ligands 29, 53, 80, 81, and 84 can't translate (29, 80, 81, 84 have 1 unmatched ring 
+bond, 53 has no smiles string)
+-Need better splash and .ico and other thing
+
+KNOWN LIMITATIONS:
+-Pie chart fill counterclockwise, so unaccounted must be given first
+-For remote access, files must be stored to group drive
+
+FUTURE IMPROVEMENTS:
+-bring back individual well view in separate app/tab
+
+-need way to indicate both yield and ratio in the same graphic, thinking half of pie as 
+yield and half as ratio
+
+-methods for the entire process to be fully automated for repeat, RELIABLE experiments?
+
+-repairfiles function for HTE breakdown (see: KNOWN BUGS)
+
+-export images at full, presentation quality
+
+-use some wells hand entered by user to test for 'confidence' in answer
+
+-ability to filter final display and show most succesful and reaction conditions, etc.
+
+-add variable filter function to present
+
+-ability to gather data from multiple plates with or without different conditions
+
+-could add back process now?
+
+-need filters on pull
+
+-need to add debugging options

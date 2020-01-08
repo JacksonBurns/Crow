@@ -1,0 +1,54 @@
+Press Control+F and type in the error code you are recieving to find a more detailed explanation!
+
+Error: Solution
+
+Reynolds-N4I: The retention time you entered is completely incompatible with a previous retention
+time/tolerance pair. It falls within the range of the previous pair, i.e. RT 1.0 Tol 0.2, RT 1.1 ...
+Choose a different retention time to fix this error, or change your previous retention time.
+
+Scalzi-MP35 - The retetion time/tolerance pair that you entered overlap with one another. This
+will cause errors when pulling data b/c it would enable the same integral to count as multiple products.
+Adjust your tolerance value (or retention time) to avoid overlap. Example: RT 1.2 Tol 0.1 would overlap
+with RT 1.4 Tol 0.15 because 1.2+0.1 = 1.3 and 1.4-0.15 = 1.25, new tolerance should be 0.09.
+
+Kunsken-QM1: Because of the way the GC outputs the integration data, JackPack has to search
+in chronological order. Provide your retention times in chronological order and then continue.
+
+Trbls-2MNE: Tolerance value cannot equal zero due to chemical variability. When eluates come off 
+0.01 minutes after they are expected to, JackPack would miss the integral if not for the tolerance
+value. Please enter a tolerance and then press Add.
+
+Btls-WIM64: Each eluate needs to have a name so that the ouput excel file can have labeled coloumns.
+Please pick a descriptive name and then press Add.
+
+Gdzll-K0M: JackPack needs a list of which peaks to pull from teh data files. Enter data using the
+Product Name, Retention Time, and Tolerance fields, then press Add before trying to Pull Data.
+
+Galileo-7: The given file had no integrals areas listed in it. This is most likely due to the
+GC failing to inject on that sample, but it may also be caused by a non-reactive sample. If you
+think the well did inject/there should be data in the file, try replacing the file with a fresh
+copy from the GC (ensure you have the correct one). If error persists, email Jackson Burns at
+jburnsky@udel.edu.
+
+NCC-1701: You did not choose any excel data files. Ensure that you pselect the files, that they 
+are in excel, and that they are not password locked. Press Refresh Input Files to try again.
+
+Blnk-1D8: The resolution here is the amount that JackPack rounds the data values for display. 
+Rounding is important here because each retention time may be the same for the first few digits,
+but it always varies in the last few, which would cause frequency to be 1 for every time. A good
+resolution to start with is 0.01, and then you can fine tune from there.
+
+Hail-FSM: This is a repeat of error Galileo-7, but on a different tab of JackPack.
+
+DRW-00D: You chose no raw data (.xml) files. Ensure that you chose the files, that they are 
+.xml files, and that they are not password locked. Press Resfresh Raw Data Input Files and try again.
+
+YT-1300: Make sure that you have provided a value for both cutoffs and a 3 number code for the
+color of the three different sections. If you no longer want to generate a graphic using this
+colormap, press OK.
+
+ISS-1701: The excel file that you have chosen has to omany coloumns for the data presenter to
+handle. This is a limitation with how much information can be meaningfully presented in the 
+limited area of a pie chart. Ensure that you have chosen the correct file and try again. If
+you do need to actually display more than 10 eluates in a single graphic, contact jburnsky@udel.edu
+

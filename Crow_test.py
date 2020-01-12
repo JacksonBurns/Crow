@@ -10,8 +10,6 @@ for child in root:
 import tkinter
 root = tkinter.Tk()
 my_gui = Crow.Crow(root)
-root.mainloop()
-
-time.sleep(3)
-my_gui.update_warning("anime is danger!")
 my_gui.call()
+root.mainloop()
+#root.destroy()

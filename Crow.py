@@ -3,19 +3,15 @@
 #retrieve python packages that aren't built in for some stupid reason
 import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 #retrieve my functions written elsewhere
 import ParseXML as ParseXML
+import RequestFiles as RequestFiles
 from PrePull import PrePull
 from Pull import Pull
 from Present import Present
-'''
-#maww
-def Crow():
-    print("maww")
-    return 0
-'''
+
 #define GUI
 class Crow(tk.Frame):
     def __init__(self, master):
@@ -34,22 +30,17 @@ class Crow(tk.Frame):
         
         #title on top of window
         tk.Label(master, text="Crow Really Outta Work").place(relx=0.405,y=0)
-        #warning label
-        self.warninglabel = tk.StringVar()
-        tk.Label(master,textvariable=self.warninglabel, fg="#ff0000").place(x=0,rely=0.955)
-        self.warninglabel.set("Warnings appear here!")
+
+        #setup callback for closing app
+        self.master.protocol('WM_DELETE_WINDOW', self.close_app)
+        
+    #apparently closing a window doesn't stop the main loop, what a great feature
+    def close_app(self):
+        if messagebox.askokcancel(title="Quit Crow",message="Are you sure?"):
+            self.master.destroy()
     #maww
     def call(self):
         #maww
         print("maww")
         #maww
     #maww
-
-    
-    #want to define a function that can be called from other classes to update the warning label
-    def update_warning(self,newwarning):
-        self.warninglabel.set(newwarning)
-        
-    #or just use tkinter to make a new error popup
-
-

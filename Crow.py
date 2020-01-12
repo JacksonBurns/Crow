@@ -38,6 +38,12 @@ class Crow(tk.Frame):
     def close_app(self):
         if messagebox.askokcancel(title="Quit Crow",message="Are you sure?"):
             self.master.destroy()
+    def __del__(self):
+        try:
+            self.master.destroy()
+        except:
+            pass
+        
     #maww
     def call(self):
         #maww

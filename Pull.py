@@ -32,7 +32,7 @@ class Pull(C.tk.Frame):
                 C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","No retention times/tolerances entered!")        
                 return
             #break if non-chronological
-            if self.rettimes.sort()!=self.rettimes:
+            if sorted(self.rettimes)!=self.rettimes:
                 C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Retention times are not in chronological order!")        
                 return
             #break if there is overlap in entered values also

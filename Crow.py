@@ -36,7 +36,7 @@ class Crow(tk.Frame):
         
     #apparently closing a window doesn't stop the main loop, what a great feature
     def close_app(self):
-        if messagebox.askokcancel(title="Quit Crow",message="Are you sure?"):
+        if messagebox.askokcancel(title="Quit Crow?",message="Are you sure?"):
             self.master.destroy()
     def __del__(self):
         try:

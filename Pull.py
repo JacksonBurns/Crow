@@ -22,9 +22,15 @@ class Pull(C.tk.Frame):
         #define pull data callback function
         def pulldatacallback():
             #gather the values in the entry boxes
-            #print("rt: "+self.rt1.get() + " tol: " + self.tol1.get())
             self.entryreadorclear("read")
             #check for missing tols or rt, error at least one rt/tol pair is missing a member
+            if len(self.rettimes)!=len(self.toltimes):
+                C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","At least one retention time/tolerance pair is missing a member!")
+                return
+            #break if no rt's or tols have been entered
+            if len(self.rettimes)==0 or len(self.toltimes)==0:
+                C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","No retention times/tolerances entered!")        
+                return
             print(self.rettimes)
             print(self.toltimes)
         #data files label

@@ -28,7 +28,9 @@ class PrePull(C.tk.Frame):
                         else:
                             self.datadict[rettime]=1
                 #display the histogram
-                plot.hist(list(self.datadict.values()))
+                plot.bar(list(self.datadict.keys()),list(self.datadict.values()), width=0.005)
+                plot.ylabel("Number of Wells")
+                plot.xlabel("Retention Time (minutes)")
                 plot.show()
                 #self.datadict.keys()
 
@@ -40,12 +42,14 @@ class PrePull(C.tk.Frame):
 
         #Pre-Pull button
         C.tk.Button(self,text="Generate histogram",command=prepullcallback).place(x=80,y=40)
+        #data files label
+        C.tk.Label(self,text="Current Data Files:").place(x=250,y=40)
         #data files display
         def update_files():
             temp = C.tk.Text(master=self,height=10,width=40)
-            temp.insert(C.tk.END,self.FileDisplay)
-            temp.place(x=150,y=140)
+            temp.insert(C.tk.END,str(len(self.datafiles))+" TOTAL FILES\n"+self.FileDisplay)
+            temp.place(x=250,y=65)
             temp.config(state="disabled")
         update_files()
         #Select Data files button
-        C.tk.Button(self,text="Select Data",command=selectdatacallback).place(x=150,y=80)
+        C.tk.Button(self,text="Select Data",command=selectdatacallback).place(x=105,y=80)

@@ -31,6 +31,14 @@ class Pull(C.tk.Frame):
             if len(self.rettimes)==0 or len(self.toltimes)==0:
                 C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","No retention times/tolerances entered!")        
                 return
+            #break if non-chronological
+            if self.rettimes.sort()!=self.rettimes:
+                C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Retention times are not in chronological order!")        
+                return
+            #break if there is overlap in entered values also
+            if self.isthereoverlap():
+                C.tk.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Retention times/tolerances overlap!")
+                return
             print(self.rettimes)
             print(self.toltimes)
         #data files label
@@ -132,6 +140,10 @@ class Pull(C.tk.Frame):
                     self.toltimes = self.toltimes + [float(self.tol7.get())]
             except:
                 C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Invalid retetion time/tolerance time entered!")
-
-
+    def isthereoverlap(self):
+        if len(self.rettimes)==1:
+            return False
+        else:
+            #iterate through list and check for overlap
+            pass
 

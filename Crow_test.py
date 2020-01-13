@@ -8,5 +8,8 @@ root = tkinter.Tk()
 my_gui = Crow.Crow(root)
 my_gui.call()
 root.mainloop()
-root.destroy()
-my_gui.destroy()
+try:
+    root.destroy()
+    my_gui.destroy()
+except:
+    pass

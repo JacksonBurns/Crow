@@ -4,7 +4,6 @@ class PrePull(C.tk.Frame):
     def __init__(self,name):
         #set up as tab
         C.tk.Frame.__init__(self,width=797,height=450)
-
         #lists to place collected data and files to get it from
         self.datafiles = []
         self.datadict = {}
@@ -32,14 +31,11 @@ class PrePull(C.tk.Frame):
                 plot.ylabel("Number of Wells")
                 plot.xlabel("Retention Time (minutes)")
                 plot.show()
-                #self.datadict.keys()
-
         #define select data callback function
         def selectdatacallback():
             self.datafiles = C.RequestFiles.RequestFiles("xml files","*.xml")
             self.FileDisplay = str(self.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
-
         #Pre-Pull button
         C.tk.Button(self,text="Generate histogram",command=prepullcallback).place(x=80,y=40)
         #data files label

@@ -1,3 +1,4 @@
+#!/usr/bin/python3.6
 from tkinter import filedialog, Tk
 def RequestFiles(file_desc,file_ext):
     root = Tk()

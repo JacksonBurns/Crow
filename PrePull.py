@@ -1,3 +1,4 @@
+#!/usr/bin/python3.6
 import Crow as C
 import matplotlib.pyplot as plot
 class PrePull(C.tk.Frame):

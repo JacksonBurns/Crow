@@ -1,3 +1,5 @@
+#!/usr/bin/python3.6
+
 #This is the wrapper function for Crow
 
 #retrieve python packages that aren't built in for some stupid reason

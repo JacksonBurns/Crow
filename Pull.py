@@ -1,3 +1,4 @@
+#!/usr/bin/python3.6
 import Crow as C
 class Pull(C.tk.Frame):
     def __init__(self,name):

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import Crow as C
 class Present(C.tk.Frame):
     def __init__(self,name):

@@ -1,3 +1,4 @@
+#!/usr/bin/python3.6
 import Crow
 import time
 #C.Crow()

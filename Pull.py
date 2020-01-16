@@ -146,5 +146,8 @@ class Pull(C.tk.Frame):
             return False
         else:
             #iterate through list and check for overlap
-            pass
+            for i in range(1,len(self.rettimes)):
+                #print(self.rettimes[i])
+                if (self.rettimes[i]-self.toltimes[i])<=(self.rettimes[i-1]+self.toltimes[i-1]):
+                    #send error with which retention times overlap
 

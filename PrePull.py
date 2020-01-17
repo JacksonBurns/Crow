@@ -4,7 +4,6 @@ import matplotlib.pyplot as plot
 class PrePull(C.tk.Frame):
     def __init__(self,name):
         #set up as tab
-        #C.tk.Frame.__init__(self,width=797,height=450)
         C.tk.Frame.__init__(self,width=460,height=450)
         #lists to place collected data and files to get it from
         self.datadict = {}

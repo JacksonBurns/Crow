@@ -3,7 +3,7 @@
 #This is the wrapper function for Crow
 
 #retrieve python packages that aren't built in for some stupid reason
-import os
+import glob
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -40,6 +40,7 @@ class Crow(tk.Frame):
         #define select data callback function
         def selectdatacallback():
             globals.datafiles = RequestFiles.RequestFiles("xml files","*.xml")
+            print(globals.datafiles)
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
         #data files display
@@ -52,7 +53,18 @@ class Crow(tk.Frame):
         #data files label
         tk.Label(master,text="Current Data Files:").place(x=470,y=40)
         #Select Data files button
-        tk.Button(master,text="Select Data",command=selectdatacallback).place(x=470,y=245)
+        tk.Button(master,text="Select Data Manually",command=selectdatacallback).place(x=470,y=245)
+        #Retrieve files from server by experiment name
+        def searchservercallback():
+            ##########     MAKE THIS THE SERVER ADDRESS     ###########
+            globals.datafiles = glob.glob("/home/jackson/Desktop/SampleData/*"+self.expname.get()+"*")
+            self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("[","").replace("]","")
+            print(globals.datafiles)
+            update_files()
+        tk.Button(master,text="Search Server by Expt. Name",command=searchservercallback).place(x=470,y=310)
+        self.expname = tk.Entry(master)
+        self.expname.place(x=470,y=280)
+        
         
         #title on top of window
         tk.Label(master, text="Crow Really Outta Work").place(relx=0.78,y=0)

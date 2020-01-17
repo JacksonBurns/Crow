@@ -3,8 +3,6 @@ import Crow as C
 class Pull(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)
-        #lists to place collected data and files to get it from
-        self.datadict = {}
         #make place for collected retention times and tolerances to go
         self.rettimes = []
         self.toltimes = []

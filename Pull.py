@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 import Crow as C
+
 class Pull(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)
@@ -28,8 +29,27 @@ class Pull(C.tk.Frame):
             #break if there is overlap in entered values also
             if self.isthereoverlap():
                 return
-            print(self.rettimes)
-            print(self.toltimes)
+            if len(C.globals.datafiles)==0:
+                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","No data files selected!")
+            else:
+                #iterate through each and pull relevant data
+                self.datalist = C.np.array(C.np.zeros([len(C.globals.datafiles),len(self.rettimes)]))
+                #iterate through each data test
+                welliterator = 0
+                for file in C.globals.datafiles:
+                    #open file
+                    temp = C.ParseXML.ParseXML(file)
+                    #go to where peaks are stored
+                    temp = temp[4][2]
+                    #iterate through all the peaks
+                    for peak in temp[1:]:
+                        #check if the peaks are the one we want
+                        for i in range(0,len(self.rettimes)):
+                            if( ((float(peak[4].text)-self.toltimes[i])<self.rettimes[i]) & ((float(peak[4].text)+self.toltimes[i])>self.rettimes[i])):
+                                #assign area to corresponding location in output array
+                                self.datalist[welliterator,i] = float(peak[5].text)
+                    welliterator+=1
+                C.np.savetxt("/home/jackson/Desktop/test.xlsx",self.datalist)
         #pull data button
         C.tk.Button(self,text="Pull Requested Data",command=pulldatacallback).place(x=130,y=245)
         C.tk.Button(self,text="Clear Entries",command=clearentriescallback).place(x=155,y=280)

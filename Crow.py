@@ -6,6 +6,7 @@
 import glob
 import tkinter as tk
 from tkinter import ttk, messagebox
+import numpy as np
 
 #retrieve my functions written elsewhere
 import ParseXML as ParseXML
@@ -13,6 +14,7 @@ import RequestFiles as RequestFiles
 from PrePull import PrePull
 from Pull import Pull
 from Present import Present
+
 #retreive global datafiles list variable
 import globals
 globals.init()
@@ -59,7 +61,6 @@ class Crow(tk.Frame):
             ##########     MAKE THIS THE SERVER ADDRESS     ###########
             globals.datafiles = glob.glob("/home/jackson/Desktop/SampleData/*"+self.expname.get()+"*")
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("[","").replace("]","")
-            print(globals.datafiles)
             update_files()
         tk.Button(master,text="Search Server by Expt. Name",command=searchservercallback).place(x=470,y=310)
         self.expname = tk.Entry(master)

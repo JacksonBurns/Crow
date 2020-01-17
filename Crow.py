@@ -13,6 +13,9 @@ import RequestFiles as RequestFiles
 from PrePull import PrePull
 from Pull import Pull
 from Present import Present
+#retreive global datafiles list variable
+import globals
+globals.init()
 
 #define GUI
 class Crow(tk.Frame):
@@ -30,8 +33,29 @@ class Crow(tk.Frame):
         self.notebook.add(Present(self.notebook),text="Present")
         self.notebook.place(x=0,y=0)
         
+        #add data selector
+        ###self.datafiles = []
+        self.FileDisplay = tk.StringVar()
+        self.FileDisplay = ""
+        #define select data callback function
+        def selectdatacallback():
+            globals.datafiles = RequestFiles.RequestFiles("xml files","*.xml")
+            self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
+            update_files()
+        #data files display
+        def update_files():
+            temp = tk.Text(master,height=10,width=40)
+            temp.insert(tk.END,str(len(globals.datafiles))+" TOTAL FILES\n"+self.FileDisplay)
+            temp.place(x=470,y=65)
+            temp.config(state="disabled")
+        update_files()
+        #data files label
+        tk.Label(master,text="Current Data Files:").place(x=470,y=40)
+        #Select Data files button
+        tk.Button(master,text="Select Data",command=selectdatacallback).place(x=470,y=245)
+        
         #title on top of window
-        tk.Label(master, text="Crow Really Outta Work").place(relx=0.405,y=0)
+        tk.Label(master, text="Crow Really Outta Work").place(relx=0.78,y=0)
 
         #setup callback for closing app
         self.master.protocol('WM_DELETE_WINDOW', self.close_app)

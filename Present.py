@@ -14,7 +14,7 @@ class Present(C.tk.Frame):
         C.tk.Button(self,text="Present",command=presentdatacallback).place(relx=0.4,rely=0.9)
         #make radio buttons for well layout
         layout = C.tk.IntVar()
-        layouts = [("96 (8x12)",1),("96 (12x8)",2),("24 (4x8)",3),("24 (8x4)",4)]
+        layouts = [("96 (8x12)",1),("96 (12x8)",2),("24 (4x6)",3),("24 (6x4)",4)]
         C.tk.Label(self,text="Well layout:").place(x=5,y=40)
         yiterator=60
         for i in range(len(layouts)):

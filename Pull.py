@@ -35,20 +35,18 @@ class Pull(C.tk.Frame):
                 #iterate through each and pull relevant data
                 self.datalist = C.np.array(C.np.zeros([len(C.globals.datafiles),len(self.rettimes)]))
                 #iterate through each data test
-                welliterator = 0
                 for file in C.globals.datafiles:
                     #open file
                     temp = C.ParseXML.ParseXML(file)
                     #go to where peaks are stored
-                    temp = temp[4][2]
+                    peaks = temp[4][2]
                     #iterate through all the peaks
-                    for peak in temp[1:]:
+                    for peak in peaks[1:]:
                         #check if the peaks are the one we want
                         for i in range(0,len(self.rettimes)):
                             if( ((float(peak[4].text)-self.toltimes[i])<self.rettimes[i]) & ((float(peak[4].text)+self.toltimes[i])>self.rettimes[i])):
                                 #assign area to corresponding location in output array
-                                self.datalist[welliterator,i] = float(peak[5].text)
-                    welliterator+=1
+                                self.datalist[int(temp[2][7].text)-1,i] = float(peak[5].text)
                 C.np.savetxt("/home/jackson/Desktop/test.xlsx",self.datalist)
         #pull data button
         C.tk.Button(self,text="Pull Requested Data",command=pulldatacallback).place(x=130,y=245)

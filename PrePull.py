@@ -12,6 +12,8 @@ class PrePull(C.tk.Frame):
             #check if data files have been chosen
             if len(C.globals.datafiles)==0:
                 C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","No data files selected!")
+            elif '.xlsx' in str(C.globals.datafiles):
+                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select raw data files!")
             else:
                 #iterate through each and pull relevant data
                 self.datadict = {}

@@ -40,9 +40,13 @@ class Crow(tk.Frame):
         self.FileDisplay = tk.StringVar()
         self.FileDisplay = ""
         #define select data callback function
-        def selectdatacallback():
+        def selectrawdatacallback():
             globals.datafiles = RequestFiles.RequestFiles("xml files","*.xml")
-            print(globals.datafiles)
+            self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
+            update_files()
+        #define excel data callback
+        def selectexceldatacallback():
+            globals.datafiles = RequestFiles.RequestFiles("Excel files","*.xlsx")
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
         #data files display
@@ -55,7 +59,9 @@ class Crow(tk.Frame):
         #data files label
         tk.Label(master,text="Current Data Files:").place(x=470,y=40)
         #Select Data files button
-        tk.Button(master,text="Select Data Manually",command=selectdatacallback).place(x=470,y=245)
+        tk.Button(master,text="Select Raw Data",command=selectrawdatacallback).place(x=470,y=245)
+        #Select Data files button
+        tk.Button(master,text="Select Excel Data",command=selectexceldatacallback).place(x=650,y=245)
         #Retrieve files from server by experiment name
         def searchservercallback():
             ##########     MAKE THIS THE SERVER ADDRESS     ###########

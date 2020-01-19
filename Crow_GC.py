@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #This is the wrapper function for Crow - GC
@@ -15,7 +14,7 @@ import RequestFiles as RequestFiles
 from PrePull import PrePull
 from Pull import Pull
 from Present import Present
-import Crow
+'''import Crow'''
 
 #retreive global datafiles list variable
 import globals
@@ -85,7 +84,7 @@ class Crow_GC(tk.Frame):
     def close_app(self):
         if messagebox.askokcancel(title="Quit Crow - GC?",message="Are you sure?"):
             self.master.destroy()
-            Crow.revivespock()
+            '''Crow.revivespock()'''
         
     #maww
     def call(self):

@@ -20,6 +20,7 @@ def revivespock():
         my_gui = Crow_GC.Crow_GC(root)
         my_gui.call()
         root.mainloop()
+        revivespock()
     GCButton = tk.Button(spock, text ="GC", command = Crow_GCcallback)
     GCButton.place(x=0,y=0)
 
@@ -30,13 +31,10 @@ def revivespock():
         my_gui = Crow_LCMS.Crow_LCMS(root)
         my_gui.call()
         root.mainloop()
-        try:
-            root.destroy()
-            my_gui.destroy()
-        except:
-            pass 
+        revivespock()
         '''
         tk.messagebox.showinfo(message="Oops... doesn't exist yet.")
+        
     LCMSButton = tk.Button(spock, text ="LCMS", command = Crow_LCMScallback)
     LCMSButton.place(x=0,y=20)
 

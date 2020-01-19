@@ -8,10 +8,10 @@ class Present(C.tk.Frame):
             if '.xml' in str(C.globals.datafiles):
                 C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data file (.csv)!")
             #please select data
-            elif len(globals.datafiles) == 0:
+            elif len(C.globals.datafiles) == 0:
                 C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data file (.csv)!")
             #please select only one excel file at a time
-            elif len(globals.datafiles) != 1:
+            elif len(C.globals.datafiles) != 1:
                 C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select an excel data file (.csv)!")
             #if passes all tests, present accordingly
             else:

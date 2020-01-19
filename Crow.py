@@ -1,6 +1,7 @@
-#!/usr/bin/python3.6
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-#This is the wrapper function for Crow
+#This is the wrapper function for Crow - GC
 
 #retrieve python packages that aren't built in for some stupid reason
 import glob
@@ -41,12 +42,12 @@ class Crow(tk.Frame):
         self.FileDisplay = ""
         #define select data callback function
         def selectrawdatacallback():
-            globals.datafiles = RequestFiles.RequestFiles("xml files","*.xml")
+            globals.datafiles = RequestFiles.RequestFiles("Raw Data","*.xml")
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
         #define excel data callback
         def selectexceldatacallback():
-            globals.datafiles = RequestFiles.RequestFiles("Excel files","*.xlsx")
+            globals.datafiles = RequestFiles.RequestFiles("Processed Data","*.csv")
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
         #data files display

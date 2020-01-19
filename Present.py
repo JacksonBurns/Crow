@@ -5,7 +5,13 @@ class Present(C.tk.Frame):
         C.tk.Frame.__init__(self,width=47,height=450)
         def presentdatacallback():
             if '.xml' in str(C.globals.datafiles):
-                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data files!")
+                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data file!")
+            #please select only one
+            
+            #exceldata = C.np.loadtxt(C.globals.datafiles)
+            print(C.globals.datafiles[0])
+            exceldata = C.np.genfromtxt(C.globals.datafiles[0], dtype=float, delimiter=',', names=True)
+            print(exceldata)
                 
                 
                 

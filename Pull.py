@@ -33,7 +33,7 @@ class Pull(C.tk.Frame):
                 C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","No data files selected!")
             else:
                 #iterate through each and pull relevant data
-                self.datalist = C.np.array(C.np.zeros([len(C.globals.datafiles),len(self.rettimes)]))
+                self.datalist = C.np.array(C.np.zeros([len(C.globals.datafiles)+1,len(self.rettimes)]))
                 #iterate through each data test
                 for file in C.globals.datafiles:
                     #open file
@@ -47,7 +47,7 @@ class Pull(C.tk.Frame):
                             if( ((float(peak[4].text)-self.toltimes[i])<self.rettimes[i]) & ((float(peak[4].text)+self.toltimes[i])>self.rettimes[i])):
                                 #assign area to corresponding location in output array
                                 self.datalist[int(temp[2][7].text)-1,i] = float(peak[5].text)
-                C.np.savetxt("/home/jackson/Desktop/test.xlsx",self.datalist)
+                C.np.savetxt("/home/jackson/Desktop/test.csv",self.datalist,delimiter=',',fmt='%.4f')
         #pull data button
         C.tk.Button(self,text="Pull Requested Data",command=pulldatacallback).place(x=130,y=245)
         C.tk.Button(self,text="Clear Entries",command=clearentriescallback).place(x=155,y=280)

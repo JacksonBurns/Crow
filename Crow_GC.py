@@ -11,13 +11,12 @@ import numpy as np
 #retrieve my functions written elsewhere
 import ParseXML as ParseXML
 import RequestFiles as RequestFiles
-from PrePull import PrePull
-from Pull import Pull
-from Present import Present
-'''import Crow'''
+from PrePull_GC import PrePull
+from Pull_GC import Pull
+from Present_GC import Present
 
 #retreive global datafiles list variable
-import globals
+import globals_GC as globals
 globals.init()
 
 #define GUI

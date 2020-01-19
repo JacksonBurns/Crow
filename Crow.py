@@ -11,27 +11,28 @@ from PIL import Image, ImageTk
 import tkinter as tk
 import Crow_GC
 
-def revivespock():
+def startrek3():
     spock = tk.Tk()
-    spock.title("Crow Launcher")
-    spock.geometry("300x110")
+    spock.title("Crow")
+    spock.geometry("250x110")
 
     def Crow_GCcallback():
-        spock.destroy()
+        startrek2(spock)
         root=tk.Tk()
         Crow_GC.Crow_GC(root)
         root.mainloop()
-        revivespock()
+        startrek3()
+        
     GCButton = tk.Button(spock, text ="GC", command = Crow_GCcallback)
     GCButton.place(x=10,y=10)
 
     def Crow_LCMScallback():
         '''
-        spock.destroy()
+        startrek2(spock)
         root=tk.Tk()
         Crow_LCMS.Crow_LCMS(root)
         root.mainloop()
-        revivespock()
+        startrek3()
         '''
         tk.messagebox.showinfo(message="Oops... doesn't exist yet.")
         
@@ -40,11 +41,11 @@ def revivespock():
 
     def Crow_SFCMScallback():
         '''
-        spock.destroy()
+        startrek2(spock)
         root=tk.Tk()
         Crow_SFCMS.Crow_SFCMS(root)
         root.mainloop()
-        revivespock()
+        startrek3()
         '''
         tk.messagebox.showinfo(message="Oops... doesn't exist yet.")
         
@@ -56,8 +57,12 @@ def revivespock():
     render = ImageTk.PhotoImage(load)
     img = tk.Label(image=render)
     img.image = render
-    img.place(x=150, y=10)
+    img.place(x=125,y=10)
     
     spock.mainloop()
     
-revivespock()
+def startrek2(spock):
+    '''KHAN!'''
+    spock.destroy()
+    
+startrek3()

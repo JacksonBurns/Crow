@@ -3,15 +3,22 @@ import Crow as C
 class Present(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)
+        #function for present button push, handles error checking and reading state of buttons
         def presentdatacallback():
+            #check for wrong type of data selected
             if '.xml' in str(C.globals.datafiles):
-                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data file!")
-            #please select only one
-            
-            #exceldata = C.np.loadtxt(C.globals.datafiles)
-            print(C.globals.datafiles[0])
-            exceldata = C.np.genfromtxt(C.globals.datafiles[0], dtype=float, delimiter=',', names=True)
-            print(exceldata)
+                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data file (.csv)!")
+            #please select data
+            elif len(globals.datafiles) == 0:
+                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select excel data file (.csv)!")
+            #please select only one excel file at a time
+            elif len(globals.datafiles) != 1:
+                C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select an excel data file (.csv)!")
+            #if passes all tests, present accordingly
+            else:
+                exceldata = C.np.genfromtxt(C.globals.datafiles[0], dtype=float, delimiter=',', names=True)
+                
+                
                 
                 
                 
@@ -46,4 +53,3 @@ class Present(C.tk.Frame):
             yiterator+=25  
         
         
-            

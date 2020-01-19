@@ -82,7 +82,7 @@ class Crow_GC(tk.Frame):
         
     #apparently closing a window doesn't stop the main loop, what a great feature
     def close_app(self):
-        if messagebox.askokcancel(title="Quit Crow - GC?",message="Are you sure?"):
+        if messagebox.askokcancel(title="Quit",message="Are you sure?"):
             self.master.destroy()
             '''Crow.revivespock()'''
         

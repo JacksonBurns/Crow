@@ -1,6 +1,4 @@
-#!/usr/bin/python3.6
-import Crow as C
-
+import Crow_GC as C
 class Pull(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)

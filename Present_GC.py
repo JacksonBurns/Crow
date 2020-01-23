@@ -1,4 +1,5 @@
 import Crow_GC as C
+import matplotlib.pyplot as plot
 class Present(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)
@@ -17,6 +18,9 @@ class Present(C.tk.Frame):
             else:
                 #pull data from user
                 exceldata = C.np.genfromtxt(C.globals.datafiles[0], dtype=float, delimiter=',', names=True)
+                #check for files that are too big
+                if len(exceldata[0])>10:
+                    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Data has too many columns (>10)!")
                 #decide on colorscheme from color radio buttons
                 if colorscheme.get()==1: #neutral
                     totalcolormap=C.np.array([[1,1,1],[1,0.1,0.1],[1,0.753,0],[0.573,0.816,0.314],[0.5,0.5,0.5],[0,0,0.8],[1,0.55,0],[1,0.5,1],[0.4,0.8,1],[0.2,0.1,0.1]])
@@ -25,36 +29,62 @@ class Present(C.tk.Frame):
                 elif colorscheme.get()==3: #colorblind-friendly
                     totalcolormap=C.np.array([[0.165,0.219,0.404],[0.545,0.498,0.278],[0.612,0.620,0.710],[0.980,0.949,0.918],[1,0.427,0.741]])
                 elif colorscheme.get()==4: #custom colors
+                    print("JACKSON PROGRAM THIS ONE TOO")
                     pass
                 #call graphic generator appropriately
                 # 96 (8x12)
                 if layout.get()==1: 
-                    try:
-                        graphic_generator(exceldata,[8,12],[True,False],['A','B','C','D','E','F','G','H'],[0.144,0.089],0.1058,['1','2','3','4','5','6','7','8','9','10','11','12'],[0.123,0.955],0.0658,totalcolormap)
-                    except:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
+                    #try:
+                    graphic_generator(exceldata,[8,12],['A','B','C','D','E','F','G','H'],[0.1,0.95],0.05,['1','2','3','4','5','6','7','8','9','10','11','12'],[0.1,0.8],0.05,totalcolormap)
+                    #except:
+                    #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 96 (12x8)
                 elif layout.get()==2: 
-                    try:
-                        print("JACKSON PROGRAM THIS ONE")
+                    #try:
+                    print("JACKSON PROGRAM THIS ONE")
                         #graphic_generator()
-                    except:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
+                    #except:
+                    #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 24 (4x6)
                 elif layout.get()==3: 
-                    try:
-                        graphic_generator(exceldata,[4,6],[False,False],['A','B','C','D'],[0.17,0.118],0.22,['1','2','3','4','5','6'],[0.175,0.935],0.1342,totalcolormap)
-                    except:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
+                    #try:
+                    graphic_generator(exceldata,[4,6],['A','B','C','D'],[0.17,0.118],0.22,['1','2','3','4','5','6'],[0.175,0.935],0.1342,totalcolormap)
+                    #except:
+                    #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 24 (6x4)
                 elif layout.get()==4: 
-                    try:
-                        graphic_generator(exceldata,[6,4],[False,True],['A','B','C','D','E','F'],[0.17,0.118],0.142,['1','2','3','4'],[0.168,0.97],0.2055,totalcolormap)
-                    except:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
-        def graphic_generator(exceldata,subplotdims,resizevector,letters,heightstarters,heightiterator,numbers,widthstarters,widthiterator,totalcolormap):
-            pass
+                    #try:
+                    graphic_generator(exceldata,[6,4],['A','B','C','D','E','F'],[0.17,0.118],0.142,['1','2','3','4'],[0.168,0.97],0.2055,totalcolormap)
+                    #except:
+                    #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
+        def graphic_generator(exceldata,subplotdims,letters,heightstarters,heightiterator,numbers,widthstarters,widthiterator,totalcolormap):
+            myfig, subplt = plot.subplots(subplotdims[0],subplotdims[1])
+            
+            ax = myfig.gca()
+            count = 0
+            for letter in letters:
+                ax.annotate(letter,xy=(heightstarters[0],heightstarters[1]-count*heightiterator),xycoords='figure fraction')
+                count+=1
+            count = 0
+            for number in numbers:
+                ax.annotate(number,xy=(widthstarters[0]+count*widthiterator,widthstarters[1]),xycoords='figure fraction')
+                count+=1
                 
+            for wellnum in range(0,subplotdims[0]*subplotdims[1]):
+                row = wellnum//subplotdims[1]
+                col = wellnum%subplotdims[1]
+                subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
+                      colors=totalcolormap , 
+                      wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                      radius=1.3 , 
+                      counterclock=False)
+                subplt[row,col].axis('off')
+                #subplt[row,col].set_title(str(wellnum+1))
+                
+            
+            
+            myfig.show()
+        
                 
                 
                 

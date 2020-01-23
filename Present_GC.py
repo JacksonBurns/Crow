@@ -35,58 +35,42 @@ class Present(C.tk.Frame):
                 # 96 (8x12)
                 if layout.get()==1: 
                     #try:
-                    graphic_generator(exceldata,[8,12],['A','B','C','D','E','F','G','H'],[0.1,0.95],0.05,['1','2','3','4','5','6','7','8','9','10','11','12'],[0.1,0.8],0.05,totalcolormap)
+                    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
                     #except:
                     #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 96 (12x8)
                 elif layout.get()==2: 
                     #try:
-                    print("JACKSON PROGRAM THIS ONE")
-                        #graphic_generator()
+                    graphic_generator(exceldata,[12,8],totalcolormap,(4,6))
                     #except:
                     #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 24 (4x6)
                 elif layout.get()==3: 
                     #try:
-                    graphic_generator(exceldata,[4,6],['A','B','C','D'],[0.17,0.118],0.22,['1','2','3','4','5','6'],[0.175,0.935],0.1342,totalcolormap)
+                    graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
                     #except:
                     #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 24 (6x4)
                 elif layout.get()==4: 
                     #try:
-                    graphic_generator(exceldata,[6,4],['A','B','C','D','E','F'],[0.17,0.118],0.142,['1','2','3','4'],[0.168,0.97],0.2055,totalcolormap)
+                    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
                     #except:
                     #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
-        def graphic_generator(exceldata,subplotdims,letters,heightstarters,heightiterator,numbers,widthstarters,widthiterator,totalcolormap):
-            myfig, subplt = plot.subplots(subplotdims[0],subplotdims[1])
-            
-            ax = myfig.gca()
-            count = 0
-            for letter in letters:
-                ax.annotate(letter,xy=(heightstarters[0],heightstarters[1]-count*heightiterator),xycoords='figure fraction')
-                count+=1
-            count = 0
-            for number in numbers:
-                ax.annotate(number,xy=(widthstarters[0]+count*widthiterator,widthstarters[1]),xycoords='figure fraction')
-                count+=1
-                
+        def graphic_generator(exceldata,subplotdims,totalcolormap,dims):
+            #create figure with correct number of subplots
+            myfig, subplt = plot.subplots(subplotdims[0],subplotdims[1],figsize=dims)
             for wellnum in range(0,subplotdims[0]*subplotdims[1]):
                 row = wellnum//subplotdims[1]
                 col = wellnum%subplotdims[1]
                 subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
                       colors=totalcolormap , 
                       wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
-                      radius=1.3 , 
-                      counterclock=False)
-                subplt[row,col].axis('off')
-                #subplt[row,col].set_title(str(wellnum+1))
-                
-            
-            
+                      radius=1.3 , counterclock=False)
+                #write numbers accross the top
+                if row==0: subplt[row,col].set_title(str(wellnum+1))
+                #write letters across the left side
+                if col==0: subplt[row,col].set_ylabel(['A','B','C','D','E','F','G','H','I','J','K','L'][row],rotation=0,labelpad=10)
             myfig.show()
-        
-                
-                
                 
         #make present data button
         C.tk.Button(self,text="Present",command=presentdatacallback).place(relx=0.4,rely=0.9)

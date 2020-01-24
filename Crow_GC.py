@@ -7,6 +7,7 @@ import glob
 import tkinter as tk
 from tkinter import ttk, messagebox
 import numpy as np
+import matplotlib.pyplot as plot
 
 #retrieve my functions written elsewhere
 import ParseXML as ParseXML
@@ -82,8 +83,8 @@ class Crow_GC(tk.Frame):
     #apparently closing a window doesn't stop the main loop, what a great feature
     def close_app(self):
         if messagebox.askokcancel(title="Quit",message="Are you sure?"):
+            plot.close('all')
             self.master.destroy()
-            '''Crow.revivespock()'''
         
     #maww
     def call(self):

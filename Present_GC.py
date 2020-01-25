@@ -40,10 +40,10 @@ class Present(C.tk.Frame):
                 #call graphic generator appropriately
                 # 96 (8x12)
                 if layout.get()==1: 
-                    try:
-                        graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
-                    except Exception as e:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!\n("+str(e)+")")
+                    #try:
+                    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+                    #except Exception as e:
+                    #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!\n("+str(e)+")")
                 # 96 (12x8)
                 elif layout.get()==2: 
                     try:
@@ -66,7 +66,6 @@ class Present(C.tk.Frame):
                     C.messagebox.showerror("ERROR SCINCE","Please select a layout!")
         def graphic_generator(exceldata,subplotdims,totalcolormap,dims):
             #handle filters
-            
             if datafilter.get()==2: #exclude threshold
                 self.excludePopup=excludePopup(self.master)
                 self.master.wait_window(self.excludePopup.top)
@@ -74,6 +73,7 @@ class Present(C.tk.Frame):
                 #popup to ask which column the chemical the gradient should be based off of is in
                 self.shadebyyieldPopup=shadebyyieldPopup(self.master)
                 self.master.wait_window(self.shadebyyieldPopup.top)
+                excludeColmax = max([well[int(self.shadebyyieldPopup.shadecol)-1] for well in exceldata])
             elif datafilter.get()==4: #set cutoffs
                 #find out how many groups to make
                 self.numberofcutoffsPopup=numberofcutoffsPopup(self.master)
@@ -91,17 +91,28 @@ class Present(C.tk.Frame):
                 #go to correct position
                 row = wellnum//subplotdims[1]
                 col = wellnum%subplotdims[1]
-                if (datafilter.get()==2):
-                    if (exceldata[wellnum][int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)):
-                        subplt[row,col].pie([0])
-                if (datafilter.get()==3):
+                if (datafilter.get()==2):#exclude threshold
+                    if (exceldata[wellnum][int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+                         subplt[row,col].pie([0])
+                    else:
+                         subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
+                              colors=totalcolormap , 
+                              wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                              radius=1.3 , counterclock=False)
+                elif (datafilter.get()==3): #shade by yield
+                    temp = totalcolormap.copy()
+                    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(exceldata[wellnum][int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+                    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
+                          colors=temp , 
+                          wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                          radius=1.3 , counterclock=False)
+                elif (datafilter.get()==4): #group cutoffs
                     pass
                 else:
                     subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
                           colors=totalcolormap , 
                           wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
                           radius=1.3 , counterclock=False)
-                    
                 #write numbers accross the top
                 if row==0: subplt[row,col].set_title(str(wellnum+1))
                 #write letters across the left side

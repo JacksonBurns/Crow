@@ -66,24 +66,36 @@ class Present(C.tk.Frame):
                     C.messagebox.showerror("ERROR SCINCE","Please select a layout!")
         def graphic_generator(exceldata,subplotdims,totalcolormap,dims):
             #handle filters
+            
             if datafilter.get()==2: #exclude threshold
-                excludethreshold=True
                 self.excludePopup=excludePopup(self.master)
                 self.master.wait_window(self.excludePopup.top)
-                self.excludePopup.excludeval
             elif datafilter.get()==3: #shade by yield
                 #popup to ask which column the chemical the gradient should be based off of is in
-                pass
+                self.shadebyyieldPopup=shadebyyieldPopup(self.master)
+                self.master.wait_window(self.shadebyyieldPopup.top)
             elif datafilter.get()==4: #set cutoffs
-                pass
+                #find out how many groups to make
+                self.numberofcutoffsPopup=numberofcutoffsPopup(self.master)
+                self.master.wait_window(self.numberofcutoffsPopup.top)
+                for i in range(0,int(self.numberofcutoffsPopup.numgroups)):
+                    self.cutoffPopup=cutoffPopup(self.master)
+                    self.master.wait_window(self.cutoffPopup.top)
+                    #assign values before overwritten
+                    print(self.cutoffPopup.cutoffval)
+                    print(self.cutoffPopup.cutoffcolor)
+                return
             #create figure with correct number of subplots
             myfig, subplt = plot.subplots(subplotdims[0],subplotdims[1],figsize=dims)
             for wellnum in range(0,subplotdims[0]*subplotdims[1]):
                 #go to correct position
                 row = wellnum//subplotdims[1]
                 col = wellnum%subplotdims[1]
-                if excludethreshold & (exceldata[wellnum][int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)):
-                    subplt[row,col].pie([0])
+                if (datafilter.get()==2):
+                    if (exceldata[wellnum][int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)):
+                        subplt[row,col].pie([0])
+                if (datafilter.get()==3):
+                    pass
                 else:
                     subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
                           colors=totalcolormap , 
@@ -139,4 +151,42 @@ class excludePopup(object):
     def close(self):
         self.excludecol=self.excludecol.get()
         self.excludeval=self.excludeval.get()
+        self.top.destroy()
+        
+class shadebyyieldPopup(object):
+    def __init__(self,master):
+        top=self.top=C.tk.Toplevel(master)
+        C.tk.Label(top,text="Column to base shading on:").place(x=0,y=0)
+        self.shadecol=C.tk.Entry(top)
+        self.shadecol.place(x=0,y=25)
+        C.tk.Button(top,text='Ok',command=self.close).place(x=0,y=50)
+    def close(self):
+        self.shadecol=self.shadecol.get()
+        self.top.destroy()
+        
+class numberofcutoffsPopup(object):
+    def __init__(self,master):
+        top=self.top=C.tk.Toplevel(master)
+        C.tk.Label(top,text="Number of groups:").place(x=0,y=0)
+        self.numgroups=C.tk.Entry(top)
+        self.numgroups.place(x=0,y=25)
+        C.tk.Button(top,text='Ok',command=self.close).place(x=0,y=50)
+    def close(self):
+        self.numgroups=self.numgroups.get()
+        self.top.destroy()
+        
+class cutoffPopup(object):
+    def __init__(self,master):
+        top=self.top=C.tk.Toplevel(master)
+        C.tk.Label(top,text="For wells below this value:").place(x=0,y=0)
+        self.cutoffval=C.tk.Entry(top)
+        self.cutoffval.place(x=0,y=25)
+        C.tk.Label(top,text="Use this color:").place(x=0,y=50)
+        self.cutoffcolor=C.tk.Entry(top)
+        self.cutoffcolor.insert(C.tk.END,'255,255,255')
+        self.cutoffcolor.place(x=0,y=75)
+        C.tk.Button(top,text='Ok',command=self.close).place(x=0,y=100)
+    def close(self):
+        self.cutoffval=self.cutoffval.get()
+        self.cutoffcolor=self.cutoffcolor.get()
         self.top.destroy()

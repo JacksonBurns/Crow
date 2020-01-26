@@ -38,9 +38,9 @@ def startrek3():
         root.mainloop()
         startrek3()
         '''
-        tk.messagebox.showinfo(message="Oops... doesn't exist yet.")
+        tk.messagebox.showinfo(message="Work in progress.")
         
-    LCMSButton = tk.Button(spock, text ="LC/MS", command = Crow_LCMScallback)
+    LCMSButton = tk.Button(spock, text ="LC/MS", command = Crow_LCMScallback, state=tk.DISABLED)
     LCMSButton.place(x=10,y=40)
 
     def Crow_SFCMScallback():
@@ -51,17 +51,17 @@ def startrek3():
         root.mainloop()
         startrek3()
         '''
-        tk.messagebox.showinfo(message="Oops... doesn't exist yet.")
+        tk.messagebox.showinfo(message="Work in progress.")
         
-    SFCMSButton = tk.Button(spock, text ="SFC/MS", command = Crow_SFCMScallback)
+    SFCMSButton = tk.Button(spock, text ="SFC/MS", command = Crow_SFCMScallback, state=tk.DISABLED)
     SFCMSButton.place(x=10,y=70)
     
-    load = Image.open("temp_logo.png")
-    load = load.resize((90,90), Image.ANTIALIAS)
+    load = Image.open("Crow_logo.png")
+    load = load.resize((160,160), Image.ANTIALIAS)
     render = ImageTk.PhotoImage(load)
     img = tk.Label(image=render)
     img.image = render
-    img.place(x=125,y=10)
+    img.place(x=90,y=-15)
     
     spock.mainloop()
     

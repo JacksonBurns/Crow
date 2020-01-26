@@ -1,8 +1,4 @@
 import Crow_GC as C
-import matplotlib.pyplot as plot
-import tkinter.colorchooser as cc
-from datetime import datetime
-import traceback
 class Present(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)
@@ -34,7 +30,7 @@ class Present(C.tk.Frame):
                 elif colorscheme.get()==4: #custom colors
                     totalcolormap = []
                     for i in range(0,len(exceldata[0])):
-                        rgb, _ = cc.askcolor(parent=self,title="Choose color "+str(i))
+                        rgb, _ = C.cc.askcolor(parent=self,title="Choose color "+str(i))
                         totalcolormap = totalcolormap + [C.np.array(list(rgb))/255]
                 else:
                     C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select a color scheme!")
@@ -93,7 +89,7 @@ class Present(C.tk.Frame):
                     cutoffvalues = cutoffvalues + [float(self.cutoffPopup.cutoffval)]
                     cutoffcolors = cutoffcolors + [[int(s)/255 for s in self.cutoffPopup.cutoffcolor.split(',')]]
             #create figure with correct number of subplots
-            myfig, subplt = plot.subplots(subplotdims[0],subplotdims[1],figsize=dims)
+            myfig, subplt = C.plot.subplots(subplotdims[0],subplotdims[1],figsize=dims)
             for wellnum in range(0,subplotdims[0]*subplotdims[1]):
                 #go to correct position
                 row = wellnum//subplotdims[1]
@@ -132,9 +128,9 @@ class Present(C.tk.Frame):
         def mylog(e):
             debugfile = open('debug.txt','a')
             debugfile.write("\n")
-            debugfile.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S")+" - "+str(e))
+            debugfile.write(C.datetime.now().strftime("%d/%m/%Y %H:%M:%S")+" - "+str(e))
             debugfile.write("\n")
-            debugfile.write(traceback.format_exc())
+            debugfile.write(C.traceback.format_exc())
             debugfile.write("\n")
             debugfile.close()
         def pickcolor(colormap,cutoffcol,cutoffvalues,cutoffcolors,currentwell):

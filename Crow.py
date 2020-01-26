@@ -5,11 +5,6 @@ Created on Sat Jan 18 23:45:07 2020
 
 @author: jackson
 """
-
-
-#change to wait window and modify button state????
-
-
 #parent gui for all Crow family apps
 from PIL import Image, ImageTk
 import tkinter as tk

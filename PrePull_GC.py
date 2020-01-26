@@ -1,5 +1,4 @@
 import Crow_GC as C
-import matplotlib.pyplot as plot
 class PrePull(C.tk.Frame):
     def __init__(self,name):
         #set up as tab
@@ -26,9 +25,9 @@ class PrePull(C.tk.Frame):
                         else:
                             self.datadict[rettime]=1
                 #display the histogram
-                plot.bar(list(self.datadict.keys()),list(self.datadict.values()), width=0.005)
-                plot.ylabel("Number of Wells")
-                plot.xlabel("Retention Time (minutes)")
-                plot.show()
+                C.plot.bar(list(self.datadict.keys()),list(self.datadict.values()), width=0.005)
+                C.plot.ylabel("Number of Wells")
+                C.plot.xlabel("Retention Time (minutes)")
+                C.plot.show()
         #Pre-Pull button
         C.tk.Button(self,text="Generate Histogram",command=prepullcallback).place(relx=0.3,rely=0.35)

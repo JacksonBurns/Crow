@@ -1,6 +1,8 @@
 import Crow_GC as C
 import matplotlib.pyplot as plot
 import tkinter.colorchooser as cc
+from datetime import datetime
+import traceback
 class Present(C.tk.Frame):
     def __init__(self,name):
         C.tk.Frame.__init__(self,width=47,height=450)
@@ -40,28 +42,32 @@ class Present(C.tk.Frame):
                 #call graphic generator appropriately
                 # 96 (8x12)
                 if layout.get()==1: 
-                    #try:
-                    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
-                    #except Exception as e:
-                    #    C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!\n("+str(e)+")")
+                    try:
+                        graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+                    except Exception as e:
+                        mylog(e)
+                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 96 (12x8)
                 elif layout.get()==2: 
                     try:
                         graphic_generator(exceldata,[12,8],totalcolormap,(4,6))
                     except Exception as e:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!\n("+str(e)+")")
+                        mylog(e)
+                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 24 (4x6)
                 elif layout.get()==3: 
                     try:
                         graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
                     except Exception as e:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again\n("+str(e)+")")
+                        mylog(e)
+                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 # 24 (6x4)
                 elif layout.get()==4: 
                     try:
                         graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
                     except Exception as e:
-                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again\n("+str(e)+")")
+                        mylog(e)
+                        C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Something went wrong, please try again!")
                 else:
                     C.messagebox.showerror("ERROR SCINCE","Please select a layout!")
         def graphic_generator(exceldata,subplotdims,totalcolormap,dims):
@@ -78,13 +84,14 @@ class Present(C.tk.Frame):
                 #find out how many groups to make
                 self.numberofcutoffsPopup=numberofcutoffsPopup(self.master)
                 self.master.wait_window(self.numberofcutoffsPopup.top)
+                cutoffvalues = []
+                cutoffcolors = []
                 for i in range(0,int(self.numberofcutoffsPopup.numgroups)):
                     self.cutoffPopup=cutoffPopup(self.master)
                     self.master.wait_window(self.cutoffPopup.top)
                     #assign values before overwritten
-                    print(self.cutoffPopup.cutoffval)
-                    print(self.cutoffPopup.cutoffcolor)
-                return
+                    cutoffvalues = cutoffvalues + [float(self.cutoffPopup.cutoffval)]
+                    cutoffcolors = cutoffcolors + [[int(s)/255 for s in self.cutoffPopup.cutoffcolor.split(',')]]
             #create figure with correct number of subplots
             myfig, subplt = plot.subplots(subplotdims[0],subplotdims[1],figsize=dims)
             for wellnum in range(0,subplotdims[0]*subplotdims[1]):
@@ -107,7 +114,11 @@ class Present(C.tk.Frame):
                           wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
                           radius=1.3 , counterclock=False)
                 elif (datafilter.get()==4): #group cutoffs
-                    pass
+                    #fix this logic
+                    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
+                        colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,exceldata[wellnum]) ,
+                        wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                        radius=1.3 , counterclock=False)
                 else:
                     subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
                           colors=totalcolormap , 
@@ -118,7 +129,22 @@ class Present(C.tk.Frame):
                 #write letters across the left side
                 if col==0: subplt[row,col].set_ylabel(['A','B','C','D','E','F','G','H','I','J','K','L'][row],rotation=0,labelpad=10)
             myfig.show()
-                
+        def mylog(e):
+            debugfile = open('debug.txt','a')
+            debugfile.write("\n")
+            debugfile.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S")+" - "+str(e))
+            debugfile.write("\n")
+            debugfile.write(traceback.format_exc())
+            debugfile.write("\n")
+            debugfile.close()
+        def pickcolor(colormap,cutoffcol,cutoffvalues,cutoffcolors,currentwell):
+            for i in range(0,len(cutoffvalues)-1):
+                if (currentwell[cutoffcol]>cutoffvalues[i]) & (currentwell[cutoffcol]<=cutoffvalues[i+1]):
+                    colormap[cutoffcol] = cutoffcolors[i+1]
+                    return colormap 
+                elif (currentwell[cutoffcol]<=cutoffvalues[i]):
+                    colormap[cutoffcol] = cutoffcolors[i]
+                    return colormap 
         #make present data button
         C.tk.Button(self,text="Present",command=presentdatacallback).place(relx=0.4,rely=0.9)
         #make radio buttons for well layout
@@ -181,9 +207,13 @@ class numberofcutoffsPopup(object):
         C.tk.Label(top,text="Number of groups:").place(x=0,y=0)
         self.numgroups=C.tk.Entry(top)
         self.numgroups.place(x=0,y=25)
-        C.tk.Button(top,text='Ok',command=self.close).place(x=0,y=50)
+        C.tk.Label(top,text="Column to base groups on:").place(x=0,y=50)
+        self.cutoffcol=C.tk.Entry(top)
+        self.cutoffcol.place(x=0,y=75)
+        C.tk.Button(top,text='Ok',command=self.close).place(x=0,y=100)
     def close(self):
         self.numgroups=self.numgroups.get()
+        self.cutoffcol=self.cutoffcol.get()
         self.top.destroy()
         
 class cutoffPopup(object):

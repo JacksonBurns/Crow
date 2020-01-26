@@ -1,0 +1,10 @@
+26/01/2020 15:39:43 - invalid index (5)
+Traceback (most recent call last):
+  File "/home/jackson/Desktop/Crow/Present_GC.py", line 46, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "/home/jackson/Desktop/Crow/Present_GC.py", line 82, in graphic_generator
+    excludeColmax = max([well[int(self.shadebyyieldPopup.shadecol)-1] for well in exceldata])
+  File "/home/jackson/Desktop/Crow/Present_GC.py", line 82, in <listcomp>
+    excludeColmax = max([well[int(self.shadebyyieldPopup.shadecol)-1] for well in exceldata])
+IndexError: invalid index (5)
+

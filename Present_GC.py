@@ -150,7 +150,7 @@ class Present(C.tk.Frame):
         yiterator=60
         for i in range(len(layouts)):
             C.tk.Radiobutton(self,text=layouts[i][0],indicatoron=0,padx = 10,variable=layout,value=layouts[i][1]).place(x=5,y=yiterator)
-            yiterator+=25
+            yiterator+=30
         
         #make radio buttons for graphic color
         colorscheme = C.tk.IntVar()
@@ -159,7 +159,7 @@ class Present(C.tk.Frame):
         yiterator=60
         for i in range(len(colorschemes)):
             C.tk.Radiobutton(self,text=colorschemes[i][0],indicatoron=0,padx = 8,variable=colorscheme,value=colorschemes[i][1]).place(x=130,y=yiterator)
-            yiterator+=25   
+            yiterator+=30  
         
         #make radio buttons for datafilters
         datafilter = C.tk.IntVar()
@@ -168,7 +168,7 @@ class Present(C.tk.Frame):
         yiterator=60
         for i in range(len(datafilters)):
             C.tk.Radiobutton(self,text=datafilters[i][0],indicatoron=0,padx = 10,variable=datafilter,value=datafilters[i][1]).place(x=255,y=yiterator)
-            yiterator+=25  
+            yiterator+=30 
         
         
 class excludePopup(object):

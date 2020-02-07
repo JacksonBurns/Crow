@@ -18,6 +18,7 @@ from Present_GC import Present
 #retreive global datafiles list variable
 import globals_GC as globals
 globals.init()
+
 #define GUI
 class Crow_GC(tk.Frame):
     def __init__(self, master):
@@ -47,8 +48,8 @@ class Crow_GC(tk.Frame):
             update_files()
         #data files display
         def update_files():
-            temp = tk.Text(master,height=10,width=40)
-            temp.insert(tk.END,str(len(globals.datafiles))+" TOTAL FILES\n"+self.FileDisplay)
+            temp = tk.Text(master,height=10,width=35)
+            temp.insert(tk.END,str(len(globals.datafiles))+" TOTAL FILES\n"+self.FileDisplay+1)
             temp.place(x=470,y=65)
             temp.config(state="disabled")
         update_files()
@@ -60,8 +61,7 @@ class Crow_GC(tk.Frame):
         tk.Button(master,text="Select Excel Data",command=selectexceldatacallback).place(x=650,y=245)
         #Retrieve files from server by experiment name
         def searchservercallback():
-            ##########     MAKE THIS THE SERVER ADDRESS     ###########
-            globals.datafiles = glob.glob("/home/jackson/Desktop/SampleData/*"+self.expname.get()+"*")
+            globals.datafiles = glob.glob(globals.rawdatapath+"*"+self.expname.get()+"*")
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("[","").replace("]","")
             update_files()
         tk.Button(master,text="Search Server by Expt. Name",command=searchservercallback).place(x=470,y=310)

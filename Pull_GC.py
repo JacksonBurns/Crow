@@ -45,10 +45,16 @@ class Pull(C.tk.Frame):
                             if( ((float(peak[4].text)-self.toltimes[i])<self.rettimes[i]) & ((float(peak[4].text)+self.toltimes[i])>self.rettimes[i])):
                                 #assign area to corresponding location in output array
                                 self.datalist[int(temp[2][7].text)-1,i] = float(peak[5].text)
-                C.np.savetxt("/home/jackson/Desktop/test.csv",self.datalist,delimiter=',',fmt='%.4f')
+                C.np.savetxt(C.globals.exportdatapath+self.expname.get()+".csv",self.datalist,delimiter=',',fmt='%.4f')
         #pull data button
-        C.tk.Button(self,text="Pull Requested Data",command=pulldatacallback).place(x=150,y=245)
-        C.tk.Button(self,text="Clear Entries",command=clearentriescallback).place(x=175,y=280)
+        C.tk.Button(self,text="Pull Requested Data",command=pulldatacallback).place(x=145,y=305)
+        #clear entries button
+        C.tk.Button(self,text="Clear Entries",command=clearentriescallback).place(x=167,y=245)
+        #Experiment Name Label
+        C.tk.Label(self,text="Expt. Name:").place(x=85,y=280)
+        #Experiment Name Entry Field
+        self.expname = C.tk.Entry(self)
+        self.expname.place(x=170,y=280)
         def add_entry_fields():
             C.tk.Label(self,text="Retention Time (minutes)").place(x=40,y=40)
             #assigning and placing have to be on seperate lines because place returns nothing

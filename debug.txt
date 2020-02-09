@@ -19,3 +19,407 @@ Traceback (most recent call last):
     excludeColmax = max([well[int(self.shadebyyieldPopup.shadecol)-1] for well in exceldata])
 IndexError: invalid index (6)
 
+
+07/02/2020 15:26:34 - index 95 is out of bounds for axis 0 with size 95
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 119, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+IndexError: index 95 is out of bounds for axis 0 with size 95
+
+
+08/02/2020 15:55:02 - 'numpy.ndarray' object has no attribute 'pop'
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 103, in graphic_generator
+    temp.pop(idx)
+AttributeError: 'numpy.ndarray' object has no attribute 'pop'
+
+
+08/02/2020 15:57:54 - 'numpy.ndarray' object has no attribute 'delete'
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 103, in graphic_generator
+    temp.delete(idx)
+AttributeError: 'numpy.ndarray' object has no attribute 'delete'
+
+
+08/02/2020 15:59:58 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 126, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 16:04:38 - Invalid RGBA argument: 1.0
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 129, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3023, in pie
+    w = mpatches.Wedge((x, y), radius, 360. * min(theta1, theta2),
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 1076, in __init__
+    Patch.__init__(self, **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 82, in __init__
+    self.set_facecolor(facecolor)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 319, in set_facecolor
+    self._set_facecolor(color)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 307, in _set_facecolor
+    self._facecolor = colors.to_rgba(color, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 177, in to_rgba
+    rgba = _to_rgba_no_colorcycle(c, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 240, in _to_rgba_no_colorcycle
+    raise ValueError("Invalid RGBA argument: {!r}".format(orig_c))
+ValueError: Invalid RGBA argument: 1.0
+
+
+08/02/2020 16:05:04 - Invalid RGBA argument: 1.0
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 129, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3023, in pie
+    w = mpatches.Wedge((x, y), radius, 360. * min(theta1, theta2),
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 1076, in __init__
+    Patch.__init__(self, **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 82, in __init__
+    self.set_facecolor(facecolor)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 319, in set_facecolor
+    self._set_facecolor(color)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 307, in _set_facecolor
+    self._facecolor = colors.to_rgba(color, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 177, in to_rgba
+    rgba = _to_rgba_no_colorcycle(c, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 240, in _to_rgba_no_colorcycle
+    raise ValueError("Invalid RGBA argument: {!r}".format(orig_c))
+ValueError: Invalid RGBA argument: 1.0
+
+
+08/02/2020 16:08:16 - Invalid RGBA argument: 1.0
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 130, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3023, in pie
+    w = mpatches.Wedge((x, y), radius, 360. * min(theta1, theta2),
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 1076, in __init__
+    Patch.__init__(self, **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 82, in __init__
+    self.set_facecolor(facecolor)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 319, in set_facecolor
+    self._set_facecolor(color)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 307, in _set_facecolor
+    self._facecolor = colors.to_rgba(color, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 177, in to_rgba
+    rgba = _to_rgba_no_colorcycle(c, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 240, in _to_rgba_no_colorcycle
+    raise ValueError("Invalid RGBA argument: {!r}".format(orig_c))
+ValueError: Invalid RGBA argument: 1.0
+
+
+08/02/2020 16:10:01 - Invalid RGBA argument: 1.0
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 131, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3023, in pie
+    w = mpatches.Wedge((x, y), radius, 360. * min(theta1, theta2),
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 1076, in __init__
+    Patch.__init__(self, **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 82, in __init__
+    self.set_facecolor(facecolor)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 319, in set_facecolor
+    self._set_facecolor(color)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 307, in _set_facecolor
+    self._facecolor = colors.to_rgba(color, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 177, in to_rgba
+    rgba = _to_rgba_no_colorcycle(c, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 240, in _to_rgba_no_colorcycle
+    raise ValueError("Invalid RGBA argument: {!r}".format(orig_c))
+ValueError: Invalid RGBA argument: 1.0
+
+
+08/02/2020 16:18:11 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 133, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 16:20:39 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 134, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 16:34:18 - invalid type promotion
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 109, in graphic_generator
+    print(exceldata[wellnum]+'\n')
+TypeError: invalid type promotion
+
+
+08/02/2020 16:44:43 - setting an array element with a sequence.
+TypeError: float() argument must be a string or a number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 108, in graphic_generator
+    exceldata[wellnum] = [val for idx, val in enumerate(exceldata[wellnum]) if idx not in mask]
+ValueError: setting an array element with a sequence.
+
+
+08/02/2020 16:45:38 - could not assign tuple of length 1 to structure with 2 fields.
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 108, in graphic_generator
+    exceldata[wellnum] = tuple([val for idx, val in enumerate(exceldata[wellnum]) if idx not in mask])
+ValueError: could not assign tuple of length 1 to structure with 2 fields.
+
+
+08/02/2020 23:03:29 - RGBA values should be within 0-1 range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 63, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 138, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3023, in pie
+    w = mpatches.Wedge((x, y), radius, 360. * min(theta1, theta2),
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 1076, in __init__
+    Patch.__init__(self, **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 82, in __init__
+    self.set_facecolor(facecolor)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 319, in set_facecolor
+    self._set_facecolor(color)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 307, in _set_facecolor
+    self._facecolor = colors.to_rgba(color, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 177, in to_rgba
+    rgba = _to_rgba_no_colorcycle(c, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 250, in _to_rgba_no_colorcycle
+    raise ValueError("RGBA values should be within 0-1 range")
+ValueError: RGBA values should be within 0-1 range
+
+
+08/02/2020 23:04:46 - RGBA values should be within 0-1 range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 57, in presentdatacallback
+    graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 139, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3023, in pie
+    w = mpatches.Wedge((x, y), radius, 360. * min(theta1, theta2),
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 1076, in __init__
+    Patch.__init__(self, **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 82, in __init__
+    self.set_facecolor(facecolor)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 319, in set_facecolor
+    self._set_facecolor(color)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\patches.py", line 307, in _set_facecolor
+    self._facecolor = colors.to_rgba(color, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 177, in to_rgba
+    rgba = _to_rgba_no_colorcycle(c, alpha)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\colors.py", line 250, in _to_rgba_no_colorcycle
+    raise ValueError("RGBA values should be within 0-1 range")
+ValueError: RGBA values should be within 0-1 range
+
+
+08/02/2020 23:06:16 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 118, in graphic_generator
+    if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+IndexError: list index out of range
+
+
+08/02/2020 23:09:25 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 119, in graphic_generator
+    if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+IndexError: list index out of range
+
+
+08/02/2020 23:10:32 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 119, in graphic_generator
+    if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+IndexError: list index out of range
+
+
+08/02/2020 23:13:40 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 131, in graphic_generator
+    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+IndexError: list index out of range
+
+
+08/02/2020 23:14:28 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 139, in graphic_generator
+    colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,welldata) ,
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 162, in pickcolor
+    if (currentwell[cutoffcol]>cutoffvalues[i]) & (currentwell[cutoffcol]<=cutoffvalues[i+1]):
+IndexError: list index out of range
+
+
+08/02/2020 23:17:27 - int() argument must be a string, a bytes-like object or a number, not 'Entry'
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 86, in graphic_generator
+    for i in range(0,int(self.numberofcutoffsPopup.numgroups)):
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'Entry'
+
+
+08/02/2020 23:17:52 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 132, in graphic_generator
+    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+IndexError: list index out of range
+
+
+08/02/2020 23:33:48 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 150, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 23:35:57 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 150, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 23:36:43 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 151, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 23:37:36 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 152, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 23:38:35 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 152, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+08/02/2020 23:40:10 - math domain error
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 64, in presentdatacallback
+    graphic_generator(exceldata,[6,4],totalcolormap,(4,6))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 153, in graphic_generator
+    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) ,
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\__init__.py", line 1599, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "C:\Users\jwb1j\.conda\envs\Crow_env\lib\site-packages\matplotlib\axes\_axes.py", line 3020, in pie
+    x += expl * math.cos(thetam)
+ValueError: math domain error
+
+
+09/02/2020 00:06:20 - local variable 'welldata' referenced before assignment
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 57, in presentdatacallback
+    graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 99, in graphic_generator
+    if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+UnboundLocalError: local variable 'welldata' referenced before assignment
+
+
+09/02/2020 00:10:46 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 57, in presentdatacallback
+    graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 149, in graphic_generator
+    colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,welldata) ,
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 183, in pickcolor
+    if (currentwell[cutoffcol]>cutoffvalues[i]) & (currentwell[cutoffcol]<=cutoffvalues[i+1]):
+IndexError: list index out of range
+

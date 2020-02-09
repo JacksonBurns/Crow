@@ -38,18 +38,18 @@ class Crow_GC(tk.Frame):
         self.FileDisplay = ""
         #define select data callback function
         def selectrawdatacallback():
-            globals.datafiles = RequestFiles.RequestFiles("Raw Data","*.xml")
+            globals.datafiles = RequestFiles.RequestFiles("Raw Data","*.xml",globals.rawdatapath)
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
         #define excel data callback
         def selectexceldatacallback():
-            globals.datafiles = RequestFiles.RequestFiles("Processed Data","*.csv")
+            globals.datafiles = RequestFiles.RequestFiles("Processed Data","*.csv",globals.exportdatapath)
             self.FileDisplay = str(globals.datafiles).replace(",","\n").replace("(","").replace(")","")
             update_files()
         #data files display
         def update_files():
             temp = tk.Text(master,height=10,width=35)
-            temp.insert(tk.END,str(len(globals.datafiles))+" TOTAL FILES\n"+self.FileDisplay+1)
+            temp.insert(tk.END,str(len(globals.datafiles))+" TOTAL FILES\n"+self.FileDisplay)
             temp.place(x=470,y=65)
             temp.config(state="disabled")
         update_files()

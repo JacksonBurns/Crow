@@ -30,8 +30,9 @@ class Present(C.tk.Frame):
                 elif colorscheme.get()==4: #custom colors
                     totalcolormap = []
                     for i in range(0,len(exceldata[0])):
-                        rgb, _ = C.cc.askcolor(parent=self,title="Choose color "+str(i))
-                        totalcolormap = totalcolormap + [C.np.array(list(rgb))/255]
+                        rgb, _ = C.cc.askcolor(parent=self,title="Choose color "+str(i+1))
+                        totalcolormap = totalcolormap + [C.np.array(list(rgb))/256]
+                        print(totalcolormap)
                 else:
                     C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select a color scheme!")
                     return
@@ -94,30 +95,74 @@ class Present(C.tk.Frame):
                 #go to correct position
                 row = wellnum//subplotdims[1]
                 col = wellnum%subplotdims[1]
+                #well data
+                welldata = exceldata[wellnum]
                 if (datafilter.get()==2):#exclude threshold
-                    if (exceldata[wellnum][int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
-                         subplt[row,col].pie([0])
+                    if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+                        subplt[row,col].pie([0])
                     else:
-                         subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
-                              colors=totalcolormap , 
-                              wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
-                              radius=1.3 , counterclock=False)
+                        #handle wells where one or more pie slices are zero
+                        temp = totalcolormap.copy()
+                        #iterate through list
+                        mask = []
+                        for idx, pievalue in enumerate(welldata):
+                            #each time a zero is found, take index and remove corresponding color from temp of colormap
+                            if float(pievalue) == 0:
+                                mask = mask + [idx]
+                        if len(mask)!=0:
+                            temp = C.np.delete(temp,mask,0)
+                            welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                        subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
+                            colors=temp , 
+                            wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                            radius=1.3 , counterclock=False)
                 elif (datafilter.get()==3): #shade by yield
+                    #handle wells where one or more pie slices are zero
                     temp = totalcolormap.copy()
-                    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(exceldata[wellnum][int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
-                    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
-                          colors=temp , 
-                          wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
-                          radius=1.3 , counterclock=False)
+                    #iterate through list
+                    mask = []
+                    for idx, pievalue in enumerate(welldata):
+                        #each time a zero is found, take index and remove corresponding color from temp of colormap
+                        if float(pievalue) == 0:
+                            mask = mask + [idx]
+                    if len(mask)!=0:
+                        temp = C.np.delete(temp,mask,0)
+                        welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+                    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
+                        colors=temp , 
+                        wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                        radius=1.3 , counterclock=False)
                 elif (datafilter.get()==4): #group cutoffs
-                    #fix this logic
-                    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
-                        colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,exceldata[wellnum]) ,
+                    #handle wells where one or more pie slices are zero
+                    temp = totalcolormap.copy()
+                    #iterate through list
+                    mask = []
+                    for idx, pievalue in enumerate(welldata):
+                        #each time a zero is found, take index and remove corresponding color from temp of colormap
+                        if float(pievalue) == 0:
+                            mask = mask + [idx]
+                    if len(mask)!=0:
+                        temp = C.np.delete(temp,mask,0)
+                        welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
+                        colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,welldata) ,
                         wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
                         radius=1.3 , counterclock=False)
                 else:
-                    subplt[row,col].pie(C.np.array(list(exceldata[wellnum])/min(list(exceldata[wellnum]))) , 
-                          colors=totalcolormap , 
+                    #handle wells where one or more pie slices are zero
+                    temp = totalcolormap.copy()
+                    #iterate through list
+                    mask = []
+                    for idx, pievalue in enumerate(welldata):
+                        #each time a zero is found, take index and remove corresponding color from temp of colormap
+                        if float(pievalue) == 0:
+                            mask = mask + [idx]
+                    if len(mask)!=0:
+                        temp = C.np.delete(temp,mask,0)
+                        welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
+                          colors=temp , 
                           wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
                           radius=1.3 , counterclock=False)
                 #write numbers accross the top

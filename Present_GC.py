@@ -18,7 +18,7 @@ class Present(C.tk.Frame):
                 #pull data from user
                 exceldata = C.np.genfromtxt(C.globals.datafiles[0], dtype=float, delimiter=',', names=True)
                 #check for files that are too big
-                if len(exceldata[0])>10:
+                if len(exceldata[0])>9:
                     C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Data has too many columns (>10)!")
                 #decide on colorscheme from color radio buttons
                 if colorscheme.get()==1: #neutral
@@ -32,7 +32,6 @@ class Present(C.tk.Frame):
                     for i in range(0,len(exceldata[0])):
                         rgb, _ = C.cc.askcolor(parent=self,title="Choose color "+str(i+1))
                         totalcolormap = totalcolormap + [C.np.array(list(rgb))/256]
-                        print(totalcolormap)
                 else:
                     C.messagebox.showerror("Error SCIENCE FICTION REFERENCE","Please select a color scheme!")
                     return
@@ -98,9 +97,55 @@ class Present(C.tk.Frame):
                 #well data
                 welldata = exceldata[wellnum]
                 if (datafilter.get()==2):#exclude threshold
-                    if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+                    try: 
+                        if (welldata[int(self.excludePopup.excludecol)-1]<float(self.excludePopup.excludeval)): #exclude cutoff
+                            subplt[row,col].pie([0])
+                        else:
+                            #handle wells where one or more pie slices are zero
+                            temp = totalcolormap.copy()
+                            #iterate through list
+                            mask = []
+                            for idx, pievalue in enumerate(welldata):
+                                #each time a zero is found, take index and remove corresponding color from temp of colormap
+                                if float(pievalue) == 0:
+                                    mask = mask + [idx]
+                            if len(mask)!=0:
+                                temp = C.np.delete(temp,mask,0)
+                                welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                            subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
+                                colors=temp , 
+                                wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                                radius=1.3 , counterclock=False)
+                    except Exception as e:
                         subplt[row,col].pie([0])
-                    else:
+                        warningmessage = 'Issue displaying well '+str(wellnum+1)+'. \n(possible zero value issue)'
+                        C.messagebox.showwarning(title='Warning', message=warningmessage)
+                        mylog(e)
+                elif (datafilter.get()==3): #shade by yield
+                    try:
+                        #handle wells where one or more pie slices are zero
+                        temp = totalcolormap.copy()
+                        #iterate through list
+                        mask = []
+                        for idx, pievalue in enumerate(welldata):
+                            #each time a zero is found, take index and remove corresponding color from temp of colormap
+                            if float(pievalue) == 0:
+                                mask = mask + [idx]
+                        if len(mask)!=0:
+                            temp = C.np.delete(temp,mask,0)
+                            welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                        temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+                        subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
+                            colors=temp , 
+                            wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
+                            radius=1.3 , counterclock=False)
+                    except Exception as e:
+                        subplt[row,col].pie([0])
+                        warningmessage = 'Issue displaying well '+str(wellnum+1)+'. \n(possible zero value issue)'
+                        C.messagebox.showwarning(title='Warning', message=warningmessage)
+                        mylog(e)
+                elif (datafilter.get()==4): #group cutoffs
+                    try:
                         #handle wells where one or more pie slices are zero
                         temp = totalcolormap.copy()
                         #iterate through list
@@ -113,42 +158,14 @@ class Present(C.tk.Frame):
                             temp = C.np.delete(temp,mask,0)
                             welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
                         subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
-                            colors=temp , 
+                            colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,welldata) ,
                             wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
                             radius=1.3 , counterclock=False)
-                elif (datafilter.get()==3): #shade by yield
-                    #handle wells where one or more pie slices are zero
-                    temp = totalcolormap.copy()
-                    #iterate through list
-                    mask = []
-                    for idx, pievalue in enumerate(welldata):
-                        #each time a zero is found, take index and remove corresponding color from temp of colormap
-                        if float(pievalue) == 0:
-                            mask = mask + [idx]
-                    if len(mask)!=0:
-                        temp = C.np.delete(temp,mask,0)
-                        welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
-                    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
-                    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
-                        colors=temp , 
-                        wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
-                        radius=1.3 , counterclock=False)
-                elif (datafilter.get()==4): #group cutoffs
-                    #handle wells where one or more pie slices are zero
-                    temp = totalcolormap.copy()
-                    #iterate through list
-                    mask = []
-                    for idx, pievalue in enumerate(welldata):
-                        #each time a zero is found, take index and remove corresponding color from temp of colormap
-                        if float(pievalue) == 0:
-                            mask = mask + [idx]
-                    if len(mask)!=0:
-                        temp = C.np.delete(temp,mask,0)
-                        welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
-                    subplt[row,col].pie(C.np.array(list(welldata)/min(list(welldata))) , 
-                        colors=pickcolor(totalcolormap.copy(),int(self.numberofcutoffsPopup.cutoffcol)-1,cutoffvalues,cutoffcolors,welldata) ,
-                        wedgeprops = {'linewidth':1,'edgecolor':[0,0,0]} , 
-                        radius=1.3 , counterclock=False)
+                    except Exception as e:
+                        subplt[row,col].pie([0])
+                        warningmessage = 'Issue displaying well '+str(wellnum+1)+'. \n(possible zero value issue)'
+                        C.messagebox.showwarning(title='Warning', message=warningmessage)
+                        mylog(e)
                 else:
                     #handle wells where one or more pie slices are zero
                     temp = totalcolormap.copy()

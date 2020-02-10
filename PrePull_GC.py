@@ -16,14 +16,18 @@ class PrePull(C.tk.Frame):
                 #iterate through each and pull relevant data
                 self.datadict = {}
                 for file in C.globals.datafiles:
-                    temp = C.ParseXML.ParseXML(file)
-                    temp = temp[4][2]
-                    for peak in temp[1:]:
-                        rettime = round(float(peak[4].text),2)
-                        if (rettime in self.datadict):
-                            self.datadict[rettime]+=1
-                        else:
-                            self.datadict[rettime]=1
+                    try:
+                        temp = C.ParseXML.ParseXML(file)
+                        temp = temp[4][2]
+                        for peak in temp[1:]:
+                            rettime = round(float(peak[4].text),2)
+                            if (rettime in self.datadict):
+                                self.datadict[rettime]+=1
+                            else:
+                                self.datadict[rettime]=1
+                    except:
+                        warningmessage = 'No peak data found in file ' + str(file) + '\n (possible failed injection)'
+                        C.messagebox.showwarning(title='Warning', message=warningmessage)
                 #display the histogram
                 C.plot.bar(list(self.datadict.keys()),list(self.datadict.values()), width=0.005)
                 C.plot.ylabel("Number of Wells")

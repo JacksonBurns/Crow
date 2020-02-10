@@ -34,17 +34,21 @@ class Pull(C.tk.Frame):
                 self.datalist = C.np.array(C.np.zeros([len(C.globals.datafiles)+1,len(self.rettimes)]))
                 #iterate through each data test
                 for file in C.globals.datafiles:
-                    #open file
-                    temp = C.ParseXML.ParseXML(file)
-                    #go to where peaks are stored
-                    peaks = temp[4][2]
-                    #iterate through all the peaks
-                    for peak in peaks[1:]:
-                        #check if the peaks are the one we want
-                        for i in range(0,len(self.rettimes)):
-                            if( ((float(peak[4].text)-self.toltimes[i])<self.rettimes[i]) & ((float(peak[4].text)+self.toltimes[i])>self.rettimes[i])):
-                                #assign area to corresponding location in output array
-                                self.datalist[int(temp[2][7].text)-1,i] = float(peak[5].text)
+                    try:
+                        #open file
+                        temp = C.ParseXML.ParseXML(file)
+                        #go to where peaks are stored
+                        peaks = temp[4][2]
+                        #iterate through all the peaks
+                        for peak in peaks[1:]:
+                            #check if the peaks are the one we want
+                            for i in range(0,len(self.rettimes)):
+                                if( ((float(peak[4].text)-self.toltimes[i])<self.rettimes[i]) & ((float(peak[4].text)+self.toltimes[i])>self.rettimes[i])):
+                                    #assign area to corresponding location in output array
+                                    self.datalist[int(temp[2][7].text)-1,i] = float(peak[5].text)
+                    except:
+                        warningmessage = 'No peak data found in file ' + str(file) + '\n (possible failed injection)'
+                        C.messagebox.showwarning(title='Warning', message=warningmessage)
                 C.np.savetxt(C.globals.exportdatapath+self.expname.get()+".csv",self.datalist,delimiter=',',fmt='%.4f')
         #pull data button
         C.tk.Button(self,text="Pull Requested Data",command=pulldatacallback).place(x=145,y=305)

@@ -423,3 +423,53 @@ Traceback (most recent call last):
     if (currentwell[cutoffcol]>cutoffvalues[i]) & (currentwell[cutoffcol]<=cutoffvalues[i+1]):
 IndexError: list index out of range
 
+
+09/02/2020 13:17:06 - index 24 is out of bounds for axis 0 with size 24
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 43, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 99, in graphic_generator
+    welldata = exceldata[wellnum]
+IndexError: index 24 is out of bounds for axis 0 with size 24
+
+
+09/02/2020 13:18:51 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 57, in presentdatacallback
+    graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 131, in graphic_generator
+    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+IndexError: list index out of range
+
+
+09/02/2020 13:26:13 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 57, in presentdatacallback
+    graphic_generator(exceldata,[4,6],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 131, in graphic_generator
+    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+IndexError: list index out of range
+
+
+09/02/2020 13:35:18 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 138, in graphic_generator
+    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+IndexError: list index out of range
+
+
+09/02/2020 13:36:28 - list index out of range
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 138, in graphic_generator
+    temp[int(self.shadebyyieldPopup.shadecol)-1] = temp[int(self.shadebyyieldPopup.shadecol)-1]*(welldata[int(self.shadebyyieldPopup.shadecol)-1]/excludeColmax)
+IndexError: list index out of range
+
+
+09/02/2020 14:21:33 - index 24 is out of bounds for axis 0 with size 24
+Traceback (most recent call last):
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 42, in presentdatacallback
+    graphic_generator(exceldata,[8,12],totalcolormap,(6,4))
+  File "C:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Present_GC.py", line 98, in graphic_generator
+    welldata = exceldata[wellnum]
+IndexError: index 24 is out of bounds for axis 0 with size 24
+

@@ -8,6 +8,10 @@ Crow has three tabs: __Pre-Pull__, __Pull__, and __Present__. __Pre-Pull__ ident
 
 Designed by Jackson Burns at the University of Delaware Donald Watson Lab in 2019, coded in Python in 2020.
 
+## How to use Crow
+Please see the video below for instructions:
+<video src="Crow-SOP.mp4" width="320" height="200" controls preload></video>
+
 ## Setup
 Data is retrieved by parsing XML files output by the software on the High Throughput Experimentation instrument. For example, our setup uses an Agilent GC and their software to run experiments and calculate eluate peak areas.
 

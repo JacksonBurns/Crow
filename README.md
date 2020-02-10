@@ -9,7 +9,7 @@ Crow has three tabs: __Pre-Pull__, __Pull__, and __Present__. __Pre-Pull__ ident
 Designed by Jackson Burns at the University of Delaware Donald Watson Lab in 2019, coded in Python in 2020.
 
 ## How to use Crow
-Please see the video below for instructions:
+Please see this video for instructions:
 https://www.jacksonwarnerburns.com/crow
 
 ## Setup

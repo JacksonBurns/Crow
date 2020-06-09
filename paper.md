@@ -78,7 +78,7 @@ and refer to \autoref{eq:fourier} from text.
 # Citations
 
 Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
+[//]: # [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
 format.
 
 If you want to cite a software repository URL (e.g. something on GitHub without a preferred
@@ -92,8 +92,8 @@ For a quick reference, the following citation commands can be used:
 # Figures
 
 Figures can be included like this:
-![Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
+[//]: # ![Caption for example figure.\label{fig:example}](figure.png)
+[//]: # and referenced from text using \autoref{fig:example}.
 
 Fenced code blocks are rendered with syntax highlighting:
 ```python

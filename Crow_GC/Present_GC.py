@@ -104,8 +104,8 @@ class Present(C.tk.Frame):
                 try:
                     graphic_generator(exceldata, [8, 12], totalcolormap, (6, 4))
                 except Exception as e:
-                    # if debug:
-                    #     mylog(e)
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(e)
                     C.messagebox.showerror(
                         "Error!", "Something went wrong, please try again.",
                     )
@@ -114,8 +114,8 @@ class Present(C.tk.Frame):
                 try:
                     graphic_generator(exceldata, [12, 8], totalcolormap, (4, 6))
                 except Exception as e:
-                    # if debug:
-                    #     mylog(e)
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(e)
                     C.messagebox.showerror(
                         "Error!", "Something went wrong, please try again.",
                     )
@@ -124,8 +124,8 @@ class Present(C.tk.Frame):
                 try:
                     graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
                 except Exception as e:
-                    # if debug:
-                    #     mylog(e)
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(e)
                     C.messagebox.showerror(
                         "Error!", "Something went wrong, please try again.",
                     )
@@ -134,8 +134,8 @@ class Present(C.tk.Frame):
                 try:
                     graphic_generator(exceldata, [6, 4], totalcolormap, (4, 6))
                 except Exception as e:
-                    # if debug:
-                    #     mylog(e)
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(e)
                     C.messagebox.showerror(
                         "Error!", "Something went wrong, please try again.",
                     )
@@ -148,7 +148,7 @@ class Present(C.tk.Frame):
             diagrams
             first check for which data filter has been selected, then
             moves on to plotting.
-            
+
             exceldata: numpy array-type of the values to be plotted
             subplotdims: array of ints containing length and width of the
                             experiment
@@ -235,7 +235,8 @@ class Present(C.tk.Frame):
                         C.messagebox.showwarning(
                             title="Warning", message=warningmessage
                         )
-                        mylog(e)
+                        if C.globals_GC.debug:
+                            C.globals_GC.mylog(e)
                 elif datafilter.get() == 3:  # shade by yield
                     try:
                         # handle wells where one or more pie slices are zero
@@ -276,7 +277,8 @@ class Present(C.tk.Frame):
                         C.messagebox.showwarning(
                             title="Warning", message=warningmessage
                         )
-                        mylog(e)
+                        if C.globals_GC.debug:
+                            C.globals_GC.mylog(e)
                 elif datafilter.get() == 4:  # group cutoffs
                     try:
                         # handle wells where one or more pie slices are zero
@@ -317,7 +319,8 @@ class Present(C.tk.Frame):
                         C.messagebox.showwarning(
                             title="Warning", message=warningmessage
                         )
-                        mylog(e)
+                        if C.globals_GC.debug:
+                            C.globals_GC.mylog(e)
                 else:
                     # handle wells where one or more pie slices are zero
                     temp = totalcolormap.copy()
@@ -352,17 +355,6 @@ class Present(C.tk.Frame):
                         labelpad=10,
                     )
             myfig.show()
-
-        def mylog(e):
-            debugfile = open("debug.txt", "w")
-            debugfile.write("\n")
-            debugfile.write(
-                C.datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " - " + str(e)
-            )
-            debugfile.write("\n")
-            debugfile.write(C.traceback.format_exc())
-            debugfile.write("\n")
-            debugfile.close()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):
             for i in range(0, len(cutoffvalues) - 1):

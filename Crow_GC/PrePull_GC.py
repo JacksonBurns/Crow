@@ -40,6 +40,8 @@ class PrePull(C.tk.Frame):
                             else:
                                 self.datadict[rettime] = 1
                     except Exception as e:
+                        if C.globals_GC.debug:
+                            C.globals_GC.mylog(e)
                         warningmessage = (
                             "No peak data found in file "
                             + str(file)

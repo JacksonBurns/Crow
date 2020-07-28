@@ -89,6 +89,8 @@ class Pull(C.tk.Frame):
                                     i,
                                 ] = float(peak[C.globals_GC.areatarg].text)
                 except Exception as e:
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(e)
                     warningmessage = (
                         "No peak data found in file "
                         + str(file)
@@ -202,6 +204,8 @@ class Pull(C.tk.Frame):
                 if len(self.tol7.get()) > 0:
                     self.toltimes = self.toltimes + [float(self.tol7.get())]
             except Exception as e:
+                if C.globals_GC.debug:
+                    C.globals_GC.mylog(e)
                 C.messagebox.showerror(
                     "Error!", "Invalid retetion time/tolerance time entered.",
                 )

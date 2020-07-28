@@ -1,4 +1,6 @@
 import yaml
+import traceback
+from datetime import datetime
 
 """
 Created on Thu Jan 16 19:32:33 2020
@@ -35,3 +37,18 @@ def init():
     roundres = cfg["pre_pull_rounding_resolution"]
     global welltarg
     welltarg = cfg["xml_wellnum_target"]
+
+
+def mylog(e):
+    """
+    General purpose function for writing errors to an external .txt file
+
+    e: exception raised by one of the three tabs of Crow GC
+    """
+    debugfile = open("debug.txt", "a")
+    debugfile.write("\n")
+    debugfile.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " - " + str(e))
+    debugfile.write("\n")
+    debugfile.write(traceback.format_exc())
+    debugfile.write("\n")
+    debugfile.close()

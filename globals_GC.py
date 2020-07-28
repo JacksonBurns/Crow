@@ -4,8 +4,10 @@ Created on Thu Jan 16 19:32:33 2020
 
 @author: jackson
 """
+
+
 def init():
-    global datafiles    
+    global datafiles
     datafiles = []
     global rawdatapath
     rawdatapath = r"W:\data\XML_EXPORT\\"

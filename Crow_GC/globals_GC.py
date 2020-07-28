@@ -7,6 +7,10 @@ Created on Thu Jan 16 19:32:33 2020
 
 
 def init():
+    """
+    variables which are used by all tabs in the GC window, such as the path to
+    the server of raw data.
+    """
     global datafiles
     datafiles = []
     global rawdatapath

@@ -2,92 +2,93 @@ from Crow_GC import Crow_GC as C
 
 
 class Pull(C.tk.Frame):
+    """
+    Tab of the GC window responsible for pulling data from the entered
+    xml files based on the indicated retention times and variability
+    """
+
     def __init__(self, name):
         C.tk.Frame.__init__(self, width=47, height=450)
         # make place for collected retention times and tolerances to go
+        # before being written
         self.rettimes = []
         self.toltimes = []
 
         # define clear entries callback
         def clearentriescallback():
+            """
+            Upon clicking clear entries button, removes all entered values for
+            retention time and tolerance.
+            """
             self.entryreadorclear("clear")
 
-        # define pull data callback function
         def pulldatacallback():
             # gather the values in the entry boxes
             self.entryreadorclear("read")
             # check for wrong type of data file
             if ".xlsx" in str(C.globals_GC.datafiles):
-                C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE", "Please select raw data files!"
-                )
-            # check for missing tols or rt, error at least one rt/tol pair is missing a member
-            elif len(self.rettimes) != len(self.toltimes):
+                C.messagebox.showerror("Error!", "Please select raw data files.")
+                return
+            # check for missing tols or rt
+            elif (len(self.rettimes) != len(self.toltimes)) or (
+                len(self.rettimes) == 0 or len(self.toltimes) == 0
+            ):
                 C.tk.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "At least one retention time/tolerance pair is missing a member!",
+                    "Error!E", "At least one retention time/tolerance is missing."
                 )
-            # break if no rt's or tols have been entered
-            elif len(self.rettimes) == 0 or len(self.toltimes) == 0:
-                C.tk.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "No retention times/tolerances entered!",
-                )
+                return
             # break if non-chronological
             elif sorted(self.rettimes) != self.rettimes:
                 C.tk.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "Retention times are not in chronological order!",
+                    "Error!", "Retention times are not in chronological order.",
                 )
+                return
             # break if there is overlap in entered values also
             elif self.isthereoverlap():
                 return
             elif len(C.globals_GC.datafiles) == 0:
-                C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE", "No data files selected!"
-                )
-            else:
-                # iterate through each and pull relevant data
-                self.datalist = C.np.array(
-                    C.np.zeros([len(C.globals_GC.datafiles) + 1, len(self.rettimes)])
-                )
-                # iterate through each data test
-                for file in C.globals_GC.datafiles:
-                    try:
-                        # open file
-                        temp = C.ParseXML.ParseXML(file)
-                        # go to where peaks are stored
-                        peaks = temp[4][2]
-                        # iterate through all the peaks
-                        for peak in peaks[1:]:
-                            # check if the peaks are the one we want
-                            for i in range(0, len(self.rettimes)):
-                                if (
-                                    (float(peak[4].text) - self.toltimes[i])
-                                    < self.rettimes[i]
-                                ) & (
-                                    (float(peak[4].text) + self.toltimes[i])
-                                    > self.rettimes[i]
-                                ):
-                                    # assign area to corresponding location in output array
-                                    self.datalist[int(temp[2][7].text) - 1, i] = float(
-                                        peak[5].text
-                                    )
-                    except Exception as e:
-                        warningmessage = (
-                            "No peak data found in file "
-                            + str(file)
-                            + "\n (possible failed injection)"
-                        )
-                        C.messagebox.showwarning(
-                            title="Warning", message=warningmessage
-                        )
-                C.np.savetxt(
-                    C.globals_GC.exportdatapath + self.expname.get() + ".csv",
-                    self.datalist,
-                    delimiter=",",
-                    fmt="%.4f",
-                )
+                C.messagebox.showerror("Error!", "No raw data files selected.")
+                return
+            # after passing all validation, continue to remainder of method.
+            # iterate through each and pull relevant data
+            self.datalist = C.np.array(
+                C.np.zeros([len(C.globals_GC.datafiles) + 1, len(self.rettimes)])
+            )
+            # iterate through each data test
+            for file in C.globals_GC.datafiles:
+                try:
+                    # open file
+                    temp = C.ParseXML.ParseXML(file)
+                    # go to where peaks are stored
+                    peaks = temp[4][2]
+                    # iterate through all the peaks
+                    for peak in peaks[1:]:
+                        # check if the peaks are the one we want
+                        for i in range(0, len(self.rettimes)):
+                            if (
+                                (float(peak[4].text) - self.toltimes[i])
+                                < self.rettimes[i]
+                            ) & (
+                                (float(peak[4].text) + self.toltimes[i])
+                                > self.rettimes[i]
+                            ):
+                                # assign area to corresponding location in output array
+                                self.datalist[int(temp[2][7].text) - 1, i] = float(
+                                    peak[5].text
+                                )
+                except Exception as e:
+                    warningmessage = (
+                        "No peak data found in file "
+                        + str(file)
+                        + "\n (possible failed injection)"
+                    )
+                    C.messagebox.showwarning(title="Warning", message=warningmessage)
+            C.np.savetxt(
+                C.globals_GC.exportdatapath + self.expname.get() + ".csv",
+                self.datalist,
+                delimiter=",",
+                fmt="%.4f",
+            )
 
         # pull data button
         C.tk.Button(self, text="Pull Requested Data", command=pulldatacallback).place(
@@ -190,8 +191,7 @@ class Pull(C.tk.Frame):
                     self.toltimes = self.toltimes + [float(self.tol7.get())]
             except Exception as e:
                 C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "Invalid retetion time/tolerance time entered!",
+                    "Error!", "Invalid retetion time/tolerance time entered.",
                 )
 
     def isthereoverlap(self):
@@ -206,11 +206,11 @@ class Pull(C.tk.Frame):
                 ):
                     # send error with which retention times overlap
                     C.tk.messagebox.showerror(
-                        "Error SCIENCE FICTION REFERENCE",
+                        "Error!",
                         "Retention time/tolerance "
                         + str(i)
                         + " overlaps "
                         + str(i + 1)
-                        + "!",
+                        + ".",
                     )
                     return True

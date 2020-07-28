@@ -2,6 +2,10 @@ from Crow_GC import Crow_GC as C
 
 
 class PrePull(C.tk.Frame):
+    """
+    Tab which contains functionality of 
+    """
+
     def __init__(self, name):
         # set up as tab
         C.tk.Frame.__init__(self, width=460, height=450)
@@ -10,14 +14,16 @@ class PrePull(C.tk.Frame):
 
         # define pre-pull callback function
         def prepullcallback():
+            """
+            When the "Generate Histogram" button is pushed, parse through
+            every data file, bin the results, and plot.
+            """
             # check if data files have been chosen
             if len(C.globals_GC.datafiles) == 0:
-                C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE", "No data files selected!"
-                )
+                C.messagebox.showerror("Error!", "No .xml data files selected.")
             elif ".xlsx" in str(C.globals_GC.datafiles):
                 C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE", "Please select raw data files!"
+                    "Error!", "Please select raw data files, not processed excel data!"
                 )
             else:
                 # iterate through each and pull relevant data

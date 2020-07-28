@@ -2,141 +2,163 @@ from Crow_GC import Crow_GC as C
 
 
 class Present(C.tk.Frame):
+    """
+    Tab of the GC window resposible for taking columns
+    of processed data and generating pie charts of the results,
+    including various filters and color schemes.
+    """
+
     def __init__(self, name):
         C.tk.Frame.__init__(self, width=47, height=450)
 
-        # function for present button push, handles error checking and reading state of buttons
+        # begin defintiion of callbacks, followed by user interface
         def presentdatacallback():
+            """
+            Upon clicking the present data button, validate input and
+            then read state of UI buttons to determine settings
+            """
             # check for wrong type of data selected
             if ".xml" in str(C.globals_GC.datafiles):
                 C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "Please select excel data file (.csv)!",
+                    "Error!", "Please select excel data file (.csv)!",
                 )
+                return
             # please select data
             elif len(C.globals_GC.datafiles) == 0:
                 C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "Please select excel data file (.csv)!",
+                    "Error!", "Please select excel data file (.csv)!",
                 )
+                return
             # please select only one excel file at a time
             elif len(C.globals_GC.datafiles) != 1:
                 C.messagebox.showerror(
-                    "Error SCIENCE FICTION REFERENCE",
-                    "Please select an excel data file (.csv)!",
+                    "Error!", "Please select a single excel data file (.csv)!",
                 )
+                return
             # if passes all tests, present accordingly
-            else:
-                # pull data from user
-                exceldata = C.np.genfromtxt(
-                    C.globals_GC.datafiles[0], dtype=float, delimiter=",", names=True
+            # pull data from user entered file
+            exceldata = C.np.genfromtxt(
+                C.globals_GC.datafiles[0], dtype=float, delimiter=",", names=True
+            )
+            # check for files that are too big
+            if len(exceldata[0]) > 9:
+                C.messagebox.showerror(
+                    "Error!", "Data has too many columns (>10).",
                 )
-                # check for files that are too big
-                if len(exceldata[0]) > 9:
+            # decide on colorscheme from color radio buttons
+            if colorscheme.get() == 1:  # neutral
+                totalcolormap = C.np.array(
+                    [
+                        [1, 1, 1],
+                        [1, 0.1, 0.1],
+                        [1, 0.753, 0],
+                        [0.573, 0.816, 0.314],
+                        [0.5, 0.5, 0.5],
+                        [0, 0, 0.8],
+                        [1, 0.55, 0],
+                        [1, 0.5, 1],
+                        [0.4, 0.8, 1],
+                        [0.2, 0.1, 0.1],
+                    ]
+                )
+            elif colorscheme.get() == 2:  # bright
+                totalcolormap = C.np.array(
+                    [
+                        [1, 1, 1],
+                        [0, 1, 1],
+                        [1, 1, 0],
+                        [0, 1, 0],
+                        [0, 0, 1],
+                        [1, 0, 0],
+                        [1, 0.6, 0],
+                        [1, 0, 1],
+                        [0.5, 0.5, 0.5],
+                        [0, 0.5, 0.6],
+                    ]
+                )
+            elif colorscheme.get() == 3:  # colorblind-friendly
+                totalcolormap = C.np.array(
+                    [
+                        [0.165, 0.219, 0.404],
+                        [0.545, 0.498, 0.278],
+                        [0.612, 0.620, 0.710],
+                        [0.980, 0.949, 0.918],
+                        [1, 0.427, 0.741],
+                    ]
+                )
+            elif colorscheme.get() == 4:  # custom colors
+                totalcolormap = []
+                for i in range(0, len(exceldata[0])):
+                    rgb, _ = C.cc.askcolor(
+                        parent=self, title="Choose color " + str(i + 1)
+                    )
+                    totalcolormap = totalcolormap + [C.np.array(list(rgb)) / 256]
+            else:
+                C.messagebox.showerror(
+                    "Error!", "Please select a color scheme!",
+                )
+                return
+            # call graphic generator appropriately
+            # 96 (8x12)
+            if layout.get() == 1:
+                try:
+                    graphic_generator(exceldata, [8, 12], totalcolormap, (6, 4))
+                except Exception as e:
+                    # if debug:
+                    #     mylog(e)
                     C.messagebox.showerror(
-                        "Error SCIENCE FICTION REFERENCE",
-                        "Data has too many columns (>10)!",
+                        "Error!", "Something went wrong, please try again.",
                     )
-                # decide on colorscheme from color radio buttons
-                if colorscheme.get() == 1:  # neutral
-                    totalcolormap = C.np.array(
-                        [
-                            [1, 1, 1],
-                            [1, 0.1, 0.1],
-                            [1, 0.753, 0],
-                            [0.573, 0.816, 0.314],
-                            [0.5, 0.5, 0.5],
-                            [0, 0, 0.8],
-                            [1, 0.55, 0],
-                            [1, 0.5, 1],
-                            [0.4, 0.8, 1],
-                            [0.2, 0.1, 0.1],
-                        ]
-                    )
-                elif colorscheme.get() == 2:  # bright
-                    totalcolormap = C.np.array(
-                        [
-                            [1, 1, 1],
-                            [0, 1, 1],
-                            [1, 1, 0],
-                            [0, 1, 0],
-                            [0, 0, 1],
-                            [1, 0, 0],
-                            [1, 0.6, 0],
-                            [1, 0, 1],
-                            [0.5, 0.5, 0.5],
-                            [0, 0.5, 0.6],
-                        ]
-                    )
-                elif colorscheme.get() == 3:  # colorblind-friendly
-                    totalcolormap = C.np.array(
-                        [
-                            [0.165, 0.219, 0.404],
-                            [0.545, 0.498, 0.278],
-                            [0.612, 0.620, 0.710],
-                            [0.980, 0.949, 0.918],
-                            [1, 0.427, 0.741],
-                        ]
-                    )
-                elif colorscheme.get() == 4:  # custom colors
-                    totalcolormap = []
-                    for i in range(0, len(exceldata[0])):
-                        rgb, _ = C.cc.askcolor(
-                            parent=self, title="Choose color " + str(i + 1)
-                        )
-                        totalcolormap = totalcolormap + [C.np.array(list(rgb)) / 256]
-                else:
+            # 96 (12x8)
+            elif layout.get() == 2:
+                try:
+                    graphic_generator(exceldata, [12, 8], totalcolormap, (4, 6))
+                except Exception as e:
+                    # if debug:
+                    #     mylog(e)
                     C.messagebox.showerror(
-                        "Error SCIENCE FICTION REFERENCE",
-                        "Please select a color scheme!",
+                        "Error!", "Something went wrong, please try again.",
                     )
-                    return
-                # call graphic generator appropriately
-                # 96 (8x12)
-                if layout.get() == 1:
-                    try:
-                        graphic_generator(exceldata, [8, 12], totalcolormap, (6, 4))
-                    except Exception as e:
-                        mylog(e)
-                        C.messagebox.showerror(
-                            "Error SCIENCE FICTION REFERENCE",
-                            "Something went wrong, please try again!",
-                        )
-                # 96 (12x8)
-                elif layout.get() == 2:
-                    try:
-                        graphic_generator(exceldata, [12, 8], totalcolormap, (4, 6))
-                    except Exception as e:
-                        mylog(e)
-                        C.messagebox.showerror(
-                            "Error SCIENCE FICTION REFERENCE",
-                            "Something went wrong, please try again!",
-                        )
-                # 24 (4x6)
-                elif layout.get() == 3:
-                    try:
-                        graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
-                    except Exception as e:
-                        mylog(e)
-                        C.messagebox.showerror(
-                            "Error SCIENCE FICTION REFERENCE",
-                            "Something went wrong, please try again!",
-                        )
-                # 24 (6x4)
-                elif layout.get() == 4:
-                    try:
-                        graphic_generator(exceldata, [6, 4], totalcolormap, (4, 6))
-                    except Exception as e:
-                        mylog(e)
-                        C.messagebox.showerror(
-                            "Error SCIENCE FICTION REFERENCE",
-                            "Something went wrong, please try again!",
-                        )
-                else:
-                    C.messagebox.showerror("ERROR SCINCE", "Please select a layout!")
+            # 24 (4x6)
+            elif layout.get() == 3:
+                try:
+                    graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
+                except Exception as e:
+                    # if debug:
+                    #     mylog(e)
+                    C.messagebox.showerror(
+                        "Error!", "Something went wrong, please try again.",
+                    )
+            # 24 (6x4)
+            elif layout.get() == 4:
+                try:
+                    graphic_generator(exceldata, [6, 4], totalcolormap, (4, 6))
+                except Exception as e:
+                    # if debug:
+                    #     mylog(e)
+                    C.messagebox.showerror(
+                        "Error!", "Something went wrong, please try again.",
+                    )
+            else:
+                C.messagebox.showerror("Error!", "Please select a layout.")
 
         def graphic_generator(exceldata, subplotdims, totalcolormap, dims):
-            # handle filters
+            """
+            general purpose, abstract function for the generation of hte
+            diagrams
+            first check for which data filter has been selected, then
+            moves on to plotting.
+            
+            exceldata: numpy array-type of the values to be plotted
+            subplotdims: array of ints containing length and width of the
+                            experiment
+            totalcolormap: array of floats containing colors to be used in the
+                            diagram
+            dims: tuple, immutable version of the dimensions of the subplot
+                            in the order required by matplotlib
+            """
+            # Check for which filter the user has requested, and call the
+            # appropriate pop-up window
             if datafilter.get() == 2:  # exclude threshold
                 self.excludePopup = excludePopup(self.master)
                 self.master.wait_window(self.excludePopup.top)
@@ -169,7 +191,7 @@ class Present(C.tk.Frame):
                 subplotdims[0], subplotdims[1], figsize=dims
             )
             for wellnum in range(0, subplotdims[0] * subplotdims[1]):
-                # go to correct position
+                # go to position
                 row = wellnum // subplotdims[1]
                 col = wellnum % subplotdims[1]
                 # well data
@@ -353,6 +375,7 @@ class Present(C.tk.Frame):
                     colormap[cutoffcol] = cutoffcolors[i]
                     return colormap
 
+        # Finish set up of user interface
         # make present data button
         C.tk.Button(self, text="Present", command=presentdatacallback).place(
             relx=0.4, rely=0.9
@@ -417,6 +440,14 @@ class Present(C.tk.Frame):
 
 
 class excludePopup(object):
+    """
+    Pop up which will ask the user which column they want to check
+    and the value floor, for which wells below will not be displayed.
+
+    Ex. Creating a selectivity chart, but not displaying wells where the
+    yield is vanishingly small.
+    """
+
     def __init__(self, master):
         top = self.top = C.tk.Toplevel(master)
         C.tk.Label(top, text="Column to filter by:").place(x=0, y=0)
@@ -434,6 +465,10 @@ class excludePopup(object):
 
 
 class shadebyyieldPopup(object):
+    """
+    Asks for which column to base the shading preference
+    """
+
     def __init__(self, master):
         top = self.top = C.tk.Toplevel(master)
         C.tk.Label(top, text="Column to base shading on:").place(x=0, y=0)
@@ -447,6 +482,11 @@ class shadebyyieldPopup(object):
 
 
 class numberofcutoffsPopup(object):
+    """
+    Asks user for both the column to base the groupign on and
+    the number of groups to generate
+    """
+
     def __init__(self, master):
         top = self.top = C.tk.Toplevel(master)
         C.tk.Label(top, text="Number of groups:").place(x=0, y=0)
@@ -464,6 +504,11 @@ class numberofcutoffsPopup(object):
 
 
 class cutoffPopup(object):
+    """
+    enable the user to make custom cutoff colors, useful for grouping wells
+    by selectivity or yield
+    """
+
     def __init__(self, master):
         top = self.top = C.tk.Toplevel(master)
         C.tk.Label(top, text="For wells below this value:").place(x=0, y=0)

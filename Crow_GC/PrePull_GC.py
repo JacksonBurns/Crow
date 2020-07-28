@@ -3,7 +3,8 @@ from Crow_GC import Crow_GC as C
 
 class PrePull(C.tk.Frame):
     """
-    Tab which contains functionality of 
+    Tab which contains functionality of pre-pulling, which involves
+    parsing all entered data files and creating a histogram
     """
 
     def __init__(self, name):

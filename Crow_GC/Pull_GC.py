@@ -1,4 +1,4 @@
-import Crow_GC as C
+from Crow_GC import Crow_GC as C
 
 
 class Pull(C.tk.Frame):
@@ -17,7 +17,7 @@ class Pull(C.tk.Frame):
             # gather the values in the entry boxes
             self.entryreadorclear("read")
             # check for wrong type of data file
-            if ".xlsx" in str(C.globals.datafiles):
+            if ".xlsx" in str(C.globals_GC.datafiles):
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE", "Please select raw data files!"
                 )
@@ -42,17 +42,17 @@ class Pull(C.tk.Frame):
             # break if there is overlap in entered values also
             elif self.isthereoverlap():
                 return
-            elif len(C.globals.datafiles) == 0:
+            elif len(C.globals_GC.datafiles) == 0:
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE", "No data files selected!"
                 )
             else:
                 # iterate through each and pull relevant data
                 self.datalist = C.np.array(
-                    C.np.zeros([len(C.globals.datafiles) + 1, len(self.rettimes)])
+                    C.np.zeros([len(C.globals_GC.datafiles) + 1, len(self.rettimes)])
                 )
                 # iterate through each data test
-                for file in C.globals.datafiles:
+                for file in C.globals_GC.datafiles:
                     try:
                         # open file
                         temp = C.ParseXML.ParseXML(file)
@@ -83,7 +83,7 @@ class Pull(C.tk.Frame):
                             title="Warning", message=warningmessage
                         )
                 C.np.savetxt(
-                    C.globals.exportdatapath + self.expname.get() + ".csv",
+                    C.globals_GC.exportdatapath + self.expname.get() + ".csv",
                     self.datalist,
                     delimiter=",",
                     fmt="%.4f",

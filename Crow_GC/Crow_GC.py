@@ -10,42 +10,45 @@ from datetime import datetime
 import tkinter.colorchooser as cc
 
 # retrieve my functions written elsewhere
-import ParseXML as ParseXML
-import RequestFiles as RequestFiles
-from PrePull_GC import PrePull
-from Pull_GC import Pull
-from Present_GC import Present
+from helper_functions import ParseXML, RequestFiles
+
+from Crow_GC import PrePull_GC as PrePull
+from Crow_GC import Pull_GC as Pull
+from Crow_GC import Present_GC as Present
+
+# from PrePull_GC import PrePull
+# from Pull_GC import Pull
+# from Present_GC import Present
 
 # retreive global datafiles list variable
-import globals_GC as globals
+from Crow_GC import globals_GC
 
-globals.init()
+globals_GC.init()
 
 
 # define GUI
 class Crow_GC(tk.Frame):
     def __init__(self, master):
-        # idk what this does really
         self.master = master
         master.title("Crow - GC")
         master.geometry("800x500")
         # set up 3 tabs
         tk.Frame.__init__(self)
         self.notebook = ttk.Notebook()
-        self.notebook.add(PrePull(self.notebook), text="Pre-Pull")
-        self.notebook.add(Pull(self.notebook), text="Pull")
-        self.notebook.add(Present(self.notebook), text="Present")
+        self.notebook.add(PrePull.PrePull(self.notebook), text="Pre-Pull")
+        self.notebook.add(Pull.Pull(self.notebook), text="Pull")
+        self.notebook.add(Present.Present(self.notebook), text="Present")
         self.notebook.place(x=0, y=0)
         # add data selector
         self.FileDisplay = tk.StringVar()
         self.FileDisplay = ""
         # define select data callback function
         def selectrawdatacallback():
-            globals.datafiles = RequestFiles.RequestFiles(
-                "Raw Data", "*.xml", globals.rawdatapath
+            globals_GC.datafiles = RequestFiles.RequestFiles(
+                "Raw Data", "*.xml", globals_GC.rawdatapath
             )
             self.FileDisplay = (
-                str(globals.datafiles)
+                str(globals_GC.datafiles)
                 .replace(",", "\n")
                 .replace("(", "")
                 .replace(")", "")
@@ -54,11 +57,11 @@ class Crow_GC(tk.Frame):
 
         # define excel data callback
         def selectexceldatacallback():
-            globals.datafiles = RequestFiles.RequestFiles(
-                "Processed Data", "*.csv", globals.exportdatapath
+            globals_GC.datafiles = RequestFiles.RequestFiles(
+                "Processed Data", "*.csv", globals_GC.exportdatapath
             )
             self.FileDisplay = (
-                str(globals.datafiles)
+                str(globals_GC.datafiles)
                 .replace(",", "\n")
                 .replace("(", "")
                 .replace(")", "")
@@ -70,7 +73,7 @@ class Crow_GC(tk.Frame):
             temp = tk.Text(master, height=10, width=35)
             temp.insert(
                 tk.END,
-                str(len(globals.datafiles)) + " TOTAL FILES\n" + self.FileDisplay,
+                str(len(globals_GC.datafiles)) + " TOTAL FILES\n" + self.FileDisplay,
             )
             temp.place(x=470, y=65)
             temp.config(state="disabled")
@@ -89,11 +92,11 @@ class Crow_GC(tk.Frame):
 
         # Retrieve files from server by experiment name
         def searchservercallback():
-            globals.datafiles = glob.glob(
-                globals.rawdatapath + "*" + self.expname.get() + "*"
+            globals_GC.datafiles = glob.glob(
+                globals_GC.rawdatapath + "*" + self.expname.get() + "*"
             )
             self.FileDisplay = (
-                str(globals.datafiles)
+                str(globals_GC.datafiles)
                 .replace(",", "\n")
                 .replace("[", "")
                 .replace("]", "")

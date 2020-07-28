@@ -1,4 +1,4 @@
-import Crow_GC as C
+from Crow_GC import Crow_GC as C
 
 
 class Present(C.tk.Frame):
@@ -8,19 +8,19 @@ class Present(C.tk.Frame):
         # function for present button push, handles error checking and reading state of buttons
         def presentdatacallback():
             # check for wrong type of data selected
-            if ".xml" in str(C.globals.datafiles):
+            if ".xml" in str(C.globals_GC.datafiles):
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE",
                     "Please select excel data file (.csv)!",
                 )
             # please select data
-            elif len(C.globals.datafiles) == 0:
+            elif len(C.globals_GC.datafiles) == 0:
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE",
                     "Please select excel data file (.csv)!",
                 )
             # please select only one excel file at a time
-            elif len(C.globals.datafiles) != 1:
+            elif len(C.globals_GC.datafiles) != 1:
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE",
                     "Please select an excel data file (.csv)!",
@@ -29,7 +29,7 @@ class Present(C.tk.Frame):
             else:
                 # pull data from user
                 exceldata = C.np.genfromtxt(
-                    C.globals.datafiles[0], dtype=float, delimiter=",", names=True
+                    C.globals_GC.datafiles[0], dtype=float, delimiter=",", names=True
                 )
                 # check for files that are too big
                 if len(exceldata[0]) > 9:
@@ -332,7 +332,7 @@ class Present(C.tk.Frame):
             myfig.show()
 
         def mylog(e):
-            debugfile = open("debug.txt", "a")
+            debugfile = open("debug.txt", "w")
             debugfile.write("\n")
             debugfile.write(
                 C.datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " - " + str(e)

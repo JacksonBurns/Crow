@@ -1,4 +1,4 @@
-import Crow_GC as C
+from Crow_GC import Crow_GC as C
 
 
 class PrePull(C.tk.Frame):
@@ -11,18 +11,18 @@ class PrePull(C.tk.Frame):
         # define pre-pull callback function
         def prepullcallback():
             # check if data files have been chosen
-            if len(C.globals.datafiles) == 0:
+            if len(C.globals_GC.datafiles) == 0:
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE", "No data files selected!"
                 )
-            elif ".xlsx" in str(C.globals.datafiles):
+            elif ".xlsx" in str(C.globals_GC.datafiles):
                 C.messagebox.showerror(
                     "Error SCIENCE FICTION REFERENCE", "Please select raw data files!"
                 )
             else:
                 # iterate through each and pull relevant data
                 self.datadict = {}
-                for file in C.globals.datafiles:
+                for file in C.globals_GC.datafiles:
                     try:
                         temp = C.ParseXML.ParseXML(file)
                         temp = temp[4][2]

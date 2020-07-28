@@ -1,4 +1,4 @@
-"""#!/usr/bin/python3.6
+"""#!/usr/bin/env python3
 # -*- coding: utf-8 -*-"""
 """
 Created on Sat Jan 18 23:45:07 2020
@@ -8,7 +8,9 @@ Created on Sat Jan 18 23:45:07 2020
 # parent gui for all Crow family apps
 from PIL import Image, ImageTk
 import tkinter as tk
-import Crow_GC
+from Crow_GC import Crow_GC
+
+# Crow_GC.Crow_GC()
 
 
 def startrek3():
@@ -20,6 +22,7 @@ def startrek3():
         startrek2(spock)
         root = tk.Tk()
         Crow_GC.Crow_GC(root)
+        # Crow_GC(root)
         root.mainloop()
         startrek3()
 

@@ -32,9 +32,9 @@ class PrePull(C.tk.Frame):
                 for file in C.globals_GC.datafiles:
                     try:
                         temp = C.ParseXML.ParseXML(file)
-                        temp = temp[4][2]
+                        temp = temp[C.globals_GC.peaktarg[0]][C.globals_GC.peaktarg[1]]
                         for peak in temp[1:]:
-                            rettime = round(float(peak[4].text), 2)
+                            rettime = round(float(peak[C.globals_GC.rettarg].text), 2)
                             if rettime in self.datadict:
                                 self.datadict[rettime] += 1
                             else:
@@ -52,7 +52,7 @@ class PrePull(C.tk.Frame):
                 C.plot.bar(
                     list(self.datadict.keys()),
                     list(self.datadict.values()),
-                    width=0.005,
+                    width=C.globals_GC.roundres,
                 )
                 C.plot.ylabel("Number of Wells")
                 C.plot.xlabel("Retention Time (minutes)")

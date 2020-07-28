@@ -60,22 +60,34 @@ class Pull(C.tk.Frame):
                     # open file
                     temp = C.ParseXML.ParseXML(file)
                     # go to where peaks are stored
-                    peaks = temp[4][2]
+                    peaks = temp[C.globals_GC.peaktarg[0]][C.globals_GC.peaktarg[1]]
                     # iterate through all the peaks
                     for peak in peaks[1:]:
                         # check if the peaks are the one we want
                         for i in range(0, len(self.rettimes)):
-                            if (
-                                (float(peak[4].text) - self.toltimes[i])
+                            if (  # retention time - tolerance < limit
+                                (
+                                    float(peak[C.globals_GC.rettarg].text)
+                                    - self.toltimes[i]
+                                )
                                 < self.rettimes[i]
-                            ) & (
-                                (float(peak[4].text) + self.toltimes[i])
+                            ) & (  # retention time + tolerance > limit
+                                (
+                                    float(peak[C.globals_GC.rettarg].text)
+                                    + self.toltimes[i]
+                                )
                                 > self.rettimes[i]
                             ):
                                 # assign area to corresponding location in output array
-                                self.datalist[int(temp[2][7].text) - 1, i] = float(
-                                    peak[5].text
-                                )
+                                self.datalist[
+                                    int(
+                                        temp[C.globals_GC.welltarg[0]][
+                                            C.globals_GC.welltarg[1]
+                                        ].text
+                                    )
+                                    - 1,
+                                    i,
+                                ] = float(peak[C.globals_GC.areatarg].text)
                 except Exception as e:
                     warningmessage = (
                         "No peak data found in file "

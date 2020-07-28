@@ -1,0 +1,9 @@
+GC_config:
+    server_data_location: W:\data\XML_EXPORT\
+    debug: True
+    export_data_path: C:\Users\jwb1j\OneDrive\Desktop\hte output data\
+    pre_pull_rounding_resolution: 0.005
+    xml_peaks_target: [4, 2] # remember that python is a zero-index language
+    xml_retention_time_target: 4
+    xml_area_target: 5
+    xml_wellnum_target: [2, 7]

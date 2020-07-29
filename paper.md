@@ -3,66 +3,70 @@ title: 'Crow: A Python GUI for Optimizing High Throughput Experimentation'
 tags:
   - Python
   - tkinter
-  - High Througput Experimentation
+  - High Throughput Experimentation
   - Gas Chromatography
   - Cheminformatics
 authors:
   - name: Jackson W. Burns
     affiliation: 1 # (Multiple affiliations must be quoted)
+  - name: Katerina M. Korch
+    affiliation: 1
+  - name: Donald A. Watson
+    affiliation: "1, 2"
 affiliations:
  - name: University of Delaware, Donald A. Watson Lab
-   index: 1
+    index: 1
+- name: University of Delaware  High Throughput Experimentation Center
+    index: 2
 date: 29 July 2020
 bibliography: paper.bib
 
 ---
 
+# Statement of Need
+
+The advent of High Throughput Experimentation (HTE) techniques has enabled
+scientists of all disciplines to drastically increase the pace of discovery and
+graduate from resource-intense, Edisonian science. In particular, the pairing of HTE
+with gas chromatography has been of special interest [@Shevlin:2018], as it enables
+the simultaneous execution of dozens or even hundreds of experiments. The implementation 
+of such groundbreaking technologies in the academic space, however, has been hampered
+by the lack of automation in the retrieval, processing, and interpretation of data. 
+Commercial solutions are prohibitively expensive, closed-source, and often require
+additional of HTE equipment, meaning existing technologies cannot be carried forward.
+
 # Summary
 
-The forces on stars, galaxies, and dark matter under external gravitational
-fields lead to the dynamical evolution of structures in the universe. The orbits
-of these bodies are therefore key to understanding the formation, history, and
-future state of galaxies. The field of "galactic dynamics," which aims to model
-the gravitating components of galaxies to study their structure and evolution,
-is now well-established, commonly taught, and frequently used in astronomy.
-Aside from toy problems and demonstrations, the majority of problems require
-efficient numerical tools, many of which require the same base code (e.g., for
-performing numerical orbit integration).
+'Crow' seeks to remedy this problem by making HTE practical in an academic setting.
+The package is platform-agnostic and highly customizable, allowing users to modify
+key application parameters through a simple *config.yaml* file. Data is retrieved
+via the *.xml* format, in which nearly all lab equipment can export data. The core functionality
+of 'Crow' is accessed via a simple multi-tab graphical user interface, enabling walk-up
+use for non-coding users post-configuration. Commonly accessed internal functions are separate
+so they may be compiled into bytecode via CPython to decrease execution time after initial
+compilation.
 
-# Mathematics
+In its current GC implementation, 'Crow' has three tabs which access its main functions: 
+**Pre-Pull**, **Pull**, and **Present**. **Pre-Pull** identifies all peaks present in a 
+user-selected data set and generates a histogram of elution times. This is intended to help
+the user decide on a retention time and small tolerance window for each eluate when retrieved
+from the instrument data. **Pull** then asks users to specify a set of retention times
+and tolerances for expected eluates, before rapidly parsing all the data and retrieving
+only some given value for peaks which the user requested, such as area. The resulting data
+is output to the universal *.csv* for easy manipulation in the users software of choice.
+**Present** ingests *.csv* files and generates graphics resembling a multi-well plate of
+pie charts. Data can then be manipulated in a variety of ways to represent multivariate data
+such as in \autoref{fig:Example **Present** output}. All plots and graphics are created with
+'matplotlib' [@Caswell:2020] which enables exporting in multiple common image formats.
 
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
+![Example 96 well plate used for ligand screening in a Heck Reaction, here using the included 
+deuteranopia-friendly color palatte.\label{fig:Example **Present** output}](example_present_output.png)
 
-Double dollars make self-standing equations:
-
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
-
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
-
-# Citations
-
-Citations to entri
-
-# Figures
-
-Figures can be included like this:
-
-
-Fenced code blocks are rendered with syntax highlighting:
-```python
-for n in range(10):
-    yield f(n)
-```	
+'Crow' has been implemented in the following publication and is used in the University of Delaware
+High Throughput Experimentation Center [@Kelly:2019]
 
 # Acknowledgements
 
-We acknowledge...
+We acknowledge funding from the University of Delaware Undergraduate Research Program Stakem Grant.
 
 # References

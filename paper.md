@@ -14,9 +14,9 @@ authors:
   - name: Donald A. Watson
     affiliation: "1, 2"
 affiliations:
- - name: University of Delaware, Donald A. Watson Lab
+  - name: University of Delaware, Donald A. Watson Lab
     index: 1
- - name: University of Delaware  High Throughput Experimentation Center
+  - name: University of Delaware  High Throughput Experimentation Center
     index: 2
 date: 29 July 2020
 bibliography: paper.bib

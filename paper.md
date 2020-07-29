@@ -1,5 +1,5 @@
 ---
-title: 'Crow: A Python GUI for Optimizing High Throughput Experimentation'
+title: 'Crow: Python GUI for Optimizing High Throughput Experimentation Workflow'
 tags:
   - Python
   - tkinter
@@ -28,7 +28,7 @@ bibliography: paper.bib
 The advent of High Throughput Experimentation (HTE) techniques has enabled
 scientists of all disciplines to drastically increase the pace of discovery and
 graduate from resource-intense, Edisonian science. In particular, the pairing of HTE
-with gas chromatography has been of special interest [@Shevlin:2018], as it enables
+with gas chromatography has been of special interest [@doi:10.1021/acsmedchemlett.7b00165:2018], as it enables
 the simultaneous execution of dozens or even hundreds of experiments. The implementation 
 of such groundbreaking technologies in the academic space, however, has been hampered
 by the lack of automation in the retrieval, processing, and interpretation of data. 
@@ -57,13 +57,13 @@ is output to the universal *.csv* for easy manipulation in the users software of
 **Present** ingests *.csv* files and generates graphics resembling a multi-well plate of
 pie charts. Data can then be manipulated in a variety of ways to represent multivariate data
 such as in \autoref{fig:Example **Present** output}. All plots and graphics are created with
-'matplotlib' [@Caswell:2020] which enables exporting in multiple common image formats.
+'matplotlib' [@thomas_a_caswell_2020_3633844:2020] which enables exporting in multiple common image formats.
 
 ![Example 96 well plate used for ligand screening in a Heck Reaction, here using the included 
 deuteranopia-friendly color palette.\label{fig:Example **Present** output}](example_present_output.png)
 
 'Crow' has been implemented in the following publication and is used in the University of Delaware
-High Throughput Experimentation Center.
+High Throughput Experimentation Center [@University_of_Delaware_High_Throughput_Experimentation_Center:2019].
 
 # Acknowledgements
 

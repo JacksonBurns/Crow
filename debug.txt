@@ -1,0 +1,136 @@
+
+28/07/2020 18:12:11 - setting an array element with a sequence.
+TypeError: float() argument must be a string or a number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 125, in pulldatacallback
+    elif self.pickingmethod.get() == 3:  # keep all areas
+ValueError: setting an array element with a sequence.
+
+
+28/07/2020 18:16:08 - setting an array element with a sequence.
+TypeError: float() argument must be a string or a number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 125, in pulldatacallback
+    elif self.pickingmethod.get() == 3:  # keep all areas
+ValueError: setting an array element with a sequence.
+
+
+28/07/2020 19:03:48 - setting an array element with a sequence.
+TypeError: float() argument must be a string or a number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 135, in pulldatacallback
+    self.datalist[
+ValueError: setting an array element with a sequence.
+
+
+28/07/2020 19:03:59 - setting an array element with a sequence.
+TypeError: float() argument must be a string or a number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 135, in pulldatacallback
+    self.datalist[
+ValueError: setting an array element with a sequence.
+
+
+28/07/2020 19:11:04 - setting an array element with a sequence.
+TypeError: float() argument must be a string or a number, not 'list'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 135, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1,i] = keep
+ValueError: setting an array element with a sequence.
+
+
+28/07/2020 19:27:02 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 19:45:32 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 19:50:46 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 19:56:29 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 19:58:19 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 20:01:16 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 20:04:43 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 20:10:11 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 121, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 124, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+
+
+28/07/2020 20:10:22 - list index out of range
+Traceback (most recent call last):
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 121, in pulldatacallback
+    min(
+  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 124, in <lambda>
+    possrettimes[i] - self.rettimes[i]
+IndexError: list index out of range
+

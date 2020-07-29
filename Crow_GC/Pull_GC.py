@@ -51,8 +51,8 @@ class Pull(C.tk.Frame):
                 return
             # after passing all validation, continue to remainder of method.
             # iterate through each and pull relevant data
-            self.datalist = C.np.array(
-                C.np.zeros([len(C.globals_GC.datafiles) + 1, len(self.rettimes)])
+            self.datalist = C.np.empty(  # empty array the size of len(datafile) x number of products
+                [len(C.globals_GC.datafiles), len(self.rettimes)], dtype=object
             )
             # iterate through each data test
             for file in C.globals_GC.datafiles:
@@ -61,6 +61,9 @@ class Pull(C.tk.Frame):
                     temp = C.ParseXML.ParseXML(file)
                     # go to where peaks are stored
                     peaks = temp[C.globals_GC.peaktarg[0]][C.globals_GC.peaktarg[1]]
+                    # setup a pair of lists to store information for
+                    # peaks which fall within the window
+                    peaksinwindow = []
                     # iterate through all the peaks
                     for peak in peaks[1:]:
                         # check if the peaks are the one we want
@@ -78,16 +81,44 @@ class Pull(C.tk.Frame):
                                 )
                                 > self.rettimes[i]
                             ):
-                                # assign area to corresponding location in output array
-                                self.datalist[
-                                    int(
-                                        temp[C.globals_GC.welltarg[0]][
-                                            C.globals_GC.welltarg[1]
-                                        ].text
+                                # every time a valid peak is found, append its
+                                # retention time and area to this list
+                                peaksinwindow.append(
+                                    tuple(
+                                        [
+                                            float(peak[C.globals_GC.rettarg].text),
+                                            float(peak[C.globals_GC.areatarg].text),
+                                            i,
+                                        ]
                                     )
-                                    - 1,
-                                    i,
-                                ] = float(peak[C.globals_GC.areatarg].text)
+                                )
+                    # assign area(s) to corresponding location in output array
+                    # depending on selected peak picking method
+                    for i in range(
+                        0, len(self.rettimes)
+                    ):  # go through in order of retention times
+                        # pull out identified peaks for each retention time
+                        poss = []
+                        for suspect in peaksinwindow:
+                            if suspect[2] == i:
+                                poss.append(suspect[0:2])
+                        if len(poss) == 1:  # only one possible peak was found
+                            keep = poss[0][1]
+                        elif (
+                            self.pickingmethod.get() == 1
+                        ):  # pick peak closest to the center of the window
+                            possrettimes = [j[0] for j in poss]
+                            possareas = [j[1] for j in poss]
+                            keep = possareas[possrettimes.index(min(possrettimes, key=lambda x: abs(x-self.rettimes[i])))]
+                        elif (
+                            self.pickingmethod.get() == 2
+                        ):  # keep max, just pick max area
+                            keep = max([j[1] for j in poss])
+                        elif self.pickingmethod.get() == 3:  # keep all areas
+                            keep = [j[1] for j in poss]
+                        else:
+                            keep = "Not found"
+                        self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
                 except Exception as e:
                     if C.globals_GC.debug:
                         C.globals_GC.mylog(e)
@@ -97,17 +128,34 @@ class Pull(C.tk.Frame):
                         + "\n (possible failed injection)"
                     )
                     C.messagebox.showwarning(title="Warning", message=warningmessage)
-            C.np.savetxt(
-                C.globals_GC.exportdatapath + self.expname.get() + ".csv",
-                self.datalist,
-                delimiter=",",
-                fmt="%.4f",
-            )
+            with open(C.globals_GC.exportdatapath + self.expname.get() + ".csv", "w") as file:
+                for row in self.datalist:
+                    for entry in row:
+                        file.write(entry+"\t")
+                    file.write("\n")
+            msg = "Data successfully written to " + C.globals_GC.exportdatapath + self.expname.get() + ".csv"
+            C.messagebox.showinfo(title="Data Written", message=msg)
 
         # pull data button
         C.tk.Button(self, text="Pull Requested Data", command=pulldatacallback).place(
-            x=145, y=305
+            x=145, y=415
         )
+        # set up button for picking method
+        self.pickingmethod = C.tk.IntVar()
+        methods = [("Keep Centermost", 1), ("Keep Maximum", 2), ("Keep All", 3)]
+        C.tk.Label(self, text="Peak picking method:").place(x=150, y=305)
+        yiterator = 325
+        for i in range(len(methods)):
+            C.tk.Radiobutton(
+                self,
+                text=methods[i][0],
+                padx=10,
+                variable=self.pickingmethod,
+                value=methods[i][1],
+            ).place(x=150, y=yiterator)
+            yiterator += 30
+        # set max as default selection
+        self.pickingmethod.set(2)
         # clear entries button
         C.tk.Button(self, text="Clear Entries", command=clearentriescallback).place(
             x=167, y=245

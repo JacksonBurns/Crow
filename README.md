@@ -20,3 +20,5 @@ To configure Crow to work for your setup, change the values in __config.yaml__ t
   
 ## Support
 If you need help with setting up Crow, finding out how to retrieve data from your HTE instrument, or you find this program at all helpful, send me a message here: jburnsky@udel.edu with the subject line "Crow" and your name.
+
+To contribute to project, report or a bug, or request a new feature, open a pull request using one of the provided templates.

@@ -60,7 +60,7 @@ such as in \autoref{fig:Example **Present** output}. All plots and graphics are 
 'matplotlib' [@Caswell:2020] which enables exporting in multiple common image formats.
 
 ![Example 96 well plate used for ligand screening in a Heck Reaction, here using the included 
-deuteranopia-friendly color palette.\label{fig:Example **Present** output}](example_present_output.png)
+deuteranopia-friendly color palette.\label{fig:Example **Present** output}](other/example_present_output.png)
 
 'Crow' has been implemented in the following publication and is used in the University of Delaware
 High Throughput Experimentation Center [@udel_HTE:2019].

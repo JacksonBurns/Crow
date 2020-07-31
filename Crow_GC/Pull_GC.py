@@ -52,7 +52,7 @@ class Pull(C.tk.Frame):
             # after passing all validation, continue to remainder of method.
             # iterate through each and pull relevant data
             self.datalist = C.np.empty(  # empty array the size of len(datafile) x number of products
-                [len(C.globals_GC.datafiles), len(self.rettimes)], dtype=object
+                [len(C.globals_GC.datafiles)-1, len(self.rettimes)], dtype=object
             )
             # iterate through each data test
             for file in C.globals_GC.datafiles:
@@ -100,23 +100,34 @@ class Pull(C.tk.Frame):
                         for suspect in peaksinwindow:
                             if suspect[2] == i:
                                 poss.append(suspect[0:2])
-                        if len(poss) == 0: # no peaks were found in the region
-                            # prevents errors in min() and max() when called on an empty list
+                        if len(poss) == 0:
                             keep = "Not found"
                         elif len(poss) == 1:  # only one possible peak was found
-                            keep = poss[0][1]
+                            if self.retinclude.get():
+                                keep = poss[0]
+                            else:
+                                keep = poss[0][1]
                         elif (
                             self.pickingmethod.get() == 1
                         ):  # pick peak closest to the center of the window
                             possrettimes = [j[0] for j in poss]
                             possareas = [j[1] for j in poss]
-                            keep = possareas[possrettimes.index(min(possrettimes, key=lambda x: abs(x-self.rettimes[i])))]
+                            if self.retinclude.get():
+                                keep = poss[possrettimes.index(min(possrettimes, key=lambda x: abs(x-self.rettimes[i])))]
+                            else:
+                                keep = possareas[possrettimes.index(min(possrettimes, key=lambda x: abs(x-self.rettimes[i])))]
                         elif (
                             self.pickingmethod.get() == 2
                         ):  # keep max, just pick max area
-                            keep = max([j[1] for j in poss])
+                            if self.retinclude.get():
+                                keep = max(poss, key=lambda x: x[1])
+                            else:
+                                keep = max([j[1] for j in poss])
                         elif self.pickingmethod.get() == 3:  # keep all areas
-                            keep = [j[1] for j in poss]
+                            if self.retinclude.get():
+                                keep = poss
+                            else:
+                                keep = [j[1] for j in poss]
                         else:
                             keep = "Error"
                         self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
@@ -137,6 +148,11 @@ class Pull(C.tk.Frame):
                     )
                     C.messagebox.showwarning(title="Warning", message=warningmessage)
             with open(C.globals_GC.exportdatapath + self.expname.get() + ".csv", "w") as file:
+                # write header
+                for i in range(len(self.rettimes)):
+                    file.write("eluate "+str(i+1)+"\t")
+                file.write("\n")
+                # write all lines to a file in a tab separated value format
                 for row in self.datalist:
                     for entry in row:
                         file.write(entry+"\t")
@@ -164,6 +180,17 @@ class Pull(C.tk.Frame):
             yiterator += 30
         # set max as default selection
         self.pickingmethod.set(2)
+        # set up chechbox for whether or not to include retention times
+        self.retinclude = C.tk.IntVar()
+        C.tk.Checkbutton(
+            self,
+            text='Include retention times?',
+            variable=self.retinclude,
+            onvalue=1,
+            offvalue=0).place(
+                x=280,
+                y=415)
+
         # clear entries button
         C.tk.Button(self, text="Clear Entries", command=clearentriescallback).place(
             x=167, y=245

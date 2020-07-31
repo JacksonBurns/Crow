@@ -1,0 +1,22 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: osx-64
+@EXPLICIT
+https://repo.anaconda.com/pkgs/main/osx-64/ca-certificates-2020.6.24-0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/libcxx-10.0.0-1.conda
+https://repo.anaconda.com/pkgs/main/osx-64/xz-5.2.5-h1de35cc_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/yaml-0.2.5-haf1e3a3_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/zlib-1.2.11-h1de35cc_3.conda
+https://repo.anaconda.com/pkgs/main/osx-64/libffi-3.3-hb1e8313_2.conda
+https://repo.anaconda.com/pkgs/main/osx-64/ncurses-6.2-h0a44026_1.conda
+https://repo.anaconda.com/pkgs/main/osx-64/openssl-1.1.1g-h1de35cc_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/tk-8.6.10-hb0a8c7a_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/libedit-3.1.20191231-h1de35cc_1.conda
+https://repo.anaconda.com/pkgs/main/osx-64/readline-8.0-h1de35cc_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/sqlite-3.32.3-hffcf06c_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/python-3.7.7-hf48f09d_4.conda
+https://repo.anaconda.com/pkgs/main/osx-64/certifi-2020.6.20-py37_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/pyyaml-5.3.1-py37haf1e3a3_1.conda
+https://repo.anaconda.com/pkgs/main/osx-64/setuptools-49.2.0-py37_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/wheel-0.34.2-py37_0.conda
+https://repo.anaconda.com/pkgs/main/osx-64/pip-20.1.1-py37_1.conda

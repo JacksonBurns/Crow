@@ -5,3 +5,4 @@
 *.json
 # MacOS Specific
 .DS_Store
+*.csv

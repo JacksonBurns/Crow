@@ -1,136 +1,84 @@
 
-28/07/2020 18:12:11 - setting an array element with a sequence.
-TypeError: float() argument must be a string or a number, not 'list'
-
-The above exception was the direct cause of the following exception:
-
+31/07/2020 11:40:30 - index 93 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 125, in pulldatacallback
-    elif self.pickingmethod.get() == 3:  # keep all areas
-ValueError: setting an array element with a sequence.
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 93 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 18:16:08 - setting an array element with a sequence.
-TypeError: float() argument must be a string or a number, not 'list'
-
-The above exception was the direct cause of the following exception:
-
+31/07/2020 11:40:33 - index 94 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 125, in pulldatacallback
-    elif self.pickingmethod.get() == 3:  # keep all areas
-ValueError: setting an array element with a sequence.
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 94 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 19:03:48 - setting an array element with a sequence.
-TypeError: float() argument must be a string or a number, not 'list'
-
-The above exception was the direct cause of the following exception:
-
+31/07/2020 11:40:33 - index 95 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 135, in pulldatacallback
-    self.datalist[
-ValueError: setting an array element with a sequence.
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 95 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 19:03:59 - setting an array element with a sequence.
-TypeError: float() argument must be a string or a number, not 'list'
-
-The above exception was the direct cause of the following exception:
-
+31/07/2020 11:40:42 - index 93 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 135, in pulldatacallback
-    self.datalist[
-ValueError: setting an array element with a sequence.
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 93 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 19:11:04 - setting an array element with a sequence.
-TypeError: float() argument must be a string or a number, not 'list'
-
-The above exception was the direct cause of the following exception:
-
+31/07/2020 11:40:44 - index 94 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 135, in pulldatacallback
-    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1,i] = keep
-ValueError: setting an array element with a sequence.
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 94 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 19:27:02 - list index out of range
+31/07/2020 11:40:44 - index 95 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 95 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 19:45:32 - list index out of range
+31/07/2020 11:41:46 - index 6 is out of bounds for axis 0 with size 6
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 6 is out of bounds for axis 0 with size 6
 
 
-28/07/2020 19:50:46 - list index out of range
+31/07/2020 11:41:47 - index 7 is out of bounds for axis 0 with size 6
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 7 is out of bounds for axis 0 with size 6
 
 
-28/07/2020 19:56:29 - list index out of range
+31/07/2020 11:44:01 - index 3 is out of bounds for axis 0 with size 3
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 3 is out of bounds for axis 0 with size 3
 
 
-28/07/2020 19:58:19 - list index out of range
+31/07/2020 11:44:05 - index 4 is out of bounds for axis 0 with size 3
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 121, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 4 is out of bounds for axis 0 with size 3
 
 
-28/07/2020 20:01:16 - list index out of range
+31/07/2020 11:59:41 - index 4 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 122, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 4 is out of bounds for axis 0 with size 4
 
 
-28/07/2020 20:04:43 - list index out of range
+31/07/2020 11:59:46 - index 5 is out of bounds for axis 0 with size 4
 Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 120, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 123, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
-
-
-28/07/2020 20:10:11 - list index out of range
-Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 121, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 124, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
-
-
-28/07/2020 20:10:22 - list index out of range
-Traceback (most recent call last):
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 121, in pulldatacallback
-    min(
-  File "c:\Users\jwb1j\OneDrive\Documents\GitHub\Crow\Crow_GC\Pull_GC.py", line 124, in <lambda>
-    possrettimes[i] - self.rettimes[i]
-IndexError: list index out of range
+  File "/Users/jburnsky/Documents/GitHub/Crow/Crow_GC/Pull_GC.py", line 122, in pulldatacallback
+    self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+IndexError: index 5 is out of bounds for axis 0 with size 4
 

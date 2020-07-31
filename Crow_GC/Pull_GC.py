@@ -135,7 +135,7 @@ class Pull(C.tk.Frame):
                         self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
                 except IndexError as ie:
                     if C.globals_GC.debug:
-                        C.globals_GC.mylog(e)
+                        C.globals_GC.mylog(ie)
                     warningmessage = (
                         "Please select files in order starting from 1 to end"
                     )

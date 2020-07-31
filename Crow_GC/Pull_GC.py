@@ -102,7 +102,9 @@ class Pull(C.tk.Frame):
                         for suspect in peaksinwindow:
                             if suspect[2] == i:
                                 poss.append(suspect[0:2])
-                        if len(poss) == 1:  # only one possible peak was found
+                        if len(poss) == 0:
+                            keep = "Not found"
+                        elif len(poss) == 1:  # only one possible peak was found
                             keep = poss[0][1]
                         elif (
                             self.pickingmethod.get() == 1
@@ -117,8 +119,15 @@ class Pull(C.tk.Frame):
                         elif self.pickingmethod.get() == 3:  # keep all areas
                             keep = [j[1] for j in poss]
                         else:
-                            keep = "Not found"
+                            keep = "Error"
                         self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+                except IndexError as ie:
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(e)
+                    warningmessage = (
+                        "Please select files in order starting from 1 to end"
+                    )
+                    C.messagebox.showwarning(title="Warning", message=warningmessage)
                 except Exception as e:
                     if C.globals_GC.debug:
                         C.globals_GC.mylog(e)

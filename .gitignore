@@ -1,3 +1,7 @@
+# General
 *.pyc
+# Windows VS Code Specific
 .vscode
 *.json
+# MacOS Specific
+.DS_Store

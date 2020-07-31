@@ -94,15 +94,15 @@ class Crow_GC(tk.Frame):
                 tk.END,
                 str(len(globals_GC.datafiles)) + " TOTAL FILES\n" + self.FileDisplay,
             )
-            temp.place(x=470, y=65)
+            temp.place(x=500, y=65)
             temp.config(state="disabled")
 
         update_files()
         # data files label
-        tk.Label(master, text="Current Data Files:").place(x=470, y=40)
+        tk.Label(master, text="Current Data Files:").place(x=500, y=40)
         # Select Data files button
         tk.Button(master, text="Select Raw Data", command=selectrawdatacallback).place(
-            x=470, y=245
+            x=500, y=245
         )
         # Select Data files button
         tk.Button(
@@ -128,9 +128,9 @@ class Crow_GC(tk.Frame):
 
         tk.Button(
             master, text="Search Server by Expt. Name", command=searchservercallback
-        ).place(x=470, y=310)
+        ).place(x=500, y=310)
         self.expname = tk.Entry(master)
-        self.expname.place(x=470, y=280)
+        self.expname.place(x=500, y=280)
         # title on top of window
         tk.Label(master, text="Crow Really Outta Work").place(relx=0.78, y=0)
         # setup callback for closing app

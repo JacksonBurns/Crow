@@ -94,15 +94,16 @@ class Pull(C.tk.Frame):
                                 )
                     # assign area(s) to corresponding location in output array
                     # depending on selected peak picking method
-                    for i in range(
-                        0, len(self.rettimes)
-                    ):  # go through in order of retention times
+                    for i in range(0, len(self.rettimes)):  # go through in order of retention times
                         # pull out identified peaks for each retention time
                         poss = []
                         for suspect in peaksinwindow:
                             if suspect[2] == i:
                                 poss.append(suspect[0:2])
-                        if len(poss) == 1:  # only one possible peak was found
+                        if len(poss) == 0: # no peaks were found in the region
+                            # prevents errors in min() and max() when called on an empty list
+                            keep = "Not found"
+                        elif len(poss) == 1:  # only one possible peak was found
                             keep = poss[0][1]
                         elif (
                             self.pickingmethod.get() == 1
@@ -117,8 +118,15 @@ class Pull(C.tk.Frame):
                         elif self.pickingmethod.get() == 3:  # keep all areas
                             keep = [j[1] for j in poss]
                         else:
-                            keep = "Not found"
+                            keep = "Error"
                         self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+                except IndexError as ie:
+                    if C.globals_GC.debug:
+                        C.globals_GC.mylog(ie)
+                    warningmessage = (
+                        "Please select files starting from injection 1 to end."
+                    )
+                    C.messagebox.showwarning(title="Warning", message=warningmessage)
                 except Exception as e:
                     if C.globals_GC.debug:
                         C.globals_GC.mylog(e)

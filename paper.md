@@ -37,16 +37,16 @@ purchase of additional HTE equipment, meaning existing technologies cannot be ca
 
 # Summary
 
-'Crow' seeks to remedy this problem by making HTE practical in an academic setting.
+`Crow` seeks to remedy this problem by making HTE practical in an academic setting.
 The package is platform-agnostic and highly customizable, allowing users to modify
 key application parameters through a simple *config.yaml* file. Data is retrieved
 via the *xml* format, in which nearly all lab equipment can export data. The core functionality
-of 'Crow' is accessed via a simple multi-tab graphical user interface, enabling walk-up
+of `Crow` is accessed via a simple multi-tab graphical user interface, enabling walk-up
 use for non-coding users post-configuration. Commonly accessed internal functions are separate
 so they may be compiled into bytecode via CPython to decrease execution time after initial
 compilation.
 
-'Crow' is currently used in the University of Delaware High Throughput Experimentation Facility [@udel_HTE:2019].
+`Crow` is currently used in the University of Delaware High Throughput Experimentation Facility [@udel_HTE:2019].
 In its current GC implementation, it has three tabs which access its main functions: 
 **Pre-Pull**, **Pull**, and **Present**. The applications of these three tabs are explored below.
 
@@ -59,7 +59,7 @@ in the Don Watson Lab:
 This reaction was run in a 96 well microtiter plate with a unique ligand in each well, ranging from simple
 tri-alkyl phosphines to various *phos-*ligands. The plate is processed via a GC
 with an autosampler attachment, which individually characterizes each well in sequence. Each resulting
-chromatogram is exported into the *xml* format to a networked drive where 'Crow' is able to retrieve files
+chromatogram is exported into the *xml* format to a networked drive where `Crow` is able to retrieve files
 and begin processing.
 
 **Pre-Pull** is a diagnostic tool to aid in automated peak retrieval. It identifies all peaks present
@@ -75,7 +75,7 @@ files are then rapidly parsed, retrieving only some given value for peaks which 
 in this case area. The resulting data is output to the universal *csv* format for easy manipulation in
 the user's software of choice.
 
-Peak picking is complicated by the presence of instrument noise and unexpected eluates, so 'Crow' allows
+Peak picking is complicated by the presence of instrument noise and unexpected eluates, so `Crow` allows
 the user to pick one of three implemented methods: keep all peaks which fall within their given interval,
 keep the peak which is closest to the center of the interval, or keep whichever peak has the maximum area.
 
@@ -83,8 +83,8 @@ keep the peak which is closest to the center of the interval, or keep whichever 
 to keep the retention times with the product area. \label{fig:Example **Pull** Output}](other/example_pull_output.png)
 
 Once the data retrieved by **Pull** has been manipulated to indicate yields, selectivity, or other values,
-the user returns to 'Crow' and uses **Present**. This ingests *csv* files and generates graphics resembling
-a multi-well plate of pie charts where each pie represents the outcome of a single well (see \autoref{fig:Example Single Well}). 'Crow' generates
+the user returns to `Crow` and uses **Present**. This ingests *csv* files and generates graphics resembling
+a multi-well plate of pie charts where each pie represents the outcome of a single well (see \autoref{fig:Example Single Well}). `Crow` generates
 graphics for 96 and 24 well plates, includes 3 pre-configured color pallattes or custom color selection, and
 can filter data and color or shade individual wells accordingly (see \autoref{fig:Example **Present** output}).
 All plots and graphics are created with 'matplotlib' [@Caswell:2020] which enables exporting in multiple common

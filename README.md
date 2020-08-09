@@ -17,6 +17,8 @@ Data is retrieved by parsing XML files output by the software on the High Throug
 A conda environment file (other/spec-list.txt) lists the required packages and versions needed to run Crow.
 
 To configure Crow to work for your setup, change the values in __config.yaml__ to work for your local installation.
+
+For an in-depth setup tutorial, see other/setup_step-by-step.md.
   
 ## Support
 If you need help with setting up Crow, finding out how to retrieve data from your HTE instrument, or you find this program at all helpful, send me a message here: jburnsky@udel.edu with the subject line "Crow" and your name.

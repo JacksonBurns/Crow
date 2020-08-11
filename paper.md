@@ -16,7 +16,7 @@ authors:
 affiliations:
   - name: University of Delaware, Donald A. Watson Lab
     index: 1
-  - name: University of Delaware  High Throughput Experimentation Center
+  - name: University of Delaware  High Throughput Experimentation Facility
     index: 2
 date: 29 July 2020
 bibliography: paper.bib
@@ -51,13 +51,13 @@ In its current GC implementation, it has three tabs which access its main functi
 **Pre-Pull**, **Pull**, and **Present**. Applications of these three tabs are explicated below.
 
 # Case Study: Optimization of a Metal-Catalyzed Coupling Reaction
-Below is the schema for a stereo-selective coupling reaction currently under investigation
-in the Don Watson Lab:
+Below is the schema for a cross-coupling reaction in which two possible isomeric products can be formed that is currently
+under investigation in the Don Watson Lab:
 
 ![Reaction scheme of model reaction. \label{fig:Model Reaction Schema}](other/model_reaction_schema.png)
 
 This reaction was run in a 96 well microtiter plate with a unique ligand in each well, ranging from simple
-tri-alkyl phosphines to various *phos-*ligands. The plate is processed via a GC
+to large, structurally complex phosphines. The plate is processed via a GC
 with an autosampler attachment, which individually characterizes each well in sequence. Each resulting
 chromatogram is exported into the *xml* format to a networked drive where `Crow` retrieves files
 and begins processing.
@@ -78,13 +78,13 @@ Peak picking is complicated by the presence of instrument noise and unexpected e
 the user to pick one of three implemented methods: keep all peaks which fall within their given interval,
 keep the peak closest to the center of the interval, or keep the peak with the maximum area.
 
-![Sample **Pull** output generated for one run of the model reaction Here the user also chose the option
+![Sample **Pull** output generated for one run of the model reaction. Here the user also chose the option
 to keep the retention times with the product area. \label{fig:Example **Pull** Output}](other/example_pull_output.png)
 
-Once the data retrieved by **Pull** has been manipulated to indicate yields, selectivity, or other values,
+Once the data retrieved by **Pull** has been processed to give a meaningful interpretation of the data (yield, selectivity, etc.).
 the user returns to `Crow` and uses **Present**. This ingests *csv* files and generates graphics resembling
-a multi-well plate of pie charts, where each pie represents the outcome of a single well (see \autoref{fig:Example Single Well}). `Crow` generates
-graphics for 96 and 24 well plates, includes 3 pre-configured color palattes or custom color selection, and
+a multi-well plate of pie charts, where each pie represents the outcome of a single well (see \autoref{fig:Example Wells}). `Crow` generates
+graphics for 96 and 24 well plates, includes 3 pre-configured color palettes or custom color selection, and
 can filter data and color or shade individual wells accordingly (see \autoref{fig:Example **Present** output}).
 All plots and graphics are created with 'matplotlib' [@Caswell:2020], which enables exporting to multiple common
 image formats.
@@ -99,10 +99,10 @@ at-a-glance.\label{fig:Example **Present** output}](other/example_present_output
 The above graphic indicated to researchers that multiple wells were candidates for achieving the desired
 high selectivity (B8, C1, C2, etc.) at scale. While the results of these individual experiments were similar,
 the structures of the ligands were completely divergent, forcing researchers to draw new conclusions
-about how structure affects selectivity. The graphic showed which ligands achieved high selectivity in the
+about how structure affects selectivity. The graphic also showed which ligands achieved high selectivity in the
 opposite direction, which also provides motivation for future projects on the same reaction.
 
-# Acknowledgements
+# Acknowledgments
 
 We gratefully acknowledge funding from the University of Delaware Undergraduate Research Program Stakem Grant.
 

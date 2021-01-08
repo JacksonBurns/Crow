@@ -10,7 +10,7 @@ README = (cwd / "README.md").read_text()
 
 setup(
     name="CrowHTE",
-    version="1.2.0",
+    version="1.2.0rc4",
     description="Python GUI to enable High Throughput Experimentation.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -19,6 +19,11 @@ setup(
     license="GNU GPLv3",
     classifiers=[
         "Programming Language :: Python :: 3"
+    ],
+    install_requires=[
+        "pillow",
+        "numpy",
+        "pyyaml",
     ],
     packages=["Crow"],
     include_package_data=True

@@ -2,3 +2,6 @@
 .vscode
 *.json
 debug.txt
+CrowHTE.egg-info/*
+dist/*
+build/*

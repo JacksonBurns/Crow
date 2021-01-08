@@ -1,7 +1,0 @@
-README.md
-setup.py
-Crow/Crow.py
-CrowHTE.egg-info/PKG-INFO
-CrowHTE.egg-info/SOURCES.txt
-CrowHTE.egg-info/dependency_links.txt
-CrowHTE.egg-info/top_level.txt

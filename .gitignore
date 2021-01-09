@@ -1,7 +1,14 @@
+# compiled python files
 *.pyc
+
+# visual studio code settings
 .vscode
 *.json
+
+# debug log
 debug.txt
+
+# PyPi packaging files
 CrowHTE.egg-info/*
 dist/*
 build/*

@@ -27,7 +27,7 @@ Test globals_GC.py
 """
 # test initialization of global variables and debug function
 os.chdir("Crow_GC")
-from Crow_GC import globals_GC
+from .Crow_GC import globals_GC
 # write a temporary config file for testing purposes
 with open("config.yaml", "w") as file:
     file.writelines([

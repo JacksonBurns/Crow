@@ -1,6 +1,9 @@
+from io import BytesIO
+import base64
 from PIL import Image, ImageTk
 import tkinter as tk
-from Crow_GC import Crow_GC
+import pkg_resources
+from .Crow_GC import Crow_GC
 
 """
 Created on Sat Jan 18 23:45:07 2020
@@ -70,7 +73,8 @@ def Crow_Parent():
     SFCMSButton.place(x=10, y=70)
 
     # add Crow logo to parent application
-    load = Image.open("./other/Crow_logo.png")
+    resource_path = pkg_resources.resource_filename(__name__, "other/Crow_logo.png")
+    load = Image.open(resource_path)
     load = load.resize((160, 160), Image.ANTIALIAS)
     render = ImageTk.PhotoImage(load)
     img = tk.Label(image=render)
@@ -86,5 +90,14 @@ def Close_tk(inWindow):
     """
     inWindow.destroy()
 
+# Helpful method for PyPi package console script entry point
+def main():
+    # Print a greeting
+    print('''
+    Thank you for installing Crow!
+    Please visit the GitHub page for help with running Crow: https://github.com/JacksonBurns/Crow
 
-Crow_Parent()
+    If you use Crow in published work, please cite this publication:
+    https://figshare.com/articles/software/Crow_-_High_Throughput_Experimentation_Data_Retrieval_and_Presentation_GUI/11741898
+    ''')
+    Crow_Parent()

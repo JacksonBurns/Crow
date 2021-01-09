@@ -15,12 +15,23 @@ be found in the manual for your instrument. It took us a bit of searching, but o
 the process is simple.
 
 
-## Downloading and configuring Crow
-There are a few options for downloading Crow (figshare, JOSS, GitHub) but it is best to do this:
-1. Follow [this](https://github.com/JacksonBurns/Crow/releases) link to the *Crow* repository on GitHub
-2. Download the release of Crow appropriate for your system, either WIN (windows) or OSX (apple).
-3. Un-Zip the code
-4. Open *config.yaml* and edit these fields:
+## Setting up a Python Environment
+Python allows you to create *virtual environments* that contain only the packages (with their appropriate versions) that a program needs. We reccomend using one like this:
+1. Download the package manager of your choice - these instructions use conda and [Anaconda Navigator](https://docs.anaconda.com/anaconda/navigator/), the GUI passthrough to conda.
+2. In anaconda navigator, create a new environment by selecting "Create".
+3. Once the environment builds, launch a terminal window through the "Home" tab.
+
+
+## Downloading and Configuring Crow
+There are a few options for downloading Crow (figshare, GitHub, PyPi) but it is best to do this:
+`pip install CrowHTE`
+If any import statements fail, use **pip** or **conda** to install missing packages. (Please also consider filing a [bug report](https://github.com/JacksonBurns/Crow/issues))
+If you would instead like to download the code directly from a website, do the following:
+1. Follow [this](https://github.com/JacksonBurns/Crow/releases) link to the *Crow* repository on GitHub.
+2. Download the Zip file containing the source code for Crow.
+3. Un-Zip the code into a new folder.
+
+Once Crow has been installed, edit the *config.yaml* file and adjust the below fields accordingly:
 	- server_data_location: This should point to a mapped drive on the system where Crow is running. Crow can automatically search this location for raw data. ex. W:\data\XML_EXPORT\
     - debug: Writes a *debug.txt* file containing exceptions and timestamps.
     - export_data_path:This should point to the location where you want pulled data to be saved. ex. /usr/me/hte_data/
@@ -29,15 +40,16 @@ There are a few options for downloading Crow (figshare, JOSS, GitHub) but it is 
     - xml_retention_time_target: Index of the retention time value for each peak.
     - xml_area_target: Index of the area value for each peak (can be set to any desired value, such as index of width)
     - xml_wellnum_target: Index of the well number which each peak should contain, which references the experimental well that the data came from.
+If you used pip to install Crow, the config file will probably be found in your-user-folder/.conda/envs/your-environment-name/Lib/site-packages/Crow/Crow_GC. If you downloaded the code from online, the configuration file will be in Crow/Crow_GC.
 
-## Setting up a Python Environment
-Python allows you to create *virtual environments* that contain only the packages (with their appropriate versions) that a program needs. We reccomend using one like this:
-1. Download the package manager of your choice - these instructions use conda and Anaconda Navigator, the GUI passthrough to conda.
-2. In anaconda navigator, select **import** and select the appropriate *spec file* included in your download.
-3. Once the environment builds, try running Crow. If any import statements fail, use **pip** or **conda** to install missing packages. (Please also consider filing a [bug report](https://github.com/JacksonBurns/Crow/issues))
 
 ## Using Crow
-For a video tutorial on how to use Crow, [click here](https://www.jacksonwarnerburns.com/crow).
+Crow can be started from the command line by typing `crow`. You can also start Crow from inside a python script like this:
+`
+from Crow import Crow
+Crow.main()
+`
+For a video tutorial on how to use Crow, ![Crow SOP](Crow-SOP.mp4).
 
 ### Selecting Data
 1. Enter a *glob*-compatible string which Crow will use to search the 'server' location or manually select input data.

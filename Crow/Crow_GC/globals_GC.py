@@ -1,6 +1,7 @@
 import yaml
 import traceback
 from datetime import datetime
+import pkg_resources
 
 """
 Created on Thu Jan 16 19:32:33 2020
@@ -14,9 +15,9 @@ def init():
     variables which are used by all tabs in the GC window, such as the path to
     the server of raw data.
     """
-    # open the config file, do not need to use absolute import because this file
-    # will always be run by Crow.py, which is in the same directory
-    with open("config.yaml", "r") as file:
+    # open the config file
+    resource_path = pkg_resources.resource_filename(__name__, "config.yaml")
+    with open(resource_path, "r") as file:
         cfg = yaml.safe_load(file)
     cfg = cfg["GC_config"]
     global datafiles

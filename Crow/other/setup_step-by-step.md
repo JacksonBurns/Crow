@@ -49,7 +49,7 @@ Crow can be started from the command line by typing `crow`. You can also start C
 from Crow import Crow
 Crow.main()
 `
-For a video tutorial on how to use Crow, ![Crow SOP](Crow-SOP.mp4).
+For a video tutorial on how to use Crow, [Crow SOP](Crow-SOP.mp4).
 
 ### Selecting Data
 1. Enter a *glob*-compatible string which Crow will use to search the 'server' location or manually select input data.

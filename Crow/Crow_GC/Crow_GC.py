@@ -7,12 +7,10 @@ import sys
 import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plot
+from matplotlib.cbook import get_sample_data
+from mpl_toolkits.axes_grid.inset_locator import inset_axes
 
-# some of these are used by PrePull, Pull, and Present, which
-# import this class, though they are not used here
 import numpy as np
-import traceback
-from datetime import datetime
 import tkinter.colorchooser as cc
 
 # retrieve functions written elsewhere
@@ -225,6 +223,7 @@ class Present(tk.Frame):
     """
 
     def __init__(self, name):
+        self._img_filenames = []
         tk.Frame.__init__(self, width=47, height=450)
 
         # begin defintiion of callbacks, followed by user interface
@@ -253,9 +252,24 @@ class Present(tk.Frame):
                 return
             # if passes all tests, present accordingly
             # pull data from user entered file
+            
             exceldata = np.genfromtxt(
                 globals_GC.datafiles[0], dtype=float, delimiter=",", names=True
             )
+            if image_overlay.get():
+                # the image filenames will have broken the input data
+                newdata = []
+                for row in exceldata:
+                    newrow = []
+                    for value in row:
+                        if not np.isnan(value):
+                            newrow.append(value)
+                    newdata.append(newrow)
+                exceldata = newdata
+                with open(globals_GC.datafiles[0], "r") as file:
+                    for line in file.readlines()[1:]:
+                        self._img_filenames.append(line.split(",")[-1].replace("\n",""))
+
             # check for files that are too big
             if len(exceldata[0]) > 9:
                 messagebox.showerror(
@@ -337,14 +351,14 @@ class Present(tk.Frame):
                     )
             # 24 (4x6)
             elif layout.get() == 3:
-                try:
-                    graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
-                except Exception as e:
-                    if globals_GC.debug:
-                        globals_GC.mylog(e)
-                    messagebox.showerror(
-                        "Error!", "Something went wrong, please try again.",
-                    )
+                # try:
+                graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
+                # except Exception as e:
+                #     if globals_GC.debug:
+                #         globals_GC.mylog(e)
+                #     messagebox.showerror(
+                #         "Error!", "Something went wrong, please try again.",
+                #     )
             # 24 (6x4)
             elif layout.get() == 4:
                 try:
@@ -414,7 +428,7 @@ class Present(tk.Frame):
                     radius=1.3,
                     counterclock=False,
                 )
-        
+
         def graphic_generator(exceldata, subplotdims, totalcolormap, dims):
             """
             general purpose, abstract function for the generation of hte
@@ -512,9 +526,34 @@ class Present(tk.Frame):
                         rotation=0,
                         labelpad=10,
                     )
+                # draw the image over the well
+                if image_overlay.get():
+                    im = plot.imread(get_sample_data(self._img_filenames[wellnum]))
+                    if layout.get() == 1:
+                        ax = myfig.add_axes([0.09 + 0.8 * col / subplotdims[1], 0.8 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    elif layout.get() == 2:
+                        ax = myfig.add_axes([0.12 + 0.8 * col / subplotdims[1], 0.78 - 0.772 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    elif layout.get() == 3:
+                        ax = myfig.add_axes([0.06 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    elif layout.get() == 4:
+                        ax = myfig.add_axes([0.14 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    else:
+                        continue
+                    ax.imshow(im)
+                    ax.axis('off')
+
+                    # subplt[row, col + 1].imshow(im)
+                    # subplt[row, col + 1].axis("off")
+
+            # write a legend for the colors
             with open(globals_GC.datafiles[0], "r") as file:
                 count = 0
-                for header in file.readline().split(","):
+                headers = file.readline().split(",")
+                if image_overlay.get():
+                    end = len(headers) - 1
+                else:
+                    end = len(headers)
+                for header in headers[:end]:
                     myfig.text(0.2 + 0.1 * count, 0.95, header.replace("\n",""), ha="center", va="bottom", size="medium", color=totalcolormap[count])
                     count += 1
             myfig.show()
@@ -535,6 +574,13 @@ class Present(tk.Frame):
         tk.Button(self, text="Present", command=presentdatacallback).place(
             relx=0.4, rely=0.9
         )
+
+        # make check button for image overlay
+        image_overlay = tk.IntVar()
+        tk.Checkbutton(self, text = "Last column contains image filepaths", variable = image_overlay,
+                onvalue = True, offvalue = False, height=1,
+                width = 30).place(relx=0.3, rely=0.8)
+
         # make radio buttons for well layout
         layout = tk.IntVar()
         layouts = [("96 (8x12)", 1), ("96 (12x8)", 2), ("24 (4x6)", 3), ("24 (6x4)", 4)]

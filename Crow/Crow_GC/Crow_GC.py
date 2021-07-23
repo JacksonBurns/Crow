@@ -351,14 +351,14 @@ class Present(tk.Frame):
                     )
             # 24 (4x6)
             elif layout.get() == 3:
-                # try:
-                graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
-                # except Exception as e:
-                #     if globals_GC.debug:
-                #         globals_GC.mylog(e)
-                #     messagebox.showerror(
-                #         "Error!", "Something went wrong, please try again.",
-                #     )
+                try:
+                    graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
+                except Exception as e:
+                    if globals_GC.debug:
+                        globals_GC.mylog(e)
+                    messagebox.showerror(
+                        "Error!", "Something went wrong, please try again.",
+                    )
             # 24 (6x4)
             elif layout.get() == 4:
                 try:
@@ -530,7 +530,7 @@ class Present(tk.Frame):
                 if image_overlay.get():
                     im = plot.imread(get_sample_data(self._img_filenames[wellnum]))
                     if layout.get() == 1:
-                        ax = myfig.add_axes([0.09 + 0.8 * col / subplotdims[1], 0.8 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                        ax = myfig.add_axes([0.09 + 0.79 * col / subplotdims[1], 0.79 - 0.78 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
                     elif layout.get() == 2:
                         ax = myfig.add_axes([0.12 + 0.8 * col / subplotdims[1], 0.78 - 0.772 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
                     elif layout.get() == 3:

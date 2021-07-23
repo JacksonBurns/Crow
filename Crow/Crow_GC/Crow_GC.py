@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # This is the wrapper function for Crow - GC
 import glob
+import webbrowser
+import pkg_resources
+import sys
 import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plot
@@ -122,6 +125,13 @@ class Crow_GC(tk.Frame):
             )
             update_files()
 
+        def openconfigcallback():
+            webbrowser.open(pkg_resources.resource_filename(__name__, "config.yaml"))
+
+        tk.Button(
+            master, text="Open Config. File", command=openconfigcallback
+        ).place(x=470, y=340)
+
         tk.Button(
             master, text="Search Server by Expt. Name", command=searchservercallback
         ).place(x=470, y=310)
@@ -139,8 +149,7 @@ class Crow_GC(tk.Frame):
         can be launched again.
         """
         if messagebox.askokcancel(title="Quit", message="Are you sure?"):
-            plot.close("all")
-            self.master.destroy()
+            sys.exit(0)
 
 
 class PrePull(tk.Frame):
@@ -503,6 +512,11 @@ class Present(tk.Frame):
                         rotation=0,
                         labelpad=10,
                     )
+            with open(globals_GC.datafiles[0], "r") as file:
+                count = 0
+                for header in file.readline().split(","):
+                    myfig.text(0.2 + 0.1 * count, 0.95, header.replace("\n",""), ha="center", va="bottom", size="medium", color=totalcolormap[count])
+                    count += 1
             myfig.show()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):

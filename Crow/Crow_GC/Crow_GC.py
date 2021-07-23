@@ -474,13 +474,20 @@ class Present(tk.Frame):
                         [int(s) / 255 for s in self.cutoffPopup.cutoffcolor.split(",")]
                     ]
             # create figure with correct number of subplots
-            myfig, subplt = plot.subplots(
-                subplotdims[0], subplotdims[1], figsize=dims
-            )
+            if image_overlay.get():
+                myfig, subplt = plot.subplots(
+                    subplotdims[0], subplotdims[1]*2, figsize=(dims[1]*2*10, dims[0]*10), dpi=200
+                )
+            else:
+                myfig, subplt = plot.subplots(
+                    subplotdims[0], subplotdims[1], figsize=dims
+                )
             for wellnum in range(0, subplotdims[0] * subplotdims[1]):
                 # go to position
                 row = wellnum // subplotdims[1]
                 col = wellnum % subplotdims[1]
+                if image_overlay.get():
+                    col *= 2
                 # well data
                 welldata = exceldata[wellnum]
                 if datafilter.get() == 2:  # exclude threshold
@@ -529,21 +536,21 @@ class Present(tk.Frame):
                 # draw the image over the well
                 if image_overlay.get():
                     im = plot.imread(get_sample_data(self._img_filenames[wellnum]))
-                    if layout.get() == 1:
-                        ax = myfig.add_axes([0.09 + 0.79 * col / subplotdims[1], 0.79 - 0.78 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    elif layout.get() == 2:
-                        ax = myfig.add_axes([0.12 + 0.8 * col / subplotdims[1], 0.78 - 0.772 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    elif layout.get() == 3:
-                        ax = myfig.add_axes([0.06 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    elif layout.get() == 4:
-                        ax = myfig.add_axes([0.14 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    else:
-                        continue
-                    ax.imshow(im)
-                    ax.axis('off')
+                    # if layout.get() == 1:
+                    #     ax = myfig.add_axes([0.09 + 0.79 * col / subplotdims[1], 0.79 - 0.78 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    # elif layout.get() == 2:
+                    #     ax = myfig.add_axes([0.12 + 0.8 * col / subplotdims[1], 0.78 - 0.772 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    # elif layout.get() == 3:
+                    #     ax = myfig.add_axes([0.06 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    # elif layout.get() == 4:
+                    #     ax = myfig.add_axes([0.14 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
+                    # else:
+                    #     continue
+                    # ax.imshow(im)
+                    # ax.axis('off')
 
-                    # subplt[row, col + 1].imshow(im)
-                    # subplt[row, col + 1].axis("off")
+                    subplt[row, col + 1].imshow(im)
+                    subplt[row, col + 1].axis("off")
 
             # write a legend for the colors
             with open(globals_GC.datafiles[0], "r") as file:
@@ -556,6 +563,7 @@ class Present(tk.Frame):
                 for header in headers[:end]:
                     myfig.text(0.2 + 0.1 * count, 0.95, header.replace("\n",""), ha="center", va="bottom", size="medium", color=totalcolormap[count])
                     count += 1
+            myfig.savefig('foo.png', bbox_inches='tight')
             myfig.show()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):

@@ -18,6 +18,7 @@ from Crow.helper_functions import ParseXML, RequestFiles
 # retreive global datafiles list variable
 from Crow.Crow_GC import globals_GC
 
+
 # define GUI
 class Crow_GC(tk.Frame):
     """
@@ -206,6 +207,7 @@ class PrePull(tk.Frame):
             relx=0.3, rely=0.35
         )
 
+
 class Present(tk.Frame):
     """
     Tab of the GC window resposible for taking columns
@@ -220,12 +222,12 @@ class Present(tk.Frame):
         def presentdatacallback():
             """
             Upon clicking the present data button, validate input and
-            then read state of UI buttons to determine settings
+            then read state of UI buttons to determine settings.
             """
             # check for wrong type of data selected
             if ".xml" in str(globals_GC.datafiles):
                 messagebox.showerror(
-                    "Error!", "Please select excel data file (.csv)!",
+                    "Error!", "Please select input data file (.csv)! (to convert excel to .csv, use File->Save As... and select .csv)",
                 )
                 return
             # please select data
@@ -347,6 +349,63 @@ class Present(tk.Frame):
             else:
                 messagebox.showerror("Error!", "Please select a layout.")
 
+        def draw_empty(subplt, row, col, wellnum, e):
+            subplt[row, col].pie([0])
+            warningmessage = (
+                "Issue displaying well "
+                + str(wellnum + 1)
+                + ". \n(possible zero value issue)"
+            )
+            messagebox.showwarning(
+                title="Warning", message=warningmessage
+            )
+            if globals_GC.debug:
+                globals_GC.mylog(e)
+
+        def draw_filled(totalcolormap, welldata, subplt, row, col, datafilter=0, cutoffvalues=None, cutoffcolors=None, excludeColmax=None):
+            # handle wells where one or more pie slices are zero
+            temp = totalcolormap.copy()
+            # iterate through list
+            mask = []
+            for idx, pievalue in enumerate(welldata):
+                # each time a zero is found, take index and remove corresponding color from temp of colormap
+                if float(pievalue) == 0:
+                    mask = mask + [idx]
+            if len(mask) != 0:
+                temp = np.delete(temp, mask, 0)
+                welldata = [
+                    val for idx, val in enumerate(welldata) if idx not in mask
+                ]
+            if datafilter == 3:
+                temp[int(self.shadebyyieldPopup.shadecol) - 1] = temp[
+                    int(self.shadebyyieldPopup.shadecol) - 1
+                ] * (
+                    welldata[int(self.shadebyyieldPopup.shadecol) - 1]
+                    / excludeColmax
+                )
+            if datafilter == 4:
+                subplt[row, col].pie(
+                    np.array(list(welldata) / min(list(welldata))),
+                    colors=pickcolor(
+                        totalcolormap.copy(),
+                        int(self.numberofcutoffsPopup.cutoffcol) - 1,
+                        cutoffvalues,
+                        cutoffcolors,
+                        welldata,
+                    ),
+                    wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
+                    radius=1.3,
+                    counterclock=False,
+                )
+            else:
+                subplt[row, col].pie(
+                    np.array(list(welldata) / min(list(welldata))),
+                    colors=temp,
+                    wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
+                    radius=1.3,
+                    counterclock=False,
+                )
+        
         def graphic_generator(exceldata, subplotdims, totalcolormap, dims):
             """
             general purpose, abstract function for the generation of hte
@@ -368,7 +427,7 @@ class Present(tk.Frame):
                 self.excludePopup = excludePopup(self.master)
                 self.master.wait_window(self.excludePopup.top)
             elif datafilter.get() == 3:  # shade by yield
-                # popup to ask which column the chemical the gradient should be based off of is in
+                # popup to ask which column the gradient should be based off of is in
                 self.shadebyyieldPopup = shadebyyieldPopup(self.master)
                 self.master.wait_window(self.shadebyyieldPopup.top)
                 excludeColmax = max(
@@ -408,145 +467,30 @@ class Present(tk.Frame):
                         ):  # exclude cutoff
                             subplt[row, col].pie([0])
                         else:
-                            # handle wells where one or more pie slices are zero
-                            temp = totalcolormap.copy()
-                            # iterate through list
-                            mask = []
-                            for idx, pievalue in enumerate(welldata):
-                                # each time a zero is found, take index and remove corresponding color from temp of colormap
-                                if float(pievalue) == 0:
-                                    mask = mask + [idx]
-                            if len(mask) != 0:
-                                temp = np.delete(temp, mask, 0)
-                                welldata = [
-                                    val
-                                    for idx, val in enumerate(welldata)
-                                    if idx not in mask
-                                ]
-                            subplt[row, col].pie(
-                                np.array(list(welldata) / min(list(welldata))),
-                                colors=temp,
-                                wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
-                                radius=1.3,
-                                counterclock=False,
-                            )
+                            draw_filled(totalcolormap, welldata, subplt, row, col)
                     except Exception as e:
-                        subplt[row, col].pie([0])
-                        warningmessage = (
-                            "Issue displaying well "
-                            + str(wellnum + 1)
-                            + ". \n(possible zero value issue)"
-                        )
-                        messagebox.showwarning(
-                            title="Warning", message=warningmessage
-                        )
-                        if globals_GC.debug:
-                            globals_GC.mylog(e)
+                        draw_empty(subplt, row, col, wellnum, e)
                 elif datafilter.get() == 3:  # shade by yield
                     try:
-                        # handle wells where one or more pie slices are zero
-                        temp = totalcolormap.copy()
-                        # iterate through list
-                        mask = []
-                        for idx, pievalue in enumerate(welldata):
-                            # each time a zero is found, take index and remove corresponding color from temp of colormap
-                            if float(pievalue) == 0:
-                                mask = mask + [idx]
-                        if len(mask) != 0:
-                            temp = np.delete(temp, mask, 0)
-                            welldata = [
-                                val
-                                for idx, val in enumerate(welldata)
-                                if idx not in mask
-                            ]
-                        temp[int(self.shadebyyieldPopup.shadecol) - 1] = temp[
-                            int(self.shadebyyieldPopup.shadecol) - 1
-                        ] * (
-                            welldata[int(self.shadebyyieldPopup.shadecol) - 1]
-                            / excludeColmax
-                        )
-                        subplt[row, col].pie(
-                            np.array(list(welldata) / min(list(welldata))),
-                            colors=temp,
-                            wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
-                            radius=1.3,
-                            counterclock=False,
-                        )
+                        draw_filled(totalcolormap, welldata, subplt, row, col, datafilter=datafilter.get(), excludeColmax=excludeColmax)
                     except Exception as e:
-                        subplt[row, col].pie([0])
-                        warningmessage = (
-                            "Issue displaying well "
-                            + str(wellnum + 1)
-                            + ". \n(possible zero value issue)"
-                        )
-                        messagebox.showwarning(
-                            title="Warning", message=warningmessage
-                        )
-                        if globals_GC.debug:
-                            globals_GC.mylog(e)
+                        draw_empty(subplt, row, col, wellnum, e)
                 elif datafilter.get() == 4:  # group cutoffs
                     try:
-                        # handle wells where one or more pie slices are zero
-                        temp = totalcolormap.copy()
-                        # iterate through list
-                        mask = []
-                        for idx, pievalue in enumerate(welldata):
-                            # each time a zero is found, take index and remove corresponding color from temp of colormap
-                            if float(pievalue) == 0:
-                                mask = mask + [idx]
-                        if len(mask) != 0:
-                            temp = np.delete(temp, mask, 0)
-                            welldata = [
-                                val
-                                for idx, val in enumerate(welldata)
-                                if idx not in mask
-                            ]
-                        subplt[row, col].pie(
-                            np.array(list(welldata) / min(list(welldata))),
-                            colors=pickcolor(
-                                totalcolormap.copy(),
-                                int(self.numberofcutoffsPopup.cutoffcol) - 1,
-                                cutoffvalues,
-                                cutoffcolors,
-                                welldata,
-                            ),
-                            wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
-                            radius=1.3,
-                            counterclock=False,
-                        )
+                        draw_filled(
+                            totalcolormap,
+                            welldata,
+                            subplt,
+                            row,
+                            col,
+                            datafilter=datafilter.get(),
+                            cutoffvalues=cutoffvalues,
+                            cutoffcolors=cutoffcolors,
+                            )
                     except Exception as e:
-                        subplt[row, col].pie([0])
-                        warningmessage = (
-                            "Issue displaying well "
-                            + str(wellnum + 1)
-                            + ". \n(possible zero value issue)"
-                        )
-                        messagebox.showwarning(
-                            title="Warning", message=warningmessage
-                        )
-                        if globals_GC.debug:
-                            globals_GC.mylog(e)
+                        draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    # handle wells where one or more pie slices are zero
-                    temp = totalcolormap.copy()
-                    # iterate through list
-                    mask = []
-                    for idx, pievalue in enumerate(welldata):
-                        # each time a zero is found, take index and remove corresponding color from temp of colormap
-                        if float(pievalue) == 0:
-                            mask = mask + [idx]
-                    if len(mask) != 0:
-                        temp = np.delete(temp, mask, 0)
-                        welldata = [
-                            val for idx, val in enumerate(welldata) if idx not in mask
-                        ]
-                    subplt[row, col].pie(
-                        np.array(list(welldata) / min(list(welldata))),
-                        colors=temp,
-                        wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
-                        radius=1.3,
-                        counterclock=False,
-                    )
+                    draw_filled(totalcolormap, welldata, subplt, row, col)
                 # write numbers accross the top
                 if row == 0:
                     subplt[row, col].set_title(str(wellnum + 1))

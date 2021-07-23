@@ -1,5 +1,3 @@
-from io import BytesIO
-import base64
 from PIL import Image, ImageTk
 import tkinter as tk
 import pkg_resources
@@ -89,6 +87,7 @@ def Close_tk(inWindow):
     Close window in order to resintate tk root window and pass to next App
     """
     inWindow.destroy()
+
 
 # Helpful method for PyPi package console script entry point
 def main():

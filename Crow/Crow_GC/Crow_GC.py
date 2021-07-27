@@ -126,9 +126,9 @@ class Crow_GC(tk.Frame):
         def openconfigcallback():
             webbrowser.open(pkg_resources.resource_filename(__name__, "config.yaml"))
 
-        tk.Button(
-            master, text="Open Config. File", command=openconfigcallback
-        ).place(x=470, y=340)
+        tk.Button(master, text="Open Config. File", command=openconfigcallback).place(
+            x=470, y=340
+        )
 
         tk.Button(
             master, text="Search Server by Expt. Name", command=searchservercallback
@@ -196,9 +196,7 @@ class PrePull(tk.Frame):
                             + str(file)
                             + "\n (possible failed injection)"
                         )
-                        messagebox.showwarning(
-                            title="Warning", message=warningmessage
-                        )
+                        messagebox.showwarning(title="Warning", message=warningmessage)
                 # display the histogram
                 plot.bar(
                     list(self.datadict.keys()),
@@ -235,7 +233,8 @@ class Present(tk.Frame):
             # check for wrong type of data selected
             if ".xml" in str(globals_GC.datafiles):
                 messagebox.showerror(
-                    "Error!", "Please select input data file (.csv)! (to convert excel to .csv, use File->Save As... and select .csv)",
+                    "Error!",
+                    "Please select input data file (.csv)! (to convert excel to .csv, use File->Save As... and select .csv)",
                 )
                 return
             # please select data
@@ -252,7 +251,7 @@ class Present(tk.Frame):
                 return
             # if passes all tests, present accordingly
             # pull data from user entered file
-            
+
             exceldata = np.genfromtxt(
                 globals_GC.datafiles[0], dtype=float, delimiter=",", names=True
             )
@@ -268,7 +267,9 @@ class Present(tk.Frame):
                 exceldata = newdata
                 with open(globals_GC.datafiles[0], "r") as file:
                     for line in file.readlines()[1:]:
-                        self._img_filenames.append(line.split(",")[-1].replace("\n",""))
+                        self._img_filenames.append(
+                            line.split(",")[-1].replace("\n", "")
+                        )
 
             # check for files that are too big
             if len(exceldata[0]) > 9:
@@ -379,13 +380,21 @@ class Present(tk.Frame):
                 + str(wellnum + 1)
                 + ". \n(possible zero value issue)"
             )
-            messagebox.showwarning(
-                title="Warning", message=warningmessage
-            )
+            messagebox.showwarning(title="Warning", message=warningmessage)
             if globals_GC.debug:
                 globals_GC.mylog(e)
 
-        def draw_filled(totalcolormap, welldata, subplt, row, col, datafilter=0, cutoffvalues=None, cutoffcolors=None, excludeColmax=None):
+        def draw_filled(
+            totalcolormap,
+            welldata,
+            subplt,
+            row,
+            col,
+            datafilter=0,
+            cutoffvalues=None,
+            cutoffcolors=None,
+            excludeColmax=None,
+        ):
             # handle wells where one or more pie slices are zero
             temp = totalcolormap.copy()
             # iterate through list
@@ -396,16 +405,11 @@ class Present(tk.Frame):
                     mask = mask + [idx]
             if len(mask) != 0:
                 temp = np.delete(temp, mask, 0)
-                welldata = [
-                    val for idx, val in enumerate(welldata) if idx not in mask
-                ]
+                welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
             if datafilter == 3:
                 temp[int(self.shadebyyieldPopup.shadecol) - 1] = temp[
                     int(self.shadebyyieldPopup.shadecol) - 1
-                ] * (
-                    welldata[int(self.shadebyyieldPopup.shadecol) - 1]
-                    / excludeColmax
-                )
+                ] * (welldata[int(self.shadebyyieldPopup.shadecol) - 1] / excludeColmax)
             if datafilter == 4:
                 subplt[row, col].pie(
                     np.array(list(welldata) / min(list(welldata))),
@@ -417,7 +421,7 @@ class Present(tk.Frame):
                         welldata,
                     ),
                     wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
-                    radius=1.3,
+                    radius=1,
                     counterclock=False,
                 )
             else:
@@ -425,7 +429,7 @@ class Present(tk.Frame):
                     np.array(list(welldata) / min(list(welldata))),
                     colors=temp,
                     wedgeprops={"linewidth": 1, "edgecolor": [0, 0, 0]},
-                    radius=1.3,
+                    radius=1,
                     counterclock=False,
                 )
 
@@ -476,7 +480,10 @@ class Present(tk.Frame):
             # create figure with correct number of subplots
             if image_overlay.get():
                 myfig, subplt = plot.subplots(
-                    subplotdims[0], subplotdims[1]*2, figsize=(dims[1]*2*10, dims[0]*10), dpi=200
+                    subplotdims[0],
+                    subplotdims[1] * 2,
+                    figsize=(dims[1] * 2 * 12, dims[0] * 10),
+                    dpi=200,
                 )
             else:
                 myfig, subplt = plot.subplots(
@@ -502,7 +509,15 @@ class Present(tk.Frame):
                         draw_empty(subplt, row, col, wellnum, e)
                 elif datafilter.get() == 3:  # shade by yield
                     try:
-                        draw_filled(totalcolormap, welldata, subplt, row, col, datafilter=datafilter.get(), excludeColmax=excludeColmax)
+                        draw_filled(
+                            totalcolormap,
+                            welldata,
+                            subplt,
+                            row,
+                            col,
+                            datafilter=datafilter.get(),
+                            excludeColmax=excludeColmax,
+                        )
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 elif datafilter.get() == 4:  # group cutoffs
@@ -516,7 +531,7 @@ class Present(tk.Frame):
                             datafilter=datafilter.get(),
                             cutoffvalues=cutoffvalues,
                             cutoffcolors=cutoffcolors,
-                            )
+                        )
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
@@ -561,9 +576,18 @@ class Present(tk.Frame):
                 else:
                     end = len(headers)
                 for header in headers[:end]:
-                    myfig.text(0.2 + 0.1 * count, 0.95, header.replace("\n",""), ha="center", va="bottom", size="medium", color=totalcolormap[count])
+                    myfig.text(
+                        0.2 + 0.1 * count,
+                        0.95,
+                        header.replace("\n", ""),
+                        ha="center",
+                        va="bottom",
+                        size="medium",
+                        color=totalcolormap[count],
+                    )
                     count += 1
-            myfig.savefig('foo.png', bbox_inches='tight')
+            plot.tight_layout()
+            myfig.savefig("foo.png", bbox_inches="tight")
             myfig.show()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):
@@ -585,9 +609,15 @@ class Present(tk.Frame):
 
         # make check button for image overlay
         image_overlay = tk.IntVar()
-        tk.Checkbutton(self, text = "Last column contains image filepaths", variable = image_overlay,
-                onvalue = True, offvalue = False, height=1,
-                width = 30).place(relx=0.3, rely=0.8)
+        tk.Checkbutton(
+            self,
+            text="Last column contains image filepaths",
+            variable=image_overlay,
+            onvalue=True,
+            offvalue=False,
+            height=1,
+            width=30,
+        ).place(relx=0.3, rely=0.8)
 
         # make radio buttons for well layout
         layout = tk.IntVar()
@@ -786,7 +816,7 @@ class Pull(tk.Frame):
             # after passing all validation, continue to remainder of method.
             # iterate through each and pull relevant data
             self.datalist = np.empty(  # empty array the size of len(datafile) x number of products
-                [len(globals_GC.datafiles)-1, len(self.rettimes)], dtype=object
+                [len(globals_GC.datafiles) - 1, len(self.rettimes)], dtype=object
             )
             # iterate through each data test
             for file in globals_GC.datafiles:
@@ -849,9 +879,23 @@ class Pull(tk.Frame):
                             possrettimes = [j[0] for j in poss]
                             possareas = [j[1] for j in poss]
                             if self.retinclude.get():
-                                keep = poss[possrettimes.index(min(possrettimes, key=lambda x: abs(x-self.rettimes[i])))]
+                                keep = poss[
+                                    possrettimes.index(
+                                        min(
+                                            possrettimes,
+                                            key=lambda x: abs(x - self.rettimes[i]),
+                                        )
+                                    )
+                                ]
                             else:
-                                keep = possareas[possrettimes.index(min(possrettimes, key=lambda x: abs(x-self.rettimes[i])))]
+                                keep = possareas[
+                                    possrettimes.index(
+                                        min(
+                                            possrettimes,
+                                            key=lambda x: abs(x - self.rettimes[i]),
+                                        )
+                                    )
+                                ]
                         elif (
                             self.pickingmethod.get() == 2
                         ):  # keep max, just pick max area
@@ -866,7 +910,17 @@ class Pull(tk.Frame):
                                 keep = [j[1] for j in poss]
                         else:
                             keep = "Error"
-                        self.datalist[int(temp[C.globals_GC.welltarg[0]][C.globals_GC.welltarg[1]].text)-1, i] = str(keep).replace("\"", "").replace("]", "").replace("[", "")
+                        self.datalist[
+                            int(
+                                temp[C.globals_GC.welltarg[0]][
+                                    C.globals_GC.welltarg[1]
+                                ].text
+                            )
+                            - 1,
+                            i,
+                        ] = (
+                            str(keep).replace('"', "").replace("]", "").replace("[", "")
+                        )
                 except IndexError as ie:
                     if globals_GC.debug:
                         globals_GC.mylog(ie)
@@ -883,17 +937,24 @@ class Pull(tk.Frame):
                         + "\n (possible failed injection)"
                     )
                     messagebox.showwarning(title="Warning", message=warningmessage)
-            with open(globals_GC.exportdatapath + self.expname.get() + ".csv", "w") as file:
+            with open(
+                globals_GC.exportdatapath + self.expname.get() + ".csv", "w"
+            ) as file:
                 # write header
                 for i in range(len(self.rettimes)):
-                    file.write("eluate "+str(i+1)+"\t")
+                    file.write("eluate " + str(i + 1) + "\t")
                 file.write("\n")
                 # write all lines to a file in a tab separated value format
                 for row in self.datalist:
                     for entry in row:
-                        file.write(entry+"\t")
+                        file.write(entry + "\t")
                     file.write("\n")
-            msg = "Data successfully written to " + globals_GC.exportdatapath + self.expname.get() + ".csv"
+            msg = (
+                "Data successfully written to "
+                + globals_GC.exportdatapath
+                + self.expname.get()
+                + ".csv"
+            )
             messagebox.showinfo(title="Data Written", message=msg)
 
         # pull data button
@@ -920,12 +981,11 @@ class Pull(tk.Frame):
         self.retinclude = tk.IntVar()
         tk.Checkbutton(
             self,
-            text='Include retention times?',
+            text="Include retention times?",
             variable=self.retinclude,
             onvalue=1,
-            offvalue=0).place(
-                x=280,
-                y=415)
+            offvalue=0,
+        ).place(x=280, y=415)
 
         # clear entries button
         tk.Button(self, text="Clear Entries", command=clearentriescallback).place(

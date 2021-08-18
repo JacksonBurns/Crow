@@ -9,7 +9,7 @@ README = (cwd / "README.md").read_text()
 
 setup(
     name="CrowHTE",
-    version="1.3.0",
+    version="1.4.0",
     description="Python GUI to enable High Throughput Experimentation.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -17,9 +17,7 @@ setup(
     author="Jackson Burns",
     author_email="jburnsky@udel.edu",
     license="GNU GPLv3",
-    classifiers=[
-        "Programming Language :: Python :: 3"
-    ],
+    classifiers=["Programming Language :: Python :: 3"],
     install_requires=[
         "six",
         "kiwisolver>=1.0.1",
@@ -30,13 +28,15 @@ setup(
         "matplotlib>=3.1.3",
         "pyyaml",
         "numpy",
-        "setuptools"
+        "setuptools",
     ],
-    packages=['Crow','Crow.Crow_GC','Crow.helper_functions','Crow.test','Crow.other'],
+    packages=[
+        "Crow",
+        "Crow.Crow_GC",
+        "Crow.helper_functions",
+        "Crow.test",
+        "Crow.other",
+    ],
     include_package_data=True,
-    entry_points={
-    'console_scripts': [
-        'crow=Crow.Crow:main',
-    ]
-    }
+    entry_points={"console_scripts": ["crow=Crow.Crow:main",]},
 )

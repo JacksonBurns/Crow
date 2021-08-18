@@ -578,7 +578,7 @@ class Present(tk.Frame):
                 for header in headers[:end]:
                     myfig.text(
                         0.2 + 0.1 * count,
-                        0.95,
+                        0.98,
                         header.replace("\n", ""),
                         ha="center",
                         va="bottom",

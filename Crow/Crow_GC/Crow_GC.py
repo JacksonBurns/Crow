@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # This is the wrapper function for Crow - GC
 import glob
+import time
 import webbrowser
 import pkg_resources
 import sys
@@ -587,8 +588,16 @@ class Present(tk.Frame):
                     )
                     count += 1
             plot.tight_layout()
-            myfig.savefig("foo.png", bbox_inches="tight")
-            myfig.show()
+            if write_to_file.get():
+                fname = (
+                    "CrowHTE_present_output_" + time.strftime("%Y%m%d-%H%M%S") + ".png"
+                )
+                myfig.savefig(
+                    fname, bbox_inches="tight", pad_inches=0.01, dpi=myfig.dpi,
+                )
+                webbrowser.open(fname)
+            else:
+                myfig.show()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):
             for i in range(0, len(cutoffvalues) - 1):
@@ -618,6 +627,18 @@ class Present(tk.Frame):
             height=1,
             width=30,
         ).place(relx=0.3, rely=0.8)
+
+        # make check button for writing image to file
+        write_to_file = tk.IntVar()
+        tk.Checkbutton(
+            self,
+            text="Save graphic directly to file",
+            variable=write_to_file,
+            onvalue=True,
+            offvalue=False,
+            height=1,
+            width=30,
+        ).place(relx=0.3, rely=0.75)
 
         # make radio buttons for well layout
         layout = tk.IntVar()

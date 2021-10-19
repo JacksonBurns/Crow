@@ -12,3 +12,7 @@ debug.txt
 CrowHTE.egg-info/*
 dist/*
 build/*
+
+# output files
+CrowHTE_present_output_*
+foo.png

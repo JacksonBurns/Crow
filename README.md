@@ -23,7 +23,7 @@ To configure Crow to work for your instruments, modify __config.yaml__ to work f
 Crow has three tabs: __Pre-Pull__, __Pull__, and __Present__. __Pre-Pull__ identifies all peaks (and their areas) present in a given data set and generates a histogram of elution times. This is intended to help the user decide on a retention time (and small tolerance window) for each eluate to be pulled from the instrument data. With the help of __Pre-Pull__, __Pull__ enables users to rapidly retrieve the peak areas for large datasets and export them to an Excel file (.csv) for easy manipulation. __Present__ takes Excel files including _only_ the data to be placed in the pie charts, which can then be filtered in a variety of ways to better represent multivariate data.
 
 The above information is also explained in the video tutorial below:
-[Crow SOP](/Crow/other/Crow-SOP.mp4)
+[Crow SOP](https://www.jacksonwarnerburns.com/crow-video-tutorials)
 
 ## Support
 If you need help with setting up Crow, finding out how to retrieve data from your HTE instrument, or you find this program at all helpful, send me a message.

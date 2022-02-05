@@ -849,10 +849,11 @@ class Pull(tk.Frame):
                 return
             # after passing all validation, continue to remainder of method.
             # iterate through each and pull relevant data
-            self.datalist = np.empty(  # empty array the size of len(datafile) x number of products
-                [len(globals_GC.datafiles) - 1, len(self.rettimes)], dtype=object
+            self.datalist = np.empty(  # empty array the size of len(datafile) x (number of eluates + filename)
+                [len(globals_GC.datafiles), len(self.rettimes) + 1], dtype=object
             )
             # iterate through each data test
+            row_num = 0
             for file in globals_GC.datafiles:
                 try:
                     # open file
@@ -895,6 +896,10 @@ class Pull(tk.Frame):
                                 )
                     # assign area(s) to corresponding location in output array
                     # depending on selected peak picking method
+                    self.datalist[
+                        row_num,
+                        0,
+                    ] = file
                     for i in range(
                         0, len(self.rettimes)
                     ):  # go through in order of retention times
@@ -950,25 +955,13 @@ class Pull(tk.Frame):
                         else:
                             keep = "Error"
                         self.datalist[
-                            int(
-                                temp[globals_GC.welltarg[0]][
-                                    globals_GC.welltarg[1]
-                                ].text
-                            )
-                            - 1,
-                            i,
+                            row_num,
+                            i + 1,
                         ] = (
                             str(keep).replace('"', "").replace(
                                 "]", "").replace("[", "")
                         )
-                except IndexError as ie:
-                    if globals_GC.debug:
-                        globals_GC.mylog(ie)
-                    warningmessage = (
-                        "Please select files in order starting from 1 to end"
-                    )
-                    messagebox.showwarning(
-                        title="Warning", message=warningmessage)
+                    row_num += 1
                 except Exception as e:
                     if globals_GC.debug:
                         globals_GC.mylog(e)
@@ -983,6 +976,7 @@ class Pull(tk.Frame):
                 globals_GC.exportdatapath + self.expname.get() + ".csv", "w"
             ) as file:
                 # write header
+                file.write("filename\t")
                 for i in range(len(self.rettimes)):
                     file.write("eluate " + str(i + 1) + "\t")
                 file.write("\n")

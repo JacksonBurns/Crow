@@ -71,7 +71,8 @@ def Crow_Parent():
     SFCMSButton.place(x=10, y=70)
 
     # add Crow logo to parent application
-    resource_path = pkg_resources.resource_filename(__name__, "other/Crow_logo.png")
+    resource_path = pkg_resources.resource_filename(
+        __name__, "other/Crow_logo.png")
     load = Image.open(resource_path)
     load = load.resize((160, 160), Image.ANTIALIAS)
     render = ImageTk.PhotoImage(load)

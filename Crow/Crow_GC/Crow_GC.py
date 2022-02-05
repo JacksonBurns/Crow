@@ -90,7 +90,8 @@ class Crow_GC(tk.Frame):
             temp = tk.Text(master, height=10, width=35)
             temp.insert(
                 tk.END,
-                str(len(globals_GC.datafiles)) + " TOTAL FILES\n" + self.FileDisplay,
+                str(len(globals_GC.datafiles)) +
+                " TOTAL FILES\n" + self.FileDisplay,
             )
             temp.place(x=470, y=65)
             temp.config(state="disabled")
@@ -125,7 +126,8 @@ class Crow_GC(tk.Frame):
             update_files()
 
         def openconfigcallback():
-            webbrowser.open(pkg_resources.resource_filename(__name__, "config.yaml"))
+            webbrowser.open(pkg_resources.resource_filename(
+                __name__, "config.yaml"))
 
         tk.Button(master, text="Open Config. File", command=openconfigcallback).place(
             x=470, y=340
@@ -182,9 +184,11 @@ class PrePull(tk.Frame):
                 for file in globals_GC.datafiles:
                     try:
                         temp = ParseXML.ParseXML(file)
-                        temp = temp[globals_GC.peaktarg[0]][globals_GC.peaktarg[1]]
+                        temp = temp[globals_GC.peaktarg[0]
+                                    ][globals_GC.peaktarg[1]]
                         for peak in temp[1:]:
-                            rettime = round(float(peak[globals_GC.rettarg].text), 2)
+                            rettime = round(
+                                float(peak[globals_GC.rettarg].text), 2)
                             if rettime in self.datadict:
                                 self.datadict[rettime] += 1
                             else:
@@ -197,7 +201,8 @@ class PrePull(tk.Frame):
                             + str(file)
                             + "\n (possible failed injection)"
                         )
-                        messagebox.showwarning(title="Warning", message=warningmessage)
+                        messagebox.showwarning(
+                            title="Warning", message=warningmessage)
                 # display the histogram
                 plot.bar(
                     list(self.datadict.keys()),
@@ -334,22 +339,24 @@ class Present(tk.Frame):
             # 96 (8x12)
             if layout.get() == 1:
                 try:
-                    graphic_generator(exceldata, [8, 12], totalcolormap, (6, 4))
+                    graphic_generator(
+                        exceldata, [8, 12], totalcolormap, (6, 4))
                 except Exception as e:
                     if globals_GC.debug:
                         globals_GC.mylog(e)
                     messagebox.showerror(
-                        "Error!", "Something went wrong, please try again.",
+                        "Error - Try Again", e,
                     )
             # 96 (12x8)
             elif layout.get() == 2:
                 try:
-                    graphic_generator(exceldata, [12, 8], totalcolormap, (4, 6))
+                    graphic_generator(
+                        exceldata, [12, 8], totalcolormap, (4, 6))
                 except Exception as e:
                     if globals_GC.debug:
                         globals_GC.mylog(e)
                     messagebox.showerror(
-                        "Error!", "Something went wrong, please try again.",
+                        "Error - Try Again", e,
                     )
             # 24 (4x6)
             elif layout.get() == 3:
@@ -359,7 +366,7 @@ class Present(tk.Frame):
                     if globals_GC.debug:
                         globals_GC.mylog(e)
                     messagebox.showerror(
-                        "Error!", "Something went wrong, please try again.",
+                        "Error - Try Again", e,
                     )
             # 24 (6x4)
             elif layout.get() == 4:
@@ -369,7 +376,7 @@ class Present(tk.Frame):
                     if globals_GC.debug:
                         globals_GC.mylog(e)
                     messagebox.showerror(
-                        "Error!", "Something went wrong, please try again.",
+                        "Error - Try Again", e,
                     )
             else:
                 messagebox.showerror("Error!", "Please select a layout.")
@@ -406,7 +413,8 @@ class Present(tk.Frame):
                     mask = mask + [idx]
             if len(mask) != 0:
                 temp = np.delete(temp, mask, 0)
-                welldata = [val for idx, val in enumerate(welldata) if idx not in mask]
+                welldata = [val for idx, val in enumerate(
+                    welldata) if idx not in mask]
             if datafilter == 3:
                 temp[int(self.shadebyyieldPopup.shadecol) - 1] = temp[
                     int(self.shadebyyieldPopup.shadecol) - 1
@@ -474,7 +482,8 @@ class Present(tk.Frame):
                     self.cutoffPopup = cutoffPopup(self.master)
                     self.master.wait_window(self.cutoffPopup.top)
                     # assign values before overwritten
-                    cutoffvalues = cutoffvalues + [float(self.cutoffPopup.cutoffval)]
+                    cutoffvalues = cutoffvalues + \
+                        [float(self.cutoffPopup.cutoffval)]
                     cutoffcolors = cutoffcolors + [
                         [int(s) / 255 for s in self.cutoffPopup.cutoffcolor.split(",")]
                     ]
@@ -505,7 +514,8 @@ class Present(tk.Frame):
                         ):  # exclude cutoff
                             subplt[row, col].pie([0])
                         else:
-                            draw_filled(totalcolormap, welldata, subplt, row, col)
+                            draw_filled(totalcolormap, welldata,
+                                        subplt, row, col)
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 elif datafilter.get() == 3:  # shade by yield
@@ -551,7 +561,8 @@ class Present(tk.Frame):
                     )
                 # draw the image over the well
                 if image_overlay.get():
-                    im = plot.imread(get_sample_data(self._img_filenames[wellnum]))
+                    im = plot.imread(get_sample_data(
+                        self._img_filenames[wellnum]))
                     # if layout.get() == 1:
                     #     ax = myfig.add_axes([0.09 + 0.79 * col / subplotdims[1], 0.79 - 0.78 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
                     # elif layout.get() == 2:
@@ -590,7 +601,8 @@ class Present(tk.Frame):
             plot.tight_layout()
             if write_to_file.get():
                 fname = (
-                    "CrowHTE_present_output_" + time.strftime("%Y%m%d-%H%M%S") + ".png"
+                    "CrowHTE_present_output_" +
+                    time.strftime("%Y%m%d-%H%M%S") + ".png"
                 )
                 myfig.savefig(
                     fname, bbox_inches="tight", pad_inches=0.01, dpi=myfig.dpi,
@@ -642,7 +654,8 @@ class Present(tk.Frame):
 
         # make radio buttons for well layout
         layout = tk.IntVar()
-        layouts = [("96 (8x12)", 1), ("96 (12x8)", 2), ("24 (4x6)", 3), ("24 (6x4)", 4)]
+        layouts = [("96 (8x12)", 1), ("96 (12x8)", 2),
+                   ("24 (4x6)", 3), ("24 (6x4)", 4)]
         tk.Label(self, text="Well layout:").place(x=5, y=40)
         yiterator = 60
         for i in range(len(layouts)):
@@ -845,7 +858,8 @@ class Pull(tk.Frame):
                     # open file
                     temp = ParseXML.ParseXML(file)
                     # go to where peaks are stored
-                    peaks = temp[globals_GC.peaktarg[0]][globals_GC.peaktarg[1]]
+                    peaks = temp[globals_GC.peaktarg[0]
+                                 ][globals_GC.peaktarg[1]]
                     # setup a pair of lists to store information for
                     # peaks which fall within the window
                     peaksinwindow = []
@@ -871,8 +885,10 @@ class Pull(tk.Frame):
                                 peaksinwindow.append(
                                     tuple(
                                         [
-                                            float(peak[globals_GC.rettarg].text),
-                                            float(peak[globals_GC.areatarg].text),
+                                            float(
+                                                peak[globals_GC.rettarg].text),
+                                            float(
+                                                peak[globals_GC.areatarg].text),
                                             i,
                                         ]
                                     )
@@ -904,7 +920,8 @@ class Pull(tk.Frame):
                                     possrettimes.index(
                                         min(
                                             possrettimes,
-                                            key=lambda x: abs(x - self.rettimes[i]),
+                                            key=lambda x: abs(
+                                                x - self.rettimes[i]),
                                         )
                                     )
                                 ]
@@ -913,7 +930,8 @@ class Pull(tk.Frame):
                                     possrettimes.index(
                                         min(
                                             possrettimes,
-                                            key=lambda x: abs(x - self.rettimes[i]),
+                                            key=lambda x: abs(
+                                                x - self.rettimes[i]),
                                         )
                                     )
                                 ]
@@ -933,14 +951,15 @@ class Pull(tk.Frame):
                             keep = "Error"
                         self.datalist[
                             int(
-                                temp[C.globals_GC.welltarg[0]][
-                                    C.globals_GC.welltarg[1]
+                                temp[globals_GC.welltarg[0]][
+                                    globals_GC.welltarg[1]
                                 ].text
                             )
                             - 1,
                             i,
                         ] = (
-                            str(keep).replace('"', "").replace("]", "").replace("[", "")
+                            str(keep).replace('"', "").replace(
+                                "]", "").replace("[", "")
                         )
                 except IndexError as ie:
                     if globals_GC.debug:
@@ -948,7 +967,8 @@ class Pull(tk.Frame):
                     warningmessage = (
                         "Please select files in order starting from 1 to end"
                     )
-                    messagebox.showwarning(title="Warning", message=warningmessage)
+                    messagebox.showwarning(
+                        title="Warning", message=warningmessage)
                 except Exception as e:
                     if globals_GC.debug:
                         globals_GC.mylog(e)
@@ -957,7 +977,8 @@ class Pull(tk.Frame):
                         + str(file)
                         + "\n (possible failed injection)"
                     )
-                    messagebox.showwarning(title="Warning", message=warningmessage)
+                    messagebox.showwarning(
+                        title="Warning", message=warningmessage)
             with open(
                 globals_GC.exportdatapath + self.expname.get() + ".csv", "w"
             ) as file:
@@ -984,7 +1005,8 @@ class Pull(tk.Frame):
         )
         # set up button for picking method
         self.pickingmethod = tk.IntVar()
-        methods = [("Keep Centermost", 1), ("Keep Maximum", 2), ("Keep All", 3)]
+        methods = [("Keep Centermost", 1),
+                   ("Keep Maximum", 2), ("Keep All", 3)]
         tk.Label(self, text="Peak picking method:").place(x=150, y=305)
         yiterator = 325
         for i in range(len(methods)):

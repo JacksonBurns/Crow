@@ -263,6 +263,7 @@ class Present(tk.Frame):
             )
             if image_overlay.get():
                 # the image filenames will have broken the input data
+                self._img_filenames = []
                 newdata = []
                 for row in exceldata:
                     newrow = []

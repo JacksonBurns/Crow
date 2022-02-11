@@ -9,7 +9,7 @@ README = (cwd / "README.md").read_text()
 
 setup(
     name="CrowHTE",
-    version="1.5.2",
+    version="1.5.3",
     description="Python GUI to enable High Throughput Experimentation.",
     long_description=README,
     long_description_content_type="text/markdown",

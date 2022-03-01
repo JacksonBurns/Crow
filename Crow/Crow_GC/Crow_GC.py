@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 # This is the wrapper function for Crow - GC
+from Crow.Crow_GC import globals_GC
+from Crow.helper_functions import ParseXML, RequestFiles
+import tkinter.colorchooser as cc
+import numpy as np
 import glob
 import time
 import webbrowser
@@ -9,16 +13,12 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plot
 from matplotlib.cbook import get_sample_data
-from mpl_toolkits.axes_grid.inset_locator import inset_axes
+import matplotlib.patheffects as pe
 
-import numpy as np
-import tkinter.colorchooser as cc
 
 # retrieve functions written elsewhere
-from Crow.helper_functions import ParseXML, RequestFiles
 
 # retreive global datafiles list variable
-from Crow.Crow_GC import globals_GC
 
 
 # define GUI
@@ -105,8 +105,8 @@ class Crow_GC(tk.Frame):
         )
         # Select Data files button
         tk.Button(
-            master, text="Select Excel Data", command=selectexceldatacallback
-        ).place(x=650, y=245)
+            master, text="Select Processed Data (.csv)", command=selectexceldatacallback
+        ).place(x=600, y=245)
 
         # Retrieve files from server by experiment name
         def searchservercallback():
@@ -379,6 +379,26 @@ class Present(tk.Frame):
                     messagebox.showerror(
                         "Error - Try Again", e,
                     )
+            # 48 (6x8)
+            elif layout.get() == 5:
+                try:
+                    graphic_generator(exceldata, [6, 8], totalcolormap, (6, 4))
+                except Exception as e:
+                    if globals_GC.debug:
+                        globals_GC.mylog(e)
+                    messagebox.showerror(
+                        "Error - Try Again", e,
+                    )
+            # 48 (8x6)
+            elif layout.get() == 6:
+                try:
+                    graphic_generator(exceldata, [8, 6], totalcolormap, (4, 6))
+                except Exception as e:
+                    if globals_GC.debug:
+                        globals_GC.mylog(e)
+                    messagebox.showerror(
+                        "Error - Try Again", e,
+                    )
             else:
                 messagebox.showerror("Error!", "Please select a layout.")
 
@@ -564,19 +584,6 @@ class Present(tk.Frame):
                 if image_overlay.get():
                     im = plot.imread(get_sample_data(
                         self._img_filenames[wellnum]))
-                    # if layout.get() == 1:
-                    #     ax = myfig.add_axes([0.09 + 0.79 * col / subplotdims[1], 0.79 - 0.78 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    # elif layout.get() == 2:
-                    #     ax = myfig.add_axes([0.12 + 0.8 * col / subplotdims[1], 0.78 - 0.772 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    # elif layout.get() == 3:
-                    #     ax = myfig.add_axes([0.06 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    # elif layout.get() == 4:
-                    #     ax = myfig.add_axes([0.14 + 0.8 * col / subplotdims[1], 0.7 - 0.8 * row / subplotdims[0], 1 / subplotdims[0], 1 / subplotdims[1]])
-                    # else:
-                    #     continue
-                    # ax.imshow(im)
-                    # ax.axis('off')
-
                     subplt[row, col + 1].imshow(im)
                     subplt[row, col + 1].axis("off")
 
@@ -595,8 +602,10 @@ class Present(tk.Frame):
                         header.replace("\n", ""),
                         ha="center",
                         va="bottom",
-                        size="medium",
+                        size=70,
                         color=totalcolormap[count],
+                        path_effects=[pe.withStroke(
+                            linewidth=1, foreground='black')],
                     )
                     count += 1
             plot.tight_layout()
@@ -607,6 +616,10 @@ class Present(tk.Frame):
                 )
                 myfig.savefig(
                     fname, bbox_inches="tight", pad_inches=0.01, dpi=myfig.dpi,
+                )
+                messagebox.showinfo(
+                    "Graphic Generation Complete",
+                    "Successfully wrote ouput to " + fname,
                 )
                 webbrowser.open(fname)
             else:
@@ -656,7 +669,8 @@ class Present(tk.Frame):
         # make radio buttons for well layout
         layout = tk.IntVar()
         layouts = [("96 (8x12)", 1), ("96 (12x8)", 2),
-                   ("24 (4x6)", 3), ("24 (6x4)", 4)]
+                   ("24 (4x6)", 3), ("24 (6x4)", 4),
+                   ("48 (6x8)", 5), ("48 (8x6)", 6), ]
         tk.Label(self, text="Well layout:").place(x=5, y=40)
         yiterator = 60
         for i in range(len(layouts)):

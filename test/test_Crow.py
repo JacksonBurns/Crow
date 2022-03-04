@@ -1,5 +1,29 @@
-import sys
+""" Test the methods of Crow """
+import Crow_GC
+from Crow_GC import Present_GC
+from Crow_GC import Pull_GC
+from Crow_GC import PrePull_GC
+from .Crow_GC import globals_GC
 import os
+import sys
+import unittest
+
+
+class TestCrow(unittest.TestCase):
+    """
+    Tests for methods of Crow.
+    """
+
+    def test_dummy_test(self):
+        """
+        Placeholder test.        
+        """
+        self.assertTrue(True)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
 sys.path.insert(0, '..')
 initdir = os.getcwd()
 """
@@ -27,7 +51,6 @@ Test globals_GC.py
 """
 # test initialization of global variables and debug function
 os.chdir("Crow_GC")
-from .Crow_GC import globals_GC
 # write a temporary config file for testing purposes
 with open("config.yaml", "w") as file:
     file.writelines([
@@ -65,7 +88,6 @@ os.remove("debug.txt")
 """
 Test PrePull_GC.py
 """
-from Crow_GC import PrePull_GC
 PrePull_test = PrePull_GC.PrePull("Pre-Pull")
 # ensure that tab is properly instantiated
 assert isinstance(PrePull_test, PrePull_GC.PrePull)
@@ -77,14 +99,12 @@ assert isinstance(PrePull_test, PrePull_GC.PrePull)
 """
 Test Pull_GC.py
 """
-from Crow_GC import Pull_GC
 Pull_test = Pull_GC.Pull("Pull")
 # ensure that tab is properly instantiated
 assert isinstance(Pull_test, Pull_GC.Pull)
 """
 Test Present_GC.py
 """
-from Crow_GC import Present_GC
 Present_test = Present_GC.Present("Present")
 # ensure that tab is properly instantiated
 assert isinstance(Present_test, Present_GC.Present)
@@ -101,15 +121,14 @@ the tests described at the top of this document.
 # write a temporary xml file to test ParseXML.py
 with open("temp.xml", "w") as file:
     file.writelines([
-            "<Module>\n",
-            "    <Number>1</Number>\n",
-            "    <NumberInModule>1</NumberInModule>\n",
-            "    <ModuleName>Agilent 6890 GC</ModuleName>\n",
-            "    <SerialNumber>US00041800</SerialNumber>\n",
-            "    <FirmwareRevision>A.03.08</FirmwareRevision>\n",
-            "    <PartNumber>6890</PartNumber>\n",
-            "</Module>"])
-import Crow_GC
+        "<Module>\n",
+        "    <Number>1</Number>\n",
+        "    <NumberInModule>1</NumberInModule>\n",
+        "    <ModuleName>Agilent 6890 GC</ModuleName>\n",
+        "    <SerialNumber>US00041800</SerialNumber>\n",
+        "    <FirmwareRevision>A.03.08</FirmwareRevision>\n",
+        "    <PartNumber>6890</PartNumber>\n",
+        "</Module>"])
 root_test = Crow_GC.Crow_GC.ParseXML.ParseXML("temp.xml")
 # check various parts of the returned root to ensure that it is read correctly
 assert root_test[0].text == "1"

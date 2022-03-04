@@ -1,7 +1,7 @@
 from PIL import Image, ImageTk
 import tkinter as tk
 import pkg_resources
-from .Crow_GC import Crow_GC
+# from .Crow_GC import Crow_GC
 
 """
 Created on Sat Jan 18 23:45:07 2020
@@ -72,7 +72,7 @@ def Crow_Parent():
 
     # add Crow logo to parent application
     resource_path = pkg_resources.resource_filename(
-        __name__, "other/Crow_logo.png")
+        __name__, "Crow_logo.png")
     load = Image.open(resource_path)
     load = load.resize((160, 160), Image.ANTIALIAS)
     render = ImageTk.PhotoImage(load)

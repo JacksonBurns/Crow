@@ -27,7 +27,7 @@ README = (cwd / "README.md").read_text()
 
 setup(
     name="CrowHTE",
-    version=get_version("src/__init__.py"),
+    version=get_version("crow/__init__.py"),
     description="Python GUI to enable High Throughput Experimentation.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -39,5 +39,5 @@ setup(
     install_requires=read("requirements.txt").split("\n"),
     packages=find_packages(),
     include_package_data=True,
-    entry_points={"console_scripts": ["crow=src.Crow:main", ]},
+    entry_points={"console_scripts": ["crow=crow.__main__:start_Crow", ]},
 )

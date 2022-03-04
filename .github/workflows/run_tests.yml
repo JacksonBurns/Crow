@@ -1,0 +1,29 @@
+name: Run Tests
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          python -m pip install rdkit-pypi
+          python -m pip install networkx==2.1
+          python -m pip install openpyxl
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+          python -m pip install coverage
+      
+      - name: Run Tests
+        run: |
+          coverage run --source=. --omit=interfaces/*,AIMSim/__main__.py,AIMSim/tasks/__init__.py,AIMSim/ops/__init__.py,AIMSim/chemical_datastructures/__init__.py,AIMSim/utils/__init__.py,setup.py,tests/*,AIMSim/__init__.py,AIMSim/utils/plotting_scripts.py -m unittest discover
+      - name: Show Coverage
+        run: |
+          coverage report -m

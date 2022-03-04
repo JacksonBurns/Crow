@@ -35,7 +35,6 @@ class CrowBase(tk.Frame):
     """
 
     def __init__(self, master):
-        # crow_globals.init()
         # create base window, name it, and size it
         self.master = master
         master.title("Crow")
@@ -87,7 +86,6 @@ class CrowBase(tk.Frame):
                 .replace(")", "")
             )
             update_files()
-            pass
 
         # define excel data callback
         def selectexceldatacallback():
@@ -104,7 +102,6 @@ class CrowBase(tk.Frame):
                 .replace(")", "")
             )
             update_files()
-            pass
 
         # data files display
         def update_files():
@@ -120,19 +117,19 @@ class CrowBase(tk.Frame):
             )
             temp.place(x=470, y=65)
             temp.config(state="disabled")
-            pass
 
         update_files()
         # data files label
         tk.Label(master, text="Current Data Files:").place(x=470, y=40)
         # Select Data files button
-        tk.Button(master, text="Select Raw Data", command=selectrawdatacallback).place(
-            x=470, y=245
-        )
+        self.selectrawdatabutton = tk.Button(
+            master, text="Select Raw Data", command=selectrawdatacallback)
+        self.selectrawdatabutton.place(x=470, y=245)
         # Select Data files button
-        tk.Button(
+        self.selectprocesseddata = tk.Button(
             master, text="Select Processed Data (.csv)", command=selectexceldatacallback
-        ).place(x=600, y=245)
+        )
+        self.selectprocesseddata.place(x=600, y=245)
 
         # Retrieve files from server by experiment name
         def searchservercallback():
@@ -150,19 +147,19 @@ class CrowBase(tk.Frame):
                 .replace("]", "")
             )
             update_files()
-            pass
 
         def openconfigcallback():
             webbrowser.open(pkg_resources.resource_filename(
                 __name__, "utils/config.yaml"))
 
-        tk.Button(master, text="Open Config. File", command=openconfigcallback).place(
-            x=470, y=340
-        )
+        self.openconfigbutton = tk.Button(
+            master, text="Open Config. File", command=openconfigcallback)
+        self.openconfigbutton.place(x=470, y=340)
 
-        tk.Button(
+        self.searchserverbutton = tk.Button(
             master, text="Search Server by Expt. Name", command=searchservercallback
-        ).place(x=470, y=310)
+        )
+        self.searchserverbutton.place(x=470, y=310)
         self.expname = tk.Entry(master)
         self.expname.place(x=470, y=280)
         # title on top of window

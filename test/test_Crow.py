@@ -1,9 +1,10 @@
 """ Test the methods of Crow."""
 import os
+import tkinter
 import unittest
 from unittest.mock import patch
 
-from crow.Crow import main
+from crow.Crow import main, CrowBase
 from crow.utils.crow_globals import crow_globals
 from crow.utils.logger import mylog
 from crow.utils.ParseXML import ParseXML
@@ -29,6 +30,31 @@ class TestCrow(unittest.TestCase):
         with patch("crow.Crow.tk.Tk.mainloop") as test_gui:
             main()
             self.assertTrue(test_gui.called)
+
+        master = tkinter.Tk()
+        cb = CrowBase(master)
+
+        with patch("crow.Crow.RequestFiles.RequestFiles") as test_request:
+            cb.selectprocesseddata.invoke()
+            self.assertTrue(test_request.called)
+
+        with patch("crow.Crow.RequestFiles.RequestFiles") as test_request:
+            cb.selectrawdatabutton.invoke()
+            self.assertTrue(test_request.called)
+
+        with patch("crow.Crow.glob.glob") as test_search:
+            cb.searchserverbutton.invoke()
+            self.assertTrue(test_search.called)
+
+        with patch("crow.Crow.webbrowser.open") as test_open:
+            cb.openconfigbutton.invoke()
+            self.assertTrue(test_open.called)
+
+        with patch("crow.Crow.messagebox.askokcancel") as test_confirm:
+            with patch("crow.Crow.sys.exit") as test_exit:
+                cb.close_app()
+                self.assertTrue(test_confirm.called)
+                self.assertTrue(test_exit.called)
 
     def test_crow_globals(self):
         """
@@ -161,27 +187,59 @@ class TestCrow(unittest.TestCase):
 
     def test_cutoff(self):
         """
-
+        Launch the popup for getting the cutoff value in present
         """
-        pass
+        master = tkinter.Tk()
+        with patch("crow.utils.popupwindows.cutoff.tk.Toplevel.destroy") as test_close:
+            pop = cutoffPopup(master)
+            self.assertIsInstance(
+                pop,
+                cutoffPopup,
+            )
+            pop.closebutton.invoke()
+            self.assertTrue(test_close.called)
 
     def test_exclude(self):
         """
-
+        Launch the popup to get the wells to exclude
         """
-        pass
+        master = tkinter.Tk()
+        with patch("crow.utils.popupwindows.exclude.tk.Toplevel.destroy") as test_close:
+            pop = excludePopup(master)
+            self.assertIsInstance(
+                pop,
+                excludePopup,
+            )
+            pop.closebutton.invoke()
+            self.assertTrue(test_close.called)
 
     def test_numberofcutoffs(self):
         """
-
+        Launch the popup to get the number of cutoffs
         """
-        pass
+        master = tkinter.Tk()
+        with patch("crow.utils.popupwindows.numberofcutoffs.tk.Toplevel.destroy") as test_close:
+            pop = numberofcutoffsPopup(master)
+            self.assertIsInstance(
+                pop,
+                numberofcutoffsPopup,
+            )
+            pop.closebutton.invoke()
+            self.assertTrue(test_close.called)
 
     def test_shadebyyield(self):
         """
-
+        Launch the popup to get shade by yield
         """
-        pass
+        master = tkinter.Tk()
+        with patch("crow.utils.popupwindows.shadebyyield.tk.Toplevel.destroy") as test_close:
+            pop = shadebyyieldPopup(master)
+            self.assertIsInstance(
+                pop,
+                shadebyyieldPopup,
+            )
+            pop.closebutton.invoke()
+            self.assertTrue(test_close.called)
 
 
 if __name__ == "__main__":

@@ -16,7 +16,8 @@ class cutoffPopup(object):
         self.cutoffcolor = tk.Entry(top)
         self.cutoffcolor.insert(tk.END, "255,255,255")
         self.cutoffcolor.place(x=0, y=75)
-        tk.Button(top, text="Ok", command=self.close).place(x=0, y=100)
+        self.closebutton = tk.Button(top, text="Ok", command=self.close)
+        self.closebutton.place(x=0, y=100)
 
     def close(self):
         self.cutoffval = self.cutoffval.get()

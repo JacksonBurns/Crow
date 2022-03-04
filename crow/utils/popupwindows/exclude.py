@@ -18,7 +18,8 @@ class excludePopup(object):
         tk.Label(top, text="Hide wells with values below:").place(x=0, y=50)
         self.excludeval = tk.Entry(top)
         self.excludeval.place(x=0, y=75)
-        tk.Button(top, text="Ok", command=self.close).place(x=0, y=100)
+        self.closebutton = tk.Button(top, text="Ok", command=self.close)
+        self.closebutton.place(x=0, y=100)
 
     def close(self):
         self.excludecol = self.excludecol.get()

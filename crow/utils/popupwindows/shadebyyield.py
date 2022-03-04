@@ -11,7 +11,8 @@ class shadebyyieldPopup(object):
         tk.Label(top, text="Column to base shading on:").place(x=0, y=0)
         self.shadecol = tk.Entry(top)
         self.shadecol.place(x=0, y=25)
-        tk.Button(top, text="Ok", command=self.close).place(x=0, y=50)
+        self.closebutton = tk.Button(top, text="Ok", command=self.close)
+        self.closebutton.place(x=0, y=50)
 
     def close(self):
         self.shadecol = self.shadecol.get()

@@ -15,7 +15,8 @@ class numberofcutoffsPopup(object):
         tk.Label(top, text="Column to base groups on:").place(x=0, y=50)
         self.cutoffcol = tk.Entry(top)
         self.cutoffcol.place(x=0, y=75)
-        tk.Button(top, text="Ok", command=self.close).place(x=0, y=100)
+        self.closebutton = tk.Button(top, text="Ok", command=self.close)
+        self.closebutton.place(x=0, y=100)
 
     def close(self):
         self.numgroups = self.numgroups.get()

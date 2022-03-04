@@ -2,12 +2,17 @@
 import os
 import sys
 import unittest
+from unittest.mock import patch
 
-from crow.Crow import CrowBase
+from crow.Crow import main
 from crow.utils.crow_globals import crow_globals
 from crow.utils.logger import mylog
 from crow.utils.ParseXML import ParseXML
 from crow.utils.RequestFiles import RequestFiles
+from crow.utils.popupwindows.cutoff import cutoffPopup
+from crow.utils.popupwindows.exclude import excludePopup
+from crow.utils.popupwindows.numberofcutoffs import numberofcutoffsPopup
+from crow.utils.popupwindows.shadebyyield import shadebyyieldPopup
 from crow.uitabs.PrePull import PrePull
 from crow.uitabs.Pull import Pull
 from crow.uitabs.Present import Present
@@ -20,9 +25,11 @@ class TestCrow(unittest.TestCase):
 
     def test_CrowBase(self):
         """
-
+        Running Crow base GUI with patched out tk calls.
         """
-        pass
+        with patch("crow.Crow.tk.Tk.mainloop") as test_gui:
+            main()
+            self.assertTrue(test_gui.called)
 
     def test_crow_globals(self):
         """
@@ -53,15 +60,38 @@ class TestCrow(unittest.TestCase):
 
     def test_mylog(self):
         """
-
+        Debug logger used by all parts of Crow.
         """
-        pass
+        try:
+            # intentionally cause an exception
+            3 / 0
+        except Exception as e:
+            mylog(e)
+        self.assertTrue(os.path.isfile("debug.txt"))
+        # remove file to prevent cluttering
+        os.remove("debug.txt")
 
     def test_ParseXML(self):
         """
-
+        File reading capability used in Crow.
         """
-        pass
+        with open("temp.xml", "w") as file:
+            file.writelines([
+                "<Module>\n",
+                "    <Number>1</Number>\n",
+                "    <NumberInModule>1</NumberInModule>\n",
+                "    <ModuleName>Agilent 6890 GC</ModuleName>\n",
+                "    <SerialNumber>US00041800</SerialNumber>\n",
+                "    <FirmwareRevision>A.03.08</FirmwareRevision>\n",
+                "    <PartNumber>6890</PartNumber>\n",
+                "</Module>"])
+        root_test = ParseXML("temp.xml")
+        # check various parts of the returned root to ensure that it is read correctly
+        self.assertEqual(root_test[0].text, "1")
+        self.assertEqual(root_test[2].text, "Agilent 6890 GC")
+        self.assertEqual(root_test[5].text, "6890")
+        # remove temporary file
+        os.remove("temp.xml")
 
     def test_RequestFiles(self):
         """
@@ -87,45 +117,54 @@ class TestCrow(unittest.TestCase):
         """
         pass
 
+    def test_cutoff(self):
+        """
+
+        """
+        pass
+
+    def test_exclude(self):
+        """
+
+        """
+        pass
+
+    def test_numberofcutoffs(self):
+        """
+
+        """
+        pass
+
+    def test_shadebyyield(self):
+        """
+
+        """
+        pass
+
 
 if __name__ == "__main__":
     unittest.main()
 
-# sys.path.insert(0, '..')
-# initdir = os.getcwd()
-# """
-# Test all internal methods for the Crow application which do not rely on user input.
+"""
+Test all internal methods for the Crow application which do not rely on user input.
 
-# Other functions which do require user input can be tested by running Crow.py and entering
-# the provided sample raw data and sample input data in the test directory, ex.:
+Other functions which do require user input can be tested by running Crow.py and entering
+the provided sample raw data and sample input data in the test directory, ex.:
 
-#     python Crow.py
+    python Crow.py
 
-#     In the User Interface, navigate to the PrePull or Pull tab.
-#     Press the "Select Raw Data" button and, when prompted, select
-#         the .xml files provided in /test/Sample GC Data
-#     Click Pre-Pull to generate of histogram of all eluates and
-#         setup and run a Pull to retrieve some desired peak(s).
-#     Navigate to the present tab.
-#     Press the "Select Excel Data" button and navigate to the
-#         sample input data provided in /test
-#     Experiment with various layouts, filters, and with exporting
-#         generated plots.
-# """
+    In the User Interface, navigate to the PrePull or Pull tab.
+    Press the "Select Raw Data" button and, when prompted, select
+        the .xml files provided in /test/Sample GC Data
+    Click Pre-Pull to generate of histogram of all eluates and
+        setup and run a Pull to retrieve some desired peak(s).
+    Navigate to the present tab.
+    Press the "Select Excel Data" button and navigate to the
+        sample input data provided in /test
+    Experiment with various layouts, filters, and with exporting
+        generated plots.
+"""
 
-# """
-# Test globals_GC.py
-# """
-
-# # test eexception logger
-# try:
-#     # intentionally cause an exception
-#     3 / 0
-# except Exception as e:
-#     globals_GC.mylog(e)
-# assert os.path.isfile("debug.txt")
-# # remove file to prevent cluttering
-# os.remove("debug.txt")
 
 # """
 # Test PrePull_GC.py
@@ -150,31 +189,3 @@ if __name__ == "__main__":
 # Present_test = Present_GC.Present("Present")
 # # ensure that tab is properly instantiated
 # assert isinstance(Present_test, Present_GC.Present)
-
-# # remove temporary file
-# os.remove("config.yaml")
-
-# """
-# Test helper functions which do not rely on GUI-based user input.
-
-# Those helper functions which do require input are tested by executing
-# the tests described at the top of this document.
-# """
-# # write a temporary xml file to test ParseXML.py
-# with open("temp.xml", "w") as file:
-#     file.writelines([
-#         "<Module>\n",
-#         "    <Number>1</Number>\n",
-#         "    <NumberInModule>1</NumberInModule>\n",
-#         "    <ModuleName>Agilent 6890 GC</ModuleName>\n",
-#         "    <SerialNumber>US00041800</SerialNumber>\n",
-#         "    <FirmwareRevision>A.03.08</FirmwareRevision>\n",
-#         "    <PartNumber>6890</PartNumber>\n",
-#         "</Module>"])
-# root_test = Crow_GC.Crow_GC.ParseXML.ParseXML("temp.xml")
-# # check various parts of the returned root to ensure that it is read correctly
-# assert root_test[0].text == "1"
-# assert root_test[2].text == "Agilent 6890 GC"
-# assert root_test[5].text == "6890"
-# # remove temporary file
-# os.remove("temp.xml")

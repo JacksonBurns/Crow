@@ -10,7 +10,7 @@ def mylog(e):
     """
     debugfile = open("debug.txt", "a")
     debugfile.write("\n")
-    debugfile.write(datetime.now().strftime(
+    debugfile.write(datetime.datetime.now().strftime(
         "%d/%m/%Y %H:%M:%S") + " - " + str(e))
     debugfile.write("\n")
     debugfile.write(traceback.format_exc())

@@ -14,13 +14,16 @@ class crow_globals():
     the server of raw data.
     """
 
-    def __init__(self):
+    def __init__(self, config="../config.yaml"):
         # open the config file
-        resource_path = pkg_resources.resource_filename(
-            __name__, "../config.yaml")
+        if config == "../config.yaml":
+            resource_path = pkg_resources.resource_filename(
+                __name__, config)
+        else:
+            resource_path = config
         with open(resource_path, "r") as file:
             cfg = yaml.safe_load(file)
-        cfg = cfg["GC_config"]
+        cfg = cfg["config"]
         self.datafiles = []
         self.rawdatapath = cfg["server_data_location"]
         self.debug = cfg["debug"]

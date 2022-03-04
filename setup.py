@@ -37,7 +37,7 @@ setup(
     license="MIT",
     classifiers=["Programming Language :: Python :: 3"],
     install_requires=read("requirements.txt").split("\n"),
-    packages=['crow', 'crow.uitabs', 'crow.utils'],
+    packages=find_packages(),
     include_package_data=True,
     entry_points={"console_scripts": ["crow=crow.__main__:start_Crow", ]},
 )

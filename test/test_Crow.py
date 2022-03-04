@@ -1,6 +1,5 @@
 """ Test the methods of Crow."""
 import os
-import sys
 import unittest
 from unittest.mock import patch
 
@@ -95,15 +94,58 @@ class TestCrow(unittest.TestCase):
 
     def test_RequestFiles(self):
         """
-
+        Launch the file request UI
         """
-        pass
+        with patch("crow.utils.RequestFiles.filedialog.askopenfilenames") as test_filereq:
+            RequestFiles("Test Desccription", ".txt", ".")
+            self.assertTrue(test_filereq.called)
 
     def test_PrePull(self):
         """
-
+        Various cases for the PrePull tab
         """
-        pass
+        prepull = PrePull("test prepull", crow_globals())
+        with patch("crow.uitabs.PrePull.messagebox.showerror") as test_missingxml:
+            prepull.prepullbutton.invoke()
+            self.assertTrue(test_missingxml.called)
+
+        cg = crow_globals()
+        cg.datafiles = ['test.csv']
+        prepull = PrePull("test prepull", cg)
+        with patch("crow.uitabs.PrePull.messagebox.showerror") as test_missingxml:
+            prepull.prepullbutton.invoke()
+            self.assertTrue(test_missingxml.called)
+
+        cg = crow_globals()
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        prepull = PrePull("test prepull", cg)
+        with patch("crow.uitabs.PrePull.plot.show") as test_plot:
+            prepull.prepullbutton.invoke()
+            self.assertTrue(test_plot.called)
+
+        open("blank.xml", "w").close()
+        cg = crow_globals()
+        cg.datafiles = ["blank.xml"]
+        cg.debug = True
+        prepull = PrePull("test prepull", cg)
+        with patch("crow.uitabs.PrePull.mylog") as test_debug:
+            with patch("crow.uitabs.PrePull.messagebox.showwarning") as test_warning:
+                with patch("crow.uitabs.PrePull.plot.show") as test_plot:
+                    prepull.prepullbutton.invoke()
+                    self.assertTrue(test_plot.called)
+                    self.assertTrue(test_debug.called)
+                    self.assertTrue(test_warning.called)
+        os.remove("blank.xml")
 
     def test_Pull(self):
         """
@@ -144,48 +186,3 @@ class TestCrow(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-"""
-Test all internal methods for the Crow application which do not rely on user input.
-
-Other functions which do require user input can be tested by running Crow.py and entering
-the provided sample raw data and sample input data in the test directory, ex.:
-
-    python Crow.py
-
-    In the User Interface, navigate to the PrePull or Pull tab.
-    Press the "Select Raw Data" button and, when prompted, select
-        the .xml files provided in /test/Sample GC Data
-    Click Pre-Pull to generate of histogram of all eluates and
-        setup and run a Pull to retrieve some desired peak(s).
-    Navigate to the present tab.
-    Press the "Select Excel Data" button and navigate to the
-        sample input data provided in /test
-    Experiment with various layouts, filters, and with exporting
-        generated plots.
-"""
-
-
-# """
-# Test PrePull_GC.py
-# """
-# PrePull_test = PrePull_GC.PrePull("Pre-Pull")
-# # ensure that tab is properly instantiated
-# assert isinstance(PrePull_test, PrePull_GC.PrePull)
-# # it is technically possible to generate "virtual events" like this:
-# # PrePull_test.event_generate("<<prepullcallback>>")
-# # such as button clicks, it is difficult to interact with the results.
-# # Manual testing with example data will still show proper functioning of
-# # methods.
-# """
-# Test Pull_GC.py
-# """
-# Pull_test = Pull_GC.Pull("Pull")
-# # ensure that tab is properly instantiated
-# assert isinstance(Pull_test, Pull_GC.Pull)
-# """
-# Test Present_GC.py
-# """
-# Present_test = Present_GC.Present("Present")
-# # ensure that tab is properly instantiated
-# assert isinstance(Present_test, Present_GC.Present)

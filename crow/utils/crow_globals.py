@@ -14,9 +14,9 @@ class crow_globals():
     the server of raw data.
     """
 
-    def __init__(self, config="../config.yaml"):
+    def __init__(self, config="config.yaml"):
         # open the config file
-        if config == "../config.yaml":
+        if config == "config.yaml":
             resource_path = pkg_resources.resource_filename(
                 __name__, config)
         else:

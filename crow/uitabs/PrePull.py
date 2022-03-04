@@ -27,7 +27,7 @@ class PrePull(tk.Frame):
             # check if data files have been chosen
             if len(crow_globals.datafiles) == 0:
                 messagebox.showerror("Error!", "No .xml data files selected.")
-            elif ".xlsx" in str(crow_globals.datafiles):
+            elif ".csv" in str(crow_globals.datafiles):
                 messagebox.showerror(
                     "Error!", "Please select raw data files, not processed excel data!"
                 )
@@ -67,6 +67,9 @@ class PrePull(tk.Frame):
                 plot.show()
 
         # Pre-Pull button
-        tk.Button(self, text="Generate Histogram", command=prepullcallback).place(
+        self.prepullbutton = tk.Button(
+            self, text="Generate Histogram", command=prepullcallback,
+        )
+        self.prepullbutton.place(
             relx=0.3, rely=0.35
         )

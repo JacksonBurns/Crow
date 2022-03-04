@@ -154,7 +154,7 @@ class CrowBase(tk.Frame):
 
         def openconfigcallback():
             webbrowser.open(pkg_resources.resource_filename(
-                __name__, "config.yaml"))
+                __name__, "utils/config.yaml"))
 
         tk.Button(master, text="Open Config. File", command=openconfigcallback).place(
             x=470, y=340

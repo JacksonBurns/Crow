@@ -31,7 +31,7 @@ class Pull(tk.Frame):
             # gather the values in the entry boxes
             self.entryreadorclear("read")
             # check for wrong type of data file
-            if ".xlsx" in str(crow_globals.datafiles):
+            if ".csv" in str(crow_globals.datafiles):
                 messagebox.showerror("Error!", "Please select raw data files.")
                 return
             # check for missing tols or rt
@@ -39,7 +39,7 @@ class Pull(tk.Frame):
                 len(self.rettimes) == 0 or len(self.toltimes) == 0
             ):
                 tk.messagebox.showerror(
-                    "Error!E", "At least one retention time/tolerance is missing."
+                    "Error!", "At least one retention time/tolerance is missing."
                 )
                 return
             # break if non-chronological
@@ -171,7 +171,7 @@ class Pull(tk.Frame):
                     row_num += 1
                 except Exception as e:
                     if crow_globals.debug:
-                        crow_globals.mylog(e)
+                        mylog(e)
                     warningmessage = (
                         "No peak data found in file "
                         + str(file)
@@ -201,9 +201,9 @@ class Pull(tk.Frame):
             messagebox.showinfo(title="Data Written", message=msg)
 
         # pull data button
-        tk.Button(self, text="Pull Requested Data", command=pulldatacallback).place(
-            x=145, y=415
-        )
+        self.pulldatabutton = tk.Button(
+            self, text="Pull Requested Data", command=pulldatacallback)
+        self.pulldatabutton.place(x=145, y=415)
         # set up button for picking method
         self.pickingmethod = tk.IntVar()
         methods = [("Keep Centermost", 1),
@@ -232,9 +232,9 @@ class Pull(tk.Frame):
         ).place(x=280, y=415)
 
         # clear entries button
-        tk.Button(self, text="Clear Entries", command=clearentriescallback).place(
-            x=167, y=245
-        )
+        self.clearentriesbutton = tk.Button(
+            self, text="Clear Entries", command=clearentriescallback)
+        self.clearentriesbutton.place(x=167, y=245)
         # Experiment Name Label
         tk.Label(self, text="Expt. Name:").place(x=85, y=280)
         # Experiment Name Entry Field
@@ -329,7 +329,8 @@ class Pull(tk.Frame):
             except Exception as e:
                 mylog(e)
                 messagebox.showerror(
-                    "Error!", "Invalid retetion time/tolerance time entered." + e,
+                    "Error!", "Invalid retetion time/tolerance time entered." +
+                    str(e),
                 )
 
     def isthereoverlap(self):

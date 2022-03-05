@@ -1,5 +1,6 @@
 """ Test the methods of Crow."""
 import os
+import contextlib
 import tkinter
 import unittest
 from unittest.mock import patch
@@ -175,15 +176,370 @@ class TestCrow(unittest.TestCase):
 
     def test_Pull(self):
         """
-
+        Pull methods and callbacks.
         """
-        pass
+        # succcessful operation
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.pickingmethod.set(1)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # succcessful operation including retention times
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.retinclude.set(1)
+        pull.pickingmethod.set(1)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # succcessful operation with max area, not ret. times
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.pickingmethod.set(2)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # succcessful operation with max area, include ret. times
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.retinclude.set(1)
+        pull.pickingmethod.set(2)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # succcessful operation with sll area, not ret. times
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.pickingmethod.set(3)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # succcessful operation with all area, include ret. times
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.retinclude.set(1)
+        pull.pickingmethod.set(3)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # succcessful operation with all area, include ret. times
+        cg = crow_globals()
+        cg.debug = True
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "2")
+        pull.tol2.insert(0, "0.1")
+        pull.rt3.insert(0, "3")
+        pull.tol3.insert(0, "0.1")
+        pull.rt4.insert(0, "4")
+        pull.tol4.insert(0, "0.1")
+        pull.rt5.insert(0, "5")
+        pull.tol5.insert(0, "0.1")
+        pull.rt6.insert(0, "6")
+        pull.tol6.insert(0, "0.1")
+        pull.rt7.insert(0, "7")
+        pull.tol7.insert(0, "0.1")
+        pull.expname.insert(0, "test")
+        pull.retinclude.set(1)
+        pull.pickingmethod.set(4)
+        with patch("crow.uitabs.Pull.messagebox.showinfo") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        pull.clearentriesbutton.invoke()
+        self.assertEqual(len(pull.rt1.get()), 0)
+
+        # wrong input file type
+        cg = crow_globals()
+        cg.debug = True
+        open("blank.csv", "w").close()
+        cg.datafiles = [
+            "blank.csv",
+        ]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        with patch("crow.uitabs.Pull.messagebox.showerror") as test_output:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_output.called)
+        os.remove("blank.csv")
+
+        # no data files selected
+        cg = crow_globals()
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        with patch("crow.uitabs.Pull.messagebox.showerror") as test_error:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_error.called)
+
+        # intervals overlap
+        cg = crow_globals()
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "1.1")
+        pull.tol2.insert(0, "0.5")
+        with patch("crow.uitabs.Pull.messagebox.showerror") as test_error:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_error.called)
+
+        # intervals out of order
+        cg = crow_globals()
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        pull.rt2.insert(0, "0.5")
+        pull.tol2.insert(0, "0.1")
+        with patch("crow.uitabs.Pull.messagebox.showerror") as test_error:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_error.called)
+
+        # ret. times are not floats
+        cg = crow_globals()
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "bad")
+        pull.tol1.insert(0, "0.1")
+        with patch("crow.uitabs.Pull.mylog") as test_debug:
+            with patch("crow.uitabs.Pull.messagebox.showerror") as test_error:
+                pull.pulldatabutton.invoke()
+                self.assertTrue(test_error.called)
+                self.assertTrue(test_debug.called)
+
+        # no retention times/tolerances given
+        open("blank.xml", "w").close()
+        cg = crow_globals()
+        cg.datafiles = [
+            "test/data/raw_data_1.xml",
+            "test/data/raw_data_2.xml",
+            "test/data/raw_data_3.xml",
+            "test/data/raw_data_4.xml",
+            "test/data/raw_data_5.xml",
+            "test/data/raw_data_6.xml",
+            "test/data/raw_data_7.xml",
+            "test/data/raw_data_8.xml",
+            "test/data/raw_data_9.xml",
+            "blank.xml",
+        ]
+        pull = Pull("test pull", cg)
+        with patch("crow.uitabs.Pull.messagebox.showerror") as test_error:
+            pull.pulldatabutton.invoke()
+            self.assertTrue(test_error.called)
+
+        # all files blank
+        cg = crow_globals()
+        cg.datafiles = ["blank.xml"]
+        pull = Pull("test pull", cg)
+        pull.rt1.insert(0, "1")
+        pull.tol1.insert(0, "0.1")
+        with patch("crow.uitabs.Pull.messagebox.showwarning") as test_error:
+            with open(os.devnull, 'w') as devnull:
+                with contextlib.redirect_stderr(devnull):
+                    # this test causes an error we would otherwise never see
+                    pull.pulldatabutton.invoke()
+            self.assertTrue(test_error.called)
+        os.remove("blank.xml")
+        os.remove(".csv")
 
     def test_Present(self):
         """
 
         """
-        pass
+        for layout in range(1, 7):
+            for colormap in range(1, 4):
+                pass
 
     def test_cutoff(self):
         """

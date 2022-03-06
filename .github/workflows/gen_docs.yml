@@ -21,7 +21,7 @@ jobs:
       - name: Generate Documentation
         run: |
           cd docs
-          rm *.html *.doctree
+          rm *.html *.doctree || True
           sphinx-apidoc -f -o . ..
           make clean
           make html

@@ -12,7 +12,11 @@ debug.txt
 CrowHTE.egg-info/*
 dist/*
 build/*
+.pypirc
 
 # output files
 CrowHTE_present_output_*
 foo.png
+
+# testing files
+.coverage

@@ -1,0 +1,25 @@
+name: Check PyPI Build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          conda install python=3.8
+          conda install -c rdkit rdkit
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+          python -m pip install build
+      
+      - name: Check Errors
+        run: |
+          python -m build

@@ -1,4 +1,4 @@
-GC_config:
+config:
     server_data_location: ./
     debug: True
     export_data_path: ./

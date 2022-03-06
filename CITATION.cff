@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Crow
+message: Please cite this software using these metadata.
+type: software
+authors:
+  - given-names: Jackson Burns
+    email: jburnsky@udel.edu
+    affiliation: University of Delaware
+    orcid: 'https://orcid.org/0000-0002-0657-9426'
+identifiers:
+  - type: doi
+    value: 10.6084/m9.figshare.11741898.v9
+    description: DOI
+  - type: url
+    value: >-
+      https://figshare.com/articles/software/Crow_-_High_Throughput_Experimentation_Data_Retrieval_and_Presentation_GUI/11741898
+    description: URL
+repository-code: 'https://github.com/JacksonBurns/Crow'
+repository-artifact: 'https://github.com/JacksonBurns/Crow/releases'
+abstract: >-
+  Crow is a software package for retrieving,
+  diagnosing, and presenting High Throughput
+  Experimentation data, configurable for practically
+  all instruments.
+keywords:
+  - hte
+license: MIT
+commit: e602dbe9b83c20c9dc3ec93a7e2d91c94dc9a7b7
+version: 2.0.0
+date-released: '2022-03-05'

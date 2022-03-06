@@ -1,5 +1,5 @@
 # Crow - Accelerating High Throughput Experimentation
-![Crow Logo](/Crow/other/Crow_logo.png)
+![Crow Logo](crow/Crow_logo.png)
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/JacksonBurns/Crow?style=social)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/CrowHTE)

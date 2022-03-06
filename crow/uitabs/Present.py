@@ -7,6 +7,7 @@ from tkinter import messagebox
 import matplotlib.pyplot as plot
 from matplotlib.cbook import get_sample_data
 import matplotlib.patheffects as pe
+from matplotlib.pyplot import savefig
 
 from crow.utils.logger import mylog
 from crow.utils.popupwindows.cutoff import cutoffPopup
@@ -57,7 +58,7 @@ class Present(tk.Frame):
             exceldata = np.genfromtxt(
                 crow_globals.datafiles[0], dtype=float, delimiter=",", names=True
             )
-            if image_overlay.get():
+            if self.image_overlay.get():
                 # the image filenames will have broken the input data
                 self._img_filenames = []
                 newdata = []
@@ -80,7 +81,7 @@ class Present(tk.Frame):
                     "Error!", "Data has too many columns (>10).",
                 )
             # decide on colorscheme from color radio buttons
-            if colorscheme.get() == 1:  # neutral
+            if self.colorscheme.get() == 1:  # neutral
                 totalcolormap = np.array(
                     [
                         [1, 1, 1],
@@ -95,7 +96,7 @@ class Present(tk.Frame):
                         [0.2, 0.1, 0.1],
                     ]
                 )
-            elif colorscheme.get() == 2:  # bright
+            elif self.colorscheme.get() == 2:  # bright
                 totalcolormap = np.array(
                     [
                         [1, 1, 1],
@@ -110,7 +111,7 @@ class Present(tk.Frame):
                         [0, 0.5, 0.6],
                     ]
                 )
-            elif colorscheme.get() == 3:  # colorblind-friendly
+            elif self.colorscheme.get() == 3:  # colorblind-friendly
                 totalcolormap = np.array(
                     [
                         [0.165, 0.219, 0.404],
@@ -120,7 +121,7 @@ class Present(tk.Frame):
                         [1, 0.427, 0.741],
                     ]
                 )
-            elif colorscheme.get() == 4:  # custom colors
+            elif self.colorscheme.get() == 4:  # pragma: no cover # custom colors
                 totalcolormap = []
                 for i in range(0, len(exceldata[0])):
                     rgb, _ = cc.askcolor(
@@ -134,7 +135,7 @@ class Present(tk.Frame):
                 return
             # call graphic generator appropriately
             # 96 (8x12)
-            if layout.get() == 1:
+            if self.layout.get() == 1:
                 try:
                     graphic_generator(
                         exceldata, [8, 12], totalcolormap, (6, 4))
@@ -145,7 +146,7 @@ class Present(tk.Frame):
                         "Error - Try Again", e,
                     )
             # 96 (12x8)
-            elif layout.get() == 2:
+            elif self.layout.get() == 2:
                 try:
                     graphic_generator(
                         exceldata, [12, 8], totalcolormap, (4, 6))
@@ -156,7 +157,7 @@ class Present(tk.Frame):
                         "Error - Try Again", e,
                     )
             # 24 (4x6)
-            elif layout.get() == 3:
+            elif self.layout.get() == 3:
                 try:
                     graphic_generator(exceldata, [4, 6], totalcolormap, (6, 4))
                 except Exception as e:
@@ -166,7 +167,7 @@ class Present(tk.Frame):
                         "Error - Try Again", e,
                     )
             # 24 (6x4)
-            elif layout.get() == 4:
+            elif self.layout.get() == 4:
                 try:
                     graphic_generator(exceldata, [6, 4], totalcolormap, (4, 6))
                 except Exception as e:
@@ -176,7 +177,7 @@ class Present(tk.Frame):
                         "Error - Try Again", e,
                     )
             # 48 (6x8)
-            elif layout.get() == 5:
+            elif self.layout.get() == 5:
                 try:
                     graphic_generator(exceldata, [6, 8], totalcolormap, (6, 4))
                 except Exception as e:
@@ -186,7 +187,7 @@ class Present(tk.Frame):
                         "Error - Try Again", e,
                     )
             # 48 (8x6)
-            elif layout.get() == 6:
+            elif self.layout.get() == 6:
                 try:
                     graphic_generator(exceldata, [8, 6], totalcolormap, (4, 6))
                 except Exception as e:
@@ -198,7 +199,7 @@ class Present(tk.Frame):
             else:
                 messagebox.showerror("Error!", "Please select a layout.")
 
-        def draw_empty(subplt, row, col, wellnum, e):
+        def draw_empty(subplt, row, col, wellnum, e):  # pragma: no cover
             subplt[row, col].pie([0])
             warningmessage = (
                 "Issue displaying well "
@@ -232,11 +233,11 @@ class Present(tk.Frame):
                 temp = np.delete(temp, mask, 0)
                 welldata = [val for idx, val in enumerate(
                     welldata) if idx not in mask]
-            if datafilter == 3:
+            if datafilter == 3:  # pragma: no cover
                 temp[int(self.shadebyyieldPopup.shadecol) - 1] = temp[
                     int(self.shadebyyieldPopup.shadecol) - 1
                 ] * (welldata[int(self.shadebyyieldPopup.shadecol) - 1] / excludeColmax)
-            if datafilter == 4:
+            if datafilter == 4:  # pragma: no cover
                 subplt[row, col].pie(
                     np.array(list(welldata) / min(list(welldata))),
                     colors=pickcolor(
@@ -276,10 +277,10 @@ class Present(tk.Frame):
             """
             # Check for which filter the user has requested, and call the
             # appropriate pop-up window
-            if datafilter.get() == 2:  # exclude threshold
+            if self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
                 self.excludePopup = excludePopup(self.master)
                 self.master.wait_window(self.excludePopup.top)
-            elif datafilter.get() == 3:  # shade by yield
+            elif self.datafilter.get() == 3:  # pragma: no cover # shade by yield
                 # popup to ask which column the gradient should be based off of is in
                 self.shadebyyieldPopup = shadebyyieldPopup(self.master)
                 self.master.wait_window(self.shadebyyieldPopup.top)
@@ -289,7 +290,7 @@ class Present(tk.Frame):
                         for well in exceldata
                     ]
                 )
-            elif datafilter.get() == 4:  # set cutoffs
+            elif self.datafilter.get() == 4:  # pragma: no cover # set cutoffs
                 # find out how many groups to make
                 self.numberofcutoffsPopup = numberofcutoffsPopup(self.master)
                 self.master.wait_window(self.numberofcutoffsPopup.top)
@@ -305,7 +306,7 @@ class Present(tk.Frame):
                         [int(s) / 255 for s in self.cutoffPopup.cutoffcolor.split(",")]
                     ]
             # create figure with correct number of subplots
-            if image_overlay.get():
+            if self.image_overlay.get():
                 myfig, subplt = plot.subplots(
                     subplotdims[0],
                     subplotdims[1] * 2,
@@ -320,11 +321,11 @@ class Present(tk.Frame):
                 # go to position
                 row = wellnum // subplotdims[1]
                 col = wellnum % subplotdims[1]
-                if image_overlay.get():
+                if self.image_overlay.get():
                     col *= 2
                 # well data
                 welldata = exceldata[wellnum]
-                if datafilter.get() == 2:  # exclude threshold
+                if self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
                     try:
                         if welldata[int(self.excludePopup.excludecol) - 1] < float(
                             self.excludePopup.excludeval
@@ -335,7 +336,7 @@ class Present(tk.Frame):
                                         subplt, row, col)
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
-                elif datafilter.get() == 3:  # shade by yield
+                elif self.datafilter.get() == 3:  # pragma: no cover # shade by yield
                     try:
                         draw_filled(
                             totalcolormap,
@@ -343,12 +344,12 @@ class Present(tk.Frame):
                             subplt,
                             row,
                             col,
-                            datafilter=datafilter.get(),
+                            datafilter=self.datafilter.get(),
                             excludeColmax=excludeColmax,
                         )
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
-                elif datafilter.get() == 4:  # group cutoffs
+                elif self.datafilter.get() == 4:  # pragma: no cover # group cutoffs
                     try:
                         draw_filled(
                             totalcolormap,
@@ -356,14 +357,20 @@ class Present(tk.Frame):
                             subplt,
                             row,
                             col,
-                            datafilter=datafilter.get(),
+                            datafilter=self.datafilter.get(),
                             cutoffvalues=cutoffvalues,
                             cutoffcolors=cutoffcolors,
                         )
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    draw_filled(totalcolormap, welldata, subplt, row, col)
+                    draw_filled(
+                        totalcolormap,
+                        welldata,
+                        subplt,
+                        row,
+                        col,
+                    )
                 # write numbers accross the top
                 if row == 0:
                     subplt[row, col].set_title(str(wellnum + 1))
@@ -377,7 +384,7 @@ class Present(tk.Frame):
                         labelpad=10,
                     )
                 # draw the image over the well
-                if image_overlay.get():
+                if self.image_overlay.get():
                     im = plot.imread(get_sample_data(
                         self._img_filenames[wellnum]))
                     subplt[row, col + 1].imshow(im)
@@ -387,7 +394,7 @@ class Present(tk.Frame):
             with open(crow_globals.datafiles[0], "r") as file:
                 count = 0
                 headers = file.readline().split(",")
-                if image_overlay.get():
+                if self.image_overlay.get():
                     end = len(headers) - 1
                 else:
                     end = len(headers)
@@ -398,19 +405,19 @@ class Present(tk.Frame):
                         header.replace("\n", ""),
                         ha="center",
                         va="bottom",
-                        size=70,
+                        size=12,
                         color=totalcolormap[count],
                         path_effects=[pe.withStroke(
                             linewidth=1, foreground='black')],
                     )
                     count += 1
             plot.tight_layout()
-            if write_to_file.get():
+            if self.write_to_file.get():
                 fname = (
                     "CrowHTE_present_output_" +
                     time.strftime("%Y%m%d-%H%M%S") + ".png"
                 )
-                myfig.savefig(
+                savefig(
                     fname, bbox_inches="tight", pad_inches=0.01, dpi=myfig.dpi,
                 )
                 messagebox.showinfo(
@@ -419,9 +426,9 @@ class Present(tk.Frame):
                 )
                 webbrowser.open(fname)
             else:
-                myfig.show()
+                plot.show()
 
-        def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):
+        def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):  # pragma: no cover
             for i in range(0, len(cutoffvalues) - 1):
                 if (currentwell[cutoffcol] > cutoffvalues[i]) & (
                     currentwell[cutoffcol] <= cutoffvalues[i + 1]
@@ -434,16 +441,16 @@ class Present(tk.Frame):
 
         # Finish set up of user interface
         # make present data button
-        tk.Button(self, text="Present", command=presentdatacallback).place(
-            relx=0.4, rely=0.9
-        )
+        self.presentbutton = tk.Button(
+            self, text="Present", command=presentdatacallback)
+        self.presentbutton.place(relx=0.4, rely=0.9)
 
         # make check button for image overlay
-        image_overlay = tk.IntVar()
+        self.image_overlay = tk.IntVar()
         tk.Checkbutton(
             self,
             text="Last column contains image filepaths",
-            variable=image_overlay,
+            variable=self.image_overlay,
             onvalue=True,
             offvalue=False,
             height=1,
@@ -451,37 +458,37 @@ class Present(tk.Frame):
         ).place(relx=0.3, rely=0.8)
 
         # make check button for writing image to file
-        write_to_file = tk.IntVar()
+        self.write_to_file = tk.IntVar()
         tk.Checkbutton(
             self,
             text="Save graphic directly to file",
-            variable=write_to_file,
+            variable=self.write_to_file,
             onvalue=True,
             offvalue=False,
             height=1,
             width=30,
         ).place(relx=0.3, rely=0.75)
 
-        # make radio buttons for well layout
-        layout = tk.IntVar()
-        layouts = [("96 (8x12)", 1), ("96 (12x8)", 2),
-                   ("24 (4x6)", 3), ("24 (6x4)", 4),
-                   ("48 (6x8)", 5), ("48 (8x6)", 6), ]
-        tk.Label(self, text="Well layout:").place(x=5, y=40)
+        # make radio buttons for well self.layout
+        self.layout = tk.IntVar()
+        self.layouts = [("96 (8x12)", 1), ("96 (12x8)", 2),
+                        ("24 (4x6)", 3), ("24 (6x4)", 4),
+                        ("48 (6x8)", 5), ("48 (8x6)", 6), ]
+        tk.Label(self, text="Well self.layout:").place(x=5, y=40)
         yiterator = 60
-        for i in range(len(layouts)):
+        for i in range(len(self.layouts)):
             tk.Radiobutton(
                 self,
-                text=layouts[i][0],
+                text=self.layouts[i][0],
                 indicatoron=0,
                 padx=10,
-                variable=layout,
-                value=layouts[i][1],
+                variable=self.layout,
+                value=self.layouts[i][1],
             ).place(x=5, y=yiterator)
             yiterator += 30
 
         # make radio buttons for graphic color
-        colorscheme = tk.IntVar()
+        self.colorscheme = tk.IntVar()
         colorschemes = [
             ("neutral", 1),
             ("bright", 2),
@@ -496,13 +503,13 @@ class Present(tk.Frame):
                 text=colorschemes[i][0],
                 indicatoron=0,
                 padx=8,
-                variable=colorscheme,
+                variable=self.colorscheme,
                 value=colorschemes[i][1],
             ).place(x=130, y=yiterator)
             yiterator += 30
 
         # make radio buttons for datafilters
-        datafilter = tk.IntVar()
+        self.datafilter = tk.IntVar()
         datafilters = [
             ("none", 1),
             ("exclude threshold", 2),
@@ -517,7 +524,7 @@ class Present(tk.Frame):
                 text=datafilters[i][0],
                 indicatoron=0,
                 padx=10,
-                variable=datafilter,
+                variable=self.datafilter,
                 value=datafilters[i][1],
             ).place(x=255, y=yiterator)
             yiterator += 30

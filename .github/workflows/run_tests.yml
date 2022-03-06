@@ -25,7 +25,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1
         with:
           run: |
-            coverage run --source=. --omit=test/* -m unittest discover
+            coverage run --source=. --omit=test/*,setup.py,crow/__main__.py -m unittest discover
       - name: Show Coverage
         run: |
           coverage report -m

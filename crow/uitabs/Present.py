@@ -396,7 +396,7 @@ class Present(tk.Frame):
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    if not (any([i < 0 for i in welldata]) or all(i == 0 for i in welldata)):
+                    if not (any(i < 0 for i in welldata) or all(i == 0 for i in welldata)):
                         draw_filled(
                             totalcolormap,
                             welldata,

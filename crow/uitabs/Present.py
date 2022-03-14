@@ -476,7 +476,6 @@ class Present(tk.Frame):
                 webbrowser.open(fname)
             else:
                 plot.show()
-            subplt.close()
             plot.close()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):  # pragma: no cover

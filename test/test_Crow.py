@@ -557,35 +557,35 @@ class TestCrow(unittest.TestCase):
                 pres.presentbutton.invoke()
                 self.assertTrue(test_plot.called)
 
-    def test_Present_2(self):
-        """
-        Methods of the Present class.
-        """
-        # test image overlay
-        cg = crow_globals()
-        with open("test/data/processed_24-well_data_images.csv", "r") as file:
-            procdata = file.readlines()
-            with open("temp.csv", "w") as file2:
-                file2.write(procdata[0])
-                for line in procdata[1:]:
-                    file2.write(
-                        line.replace(
-                            '\n',
-                            "," + os.path.join(os.getcwd(), 'test', 'data', 'blank.png') + '\n'),
-                    )
-        cg.datafiles = ["temp.csv"]
-        pres = Present("test present", cg)
-        pres.colorscheme.set(1)
-        pres.write_to_file.set(False)
-        pres.layout.set(3)
-        pres.image_overlay.set(True)
-        with patch("crow.uitabs.Present.plot.show") as test_plot:
-            with open(os.devnull, 'w') as devnull:
-                with contextlib.redirect_stderr(devnull):
-                    # ignore resource warning
-                    pres.presentbutton.invoke()
-            self.assertTrue(test_plot.called)
-        os.remove("temp.csv")
+    # def test_Present_2(self):
+    #     """
+    #     Methods of the Present class.
+    #     """
+    #     # test image overlay
+    #     cg = crow_globals()
+    #     with open("test/data/processed_24-well_data_images.csv", "r") as file:
+    #         procdata = file.readlines()
+    #         with open("temp.csv", "w") as file2:
+    #             file2.write(procdata[0])
+    #             for line in procdata[1:]:
+    #                 file2.write(
+    #                     line.replace(
+    #                         '\n',
+    #                         "," + os.path.join(os.getcwd(), 'test', 'data', 'blank.png') + '\n'),
+    #                 )
+    #     cg.datafiles = ["temp.csv"]
+    #     pres = Present("test present", cg)
+    #     pres.colorscheme.set(1)
+    #     pres.write_to_file.set(False)
+    #     pres.layout.set(3)
+    #     pres.image_overlay.set(True)
+    #     with patch("crow.uitabs.Present.plot.show") as test_plot:
+    #         # with open(os.devnull, 'w') as devnull:
+    #         #     with contextlib.redirect_stderr(devnull):
+    #         # ignore resource warning
+    #         pres.presentbutton.invoke()
+    #         self.assertTrue(test_plot.called)
+    #     os.remove("temp.csv")
 
     def test_Present_3(self):
         """

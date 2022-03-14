@@ -90,9 +90,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="crow.utils.ParseXML.ParseXML">
 <span class="sig-prename descclassname"><span class="pre">crow.utils.ParseXML.</span></span><span class="sig-name descname"><span class="pre">ParseXML</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.ParseXML.ParseXML" title="Permalink to this definition"></a></dt>
-<dd><p>One line passthrough to xml element tree, returns root of tree</p>
-<dl class="simple">
-<dt>filename: string which gives either the absolute or relative path</dt><dd><p>to an xml file</p>
+<dd><p>One line passthrough to xml element tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>string</em>) – the absolute or relative path to an xml file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>root of tree</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>etree</p>
 </dd>
 </dl>
 </dd></dl>
@@ -107,12 +114,19 @@
 <dt class="sig sig-object py" id="crow.utils.crow_globals.crow_globals">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crow.utils.crow_globals.</span></span><span class="sig-name descname"><span class="pre">crow_globals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'config.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.crow_globals.crow_globals" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>variables which are used by all tabs in the window, such as the path to
-the server of raw data.</p>
+<p>Class which initializes itself using the <cite>config.yaml</cite> file, making
+variables which are used by all tabs of crow accesible in the ‘global’
+namespace (but without using global variables).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="crow.utils.crow_globals.crow_globals.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'config.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.crow_globals.crow_globals.__init__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Opens the configuration file and reads the contents into attritbutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>str</em><em>, </em><em>optional</em>) – Configuration file. Defaults to “config.yaml”.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -122,8 +136,12 @@ the server of raw data.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="crow.utils.logger.mylog">
 <span class="sig-prename descclassname"><span class="pre">crow.utils.logger.</span></span><span class="sig-name descname"><span class="pre">mylog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.logger.mylog" title="Permalink to this definition"></a></dt>
-<dd><p>General purpose function for writing errors to an external .txt file</p>
-<p>e: exception raised by Crow</p>
+<dd><p>General purpose function for writing errors to an external .txt file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>e</strong> (<em>exception</em>) – exception raised by Crow</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

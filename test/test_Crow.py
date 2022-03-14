@@ -550,7 +550,6 @@ class TestCrow(unittest.TestCase):
                 pres.presentbutton.invoke()
                 self.assertTrue(test_plot.called)
         pres.layout.set(3)
-        plt.close('all')
 
         # test all colormaps
         for colormap in range(1, 4):
@@ -558,7 +557,6 @@ class TestCrow(unittest.TestCase):
             with patch("crow.uitabs.Present.plot.show") as test_plot:
                 pres.presentbutton.invoke()
                 self.assertTrue(test_plot.called)
-        plt.close('all')
 
         # test image overlay
         cg = crow_globals()
@@ -585,7 +583,6 @@ class TestCrow(unittest.TestCase):
                     pres.presentbutton.invoke()
             self.assertTrue(test_plot.called)
         os.remove("temp.csv")
-        plt.close('all')
 
         # no colorscheme selected
         cg = crow_globals()
@@ -596,7 +593,6 @@ class TestCrow(unittest.TestCase):
         with patch("crow.uitabs.Present.messagebox.showerror") as test_error:
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
-        plt.close('all')
 
         # save to file
         cg = crow_globals()
@@ -612,7 +608,6 @@ class TestCrow(unittest.TestCase):
                     self.assertTrue(test_info.called)
                     self.assertTrue(test_save.called)
                     self.assertTrue(test_open.called)
-        plt.close('all')
 
         # no layout selected
         cg = crow_globals()
@@ -623,7 +618,6 @@ class TestCrow(unittest.TestCase):
         with patch("crow.uitabs.Present.messagebox.showerror") as test_error:
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
-        plt.close('all')
 
         # test all layouts with error
         cg = crow_globals()
@@ -640,7 +634,6 @@ class TestCrow(unittest.TestCase):
                         self.assertTrue(test_plot.called)
                         self.assertTrue(test_warning.called)
                         self.assertTrue(test_logger.called)
-        plt.close('all')
 
         # test all layouts with zeros
         cg = crow_globals()
@@ -657,7 +650,6 @@ class TestCrow(unittest.TestCase):
                         self.assertTrue(test_plot.called)
                         self.assertTrue(test_warning.called)
                         self.assertTrue(test_logger.called)
-        plt.close('all')
 
         # wrong data type
         cg = crow_globals()
@@ -669,7 +661,6 @@ class TestCrow(unittest.TestCase):
         with patch("crow.uitabs.Present.messagebox.showerror") as test_error:
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
-        plt.close('all')
 
         # no data selected
         cg = crow_globals()
@@ -681,7 +672,6 @@ class TestCrow(unittest.TestCase):
         with patch("crow.uitabs.Present.messagebox.showerror") as test_error:
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
-        plt.close('all')
 
         # too many input files
         cg = crow_globals()
@@ -696,7 +686,6 @@ class TestCrow(unittest.TestCase):
         with patch("crow.uitabs.Present.messagebox.showerror") as test_error:
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
-        plt.close('all')
 
         # input file too big
         cg = crow_globals()
@@ -710,7 +699,6 @@ class TestCrow(unittest.TestCase):
         with patch("crow.uitabs.Present.messagebox.showerror") as test_error:
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
-        plt.close('all')
 
     def test_cutoff(self):
         """

@@ -476,6 +476,7 @@ class Present(tk.Frame):
                 webbrowser.open(fname)
             else:
                 plot.show()
+            plot.close()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):  # pragma: no cover
             """Based on user inputs, choose which color the well should be.

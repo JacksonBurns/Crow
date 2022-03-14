@@ -296,7 +296,7 @@ class Present(tk.Frame):
 
             Args:
                 exceldata (list): numpy array-type of the values to be plotted
-                subplotdims (list(ints)): array of ints containing length and 
+                subplotdims (list(ints)): array of ints containing length and
                                           width of the experiment
                 totalcolormap (list): array of floats containing colors to be used in the
                                       diagram

@@ -347,7 +347,9 @@ class Present(tk.Frame):
                 )
             else:
                 myfig, subplt = plot.subplots(
-                    subplotdims[0], subplotdims[1], figsize=dims
+                    subplotdims[0],
+                    subplotdims[1],
+                    figsize=(dims[1] * 2 * 12, dims[0] * 10),
                 )
             for wellnum in range(0, subplotdims[0] * subplotdims[1]):
                 # go to position
@@ -416,7 +418,10 @@ class Present(tk.Frame):
                         )
                 # write numbers accross the top
                 if row == 0:
-                    subplt[row, col].set_title(str(wellnum + 1))
+                    subplt[row, col].set_title(
+                        str(wellnum + 1),
+                        fontsize=90,
+                    )
                 # write letters across the left side
                 if col == 0:
                     subplt[row, col].set_ylabel(
@@ -425,6 +430,7 @@ class Present(tk.Frame):
                         ],
                         rotation=0,
                         labelpad=10,
+                        fontsize=90,
                     )
                 # draw the image over the well
                 if self.image_overlay.get():
@@ -443,12 +449,12 @@ class Present(tk.Frame):
                     end = len(headers)
                 for header in headers[:end]:
                     myfig.text(
-                        0.2 + 0.1 * count,
-                        0.98,
+                        1.05,
+                        0.8 - 0.05 * count,
                         header.replace("\n", ""),
-                        ha="center",
+                        ha="left",
                         va="bottom",
-                        size=12,
+                        size=90,
                         color=totalcolormap[count],
                         path_effects=[pe.withStroke(
                             linewidth=1, foreground='black')],

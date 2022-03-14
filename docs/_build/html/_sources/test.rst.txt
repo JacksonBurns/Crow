@@ -12,6 +12,22 @@ test.test\_Crow module
    :undoc-members:
    :show-inheritance:
 
+test.test\_Present module
+-------------------------
+
+.. automodule:: test.test_Present
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+test.test\_Present\_2 module
+----------------------------
+
+.. automodule:: test.test_Present_2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

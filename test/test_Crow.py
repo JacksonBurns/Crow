@@ -2,7 +2,6 @@
 import os
 import contextlib
 import tkinter
-import matplotlib.pyplot as plt
 import unittest
 from unittest.mock import patch
 
@@ -534,7 +533,7 @@ class TestCrow(unittest.TestCase):
         os.remove("blank.xml")
         os.remove(".csv")
 
-    def test_Present(self):
+    def test_Present_1(self):
         """
         Methods of the Present class.
         """
@@ -558,6 +557,10 @@ class TestCrow(unittest.TestCase):
                 pres.presentbutton.invoke()
                 self.assertTrue(test_plot.called)
 
+    def test_Present_2(self):
+        """
+        Methods of the Present class.
+        """
         # test image overlay
         cg = crow_globals()
         with open("test/data/processed_24-well_data_images.csv", "r") as file:
@@ -584,6 +587,10 @@ class TestCrow(unittest.TestCase):
             self.assertTrue(test_plot.called)
         os.remove("temp.csv")
 
+    def test_Present_3(self):
+        """
+        Methods of the Present class.
+        """
         # no colorscheme selected
         cg = crow_globals()
         cg.datafiles = ["test/data/processed_96-well_data.csv"]
@@ -594,6 +601,10 @@ class TestCrow(unittest.TestCase):
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
 
+    def test_Present_4(self):
+        """
+        Methods of the Present class.
+        """
         # save to file
         cg = crow_globals()
         cg.datafiles = ["test/data/processed_96-well_data.csv"]
@@ -609,6 +620,10 @@ class TestCrow(unittest.TestCase):
                     self.assertTrue(test_save.called)
                     self.assertTrue(test_open.called)
 
+    def test_Present_5(self):
+        """
+        Methods of the Present class.
+        """
         # no layout selected
         cg = crow_globals()
         cg.datafiles = ["test/data/processed_96-well_data.csv"]
@@ -619,6 +634,10 @@ class TestCrow(unittest.TestCase):
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
 
+    def test_Present_6(self):
+        """
+        Methods of the Present class.
+        """
         # test all layouts with error
         cg = crow_globals()
         cg.datafiles = ["test/data/processed_96-well_data_with_errors.csv"]
@@ -635,22 +654,30 @@ class TestCrow(unittest.TestCase):
                         self.assertTrue(test_warning.called)
                         self.assertTrue(test_logger.called)
 
-        # # test all layouts with zeros
-        # cg = crow_globals()
-        # cg.datafiles = ["test/data/processed_96-well_data_with_zeros.csv"]
-        # pres = Present("test present", cg)
-        # pres.colorscheme.set(1)
-        # pres.write_to_file.set(False)
-        # for layout in range(1, 7):
-        #     pres.layout.set(layout)
-        #     with patch("crow.uitabs.Present.messagebox.showwarning") as test_warning:
-        #         with patch("crow.uitabs.Present.mylog") as test_logger:
-        #             with patch("crow.uitabs.Present.plot.show") as test_plot:
-        #                 pres.presentbutton.invoke()
-        #                 self.assertTrue(test_plot.called)
-        #                 self.assertTrue(test_warning.called)
-        #                 self.assertTrue(test_logger.called)
+    def test_Present_7(self):
+        """
+        Methods of the Present class.
+        """
+        # test all layouts with zeros
+        cg = crow_globals()
+        cg.datafiles = ["test/data/processed_96-well_data_with_zeros.csv"]
+        pres = Present("test present", cg)
+        pres.colorscheme.set(1)
+        pres.write_to_file.set(False)
+        for layout in range(1, 7):
+            pres.layout.set(layout)
+            with patch("crow.uitabs.Present.messagebox.showwarning") as test_warning:
+                with patch("crow.uitabs.Present.mylog") as test_logger:
+                    with patch("crow.uitabs.Present.plot.show") as test_plot:
+                        pres.presentbutton.invoke()
+                        self.assertTrue(test_plot.called)
+                        self.assertTrue(test_warning.called)
+                        self.assertTrue(test_logger.called)
 
+    def test_Present_8(self):
+        """
+        Methods of the Present class.
+        """
         # wrong data type
         cg = crow_globals()
         cg.datafiles = ["test/data/raw_data_1.xml"]
@@ -662,6 +689,10 @@ class TestCrow(unittest.TestCase):
             pres.presentbutton.invoke()
             self.assertTrue(test_error.called)
 
+    def test_Present_9(self):
+        """
+        Methods of the Present class.
+        """
         # no data selected
         cg = crow_globals()
         cg.datafiles = []

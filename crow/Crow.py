@@ -32,9 +32,18 @@ class CrowBase(tk.Frame):
     including raw data and input data, as well as holding the notebook
     which containts the 3 tabs (PrePull, Pull, Present)
 
+    Args:
+        tk (tk.Frame): tkinter base window.
     """
 
     def __init__(self, master):
+        """
+        Constructor for the base Crow UI, containing the file selection interface
+        as well as the notbook used to house the tabs.
+
+        Args:
+            master (tk.Tk): tkinter base window
+        """
         # create base window, name it, and size it
         self.master = master
         master.title("Crow")
@@ -74,7 +83,7 @@ class CrowBase(tk.Frame):
             """
             Upon clicking the select data button, open up a file request window
             and set the currently selected files to those which are selected,
-            update the display
+            update the display.
             """
             crow_globals.datafiles = RequestFiles.RequestFiles(
                 "Raw Data", "*.xml", crow_globals.rawdatapath
@@ -90,7 +99,7 @@ class CrowBase(tk.Frame):
         # define excel data callback
         def selectexceldatacallback():
             """
-            Create pop-up file request for ".csv" input data for present
+            Create pop-up file request for ".csv" input data for present.
             """
             crow_globals.datafiles = RequestFiles.RequestFiles(
                 "Processed Data", "*.csv", crow_globals.exportdatapath
@@ -135,7 +144,7 @@ class CrowBase(tk.Frame):
         def searchservercallback():
             """
             Go to given 'server' location and glob for any file matching
-            the given experiment name
+            the given experiment name.
             """
             crow_globals.datafiles = glob.glob(
                 crow_globals.rawdatapath + "*" + self.expname.get() + "*"
@@ -149,6 +158,8 @@ class CrowBase(tk.Frame):
             update_files()
 
         def openconfigcallback():
+            """Opens the configuration file using the system default viewer.
+            """
             webbrowser.open(pkg_resources.resource_filename(
                 __name__, "utils/config.yaml"))
 
@@ -177,8 +188,9 @@ class CrowBase(tk.Frame):
             sys.exit(0)
 
 
-# Helpful method for PyPi package console script entry point
 def main():
+    """Helpful method for PyPi package console script entry point
+    """
     # Print a greeting
     print('''
     Thank you for installing Crow!

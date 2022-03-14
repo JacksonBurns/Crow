@@ -24,6 +24,12 @@ class Present(tk.Frame):
     """
 
     def __init__(self, name, crow_globals):
+        """Constructor for Present frame.
+
+        Args:
+            name (string): Name for the tab. Unpacked from tk calls.
+            crow_globals (crow_globals): Global variables for Crow.
+        """
         self._img_filenames = []
         tk.Frame.__init__(self, width=47, height=450)
 
@@ -200,6 +206,15 @@ class Present(tk.Frame):
                 messagebox.showerror("Error!", "Please select a layout.")
 
         def draw_empty(subplt, row, col, wellnum, e):  # pragma: no cover
+            """Draws an epty pie when an error is encountered.
+
+            Args:
+                subplt (int): matplotlib subplot.
+                row (int): Row number.
+                col (int): Column number.
+                wellnum (int): Index of well.
+                e (exception): exception that was raised to get here.
+            """
             subplt[row, col].pie([0])
             warningmessage = (
                 "Issue displaying well "
@@ -221,6 +236,19 @@ class Present(tk.Frame):
             cutoffcolors=None,
             excludeColmax=None,
         ):
+            """Convenience function for drawing a pie.
+
+            Args:
+                totalcolormap (list): List of colors to be used.
+                welldata (list): Values for each pie slice.
+                subplt (int): matplotlib subplot.
+                row (int): Row number.
+                col (int): Column number.
+                datafilter (int, optional): Data filter selected. Defaults to 0.
+                cutoffvalues (list, optional): List of values for groupings. Defaults to None.
+                cutoffcolors (list, optional): Colormap colors for cutoffs. Defaults to None.
+                excludeColmax (float, optional): Value to only plot above. Defaults to None.
+            """
             # handle wells where one or more pie slices are zero
             temp = totalcolormap.copy()
             # iterate through list
@@ -262,18 +290,18 @@ class Present(tk.Frame):
 
         def graphic_generator(exceldata, subplotdims, totalcolormap, dims):
             """
-            general purpose, abstract function for the generation of hte
-            diagrams
-            first check for which data filter has been selected, then
+            General purpose, abstract function for the generation of hte
+            diagrams first check for which data filter has been selected, then
             moves on to plotting.
 
-            exceldata: numpy array-type of the values to be plotted
-            subplotdims: array of ints containing length and width of the
-                            experiment
-            totalcolormap: array of floats containing colors to be used in the
-                            diagram
-            dims: tuple, immutable version of the dimensions of the subplot
-                            in the order required by matplotlib
+            Args:
+                exceldata (list): numpy array-type of the values to be plotted
+                subplotdims (list(ints)): array of ints containing length and
+                                          width of the experiment
+                totalcolormap (list): array of floats containing colors to be used in the
+                                      diagram
+                dims (tuple): immutable version of the dimensions of the subplot
+                              in the order required by matplotlib
             """
             # Check for which filter the user has requested, and call the
             # appropriate pop-up window
@@ -429,6 +457,18 @@ class Present(tk.Frame):
                 plot.show()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):  # pragma: no cover
+            """Based on user inputs, choose which color the well should be.
+
+            Args:
+                colormap (list): Overall set of colors.
+                cutoffcol (int): Column on which to base decision.
+                cutoffvalues (list): Floats for deciding column grouping.
+                cutoffcolors (list): Colors for cutoffs.
+                currentwell (int): Index of current well.
+
+            Returns:
+                list: Colors to use.
+            """
             for i in range(0, len(cutoffvalues) - 1):
                 if (currentwell[cutoffcol] > cutoffvalues[i]) & (
                     currentwell[cutoffcol] <= cutoffvalues[i + 1]

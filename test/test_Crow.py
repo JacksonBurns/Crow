@@ -635,21 +635,21 @@ class TestCrow(unittest.TestCase):
                         self.assertTrue(test_warning.called)
                         self.assertTrue(test_logger.called)
 
-        # test all layouts with zeros
-        cg = crow_globals()
-        cg.datafiles = ["test/data/processed_96-well_data_with_zeros.csv"]
-        pres = Present("test present", cg)
-        pres.colorscheme.set(1)
-        pres.write_to_file.set(False)
-        for layout in range(1, 7):
-            pres.layout.set(layout)
-            with patch("crow.uitabs.Present.messagebox.showwarning") as test_warning:
-                with patch("crow.uitabs.Present.mylog") as test_logger:
-                    with patch("crow.uitabs.Present.plot.show") as test_plot:
-                        pres.presentbutton.invoke()
-                        self.assertTrue(test_plot.called)
-                        self.assertTrue(test_warning.called)
-                        self.assertTrue(test_logger.called)
+        # # test all layouts with zeros
+        # cg = crow_globals()
+        # cg.datafiles = ["test/data/processed_96-well_data_with_zeros.csv"]
+        # pres = Present("test present", cg)
+        # pres.colorscheme.set(1)
+        # pres.write_to_file.set(False)
+        # for layout in range(1, 7):
+        #     pres.layout.set(layout)
+        #     with patch("crow.uitabs.Present.messagebox.showwarning") as test_warning:
+        #         with patch("crow.uitabs.Present.mylog") as test_logger:
+        #             with patch("crow.uitabs.Present.plot.show") as test_plot:
+        #                 pres.presentbutton.invoke()
+        #                 self.assertTrue(test_plot.called)
+        #                 self.assertTrue(test_warning.called)
+        #                 self.assertTrue(test_logger.called)
 
         # wrong data type
         cg = crow_globals()

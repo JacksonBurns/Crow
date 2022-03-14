@@ -1,0 +1,31 @@
+name: Run Present Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          sudo apt-get install python3-tk
+          conda install python=3.8
+          python -m pip install -r requirements.txt
+          python -m pip install -e .
+          python -m pip install coverage
+      
+      - name: Run Tests
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: |
+            coverage run --source=. --omit=test/*,setup.py,crow/__main__.py -m unittest test/test_Present_2.py
+      - name: Show Coverage
+        run: |
+          coverage report -m

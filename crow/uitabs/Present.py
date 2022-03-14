@@ -15,6 +15,10 @@ from crow.utils.popupwindows.exclude import excludePopup
 from crow.utils.popupwindows.numberofcutoffs import numberofcutoffsPopup
 from crow.utils.popupwindows.shadebyyield import shadebyyieldPopup
 
+import matplotlib as mpl
+
+mpl.rcParams.update({'figure.max_open_warning': 0})
+
 
 class Present(tk.Frame):
     """
@@ -204,6 +208,8 @@ class Present(tk.Frame):
                     )
             else:
                 messagebox.showerror("Error!", "Please select a layout.")
+            # regardless of what happened, close active plots
+            plot.close('all')
 
         def draw_empty(subplt, row, col, wellnum, e):  # pragma: no cover
             """Draws an epty pie when an error is encountered.
@@ -215,7 +221,7 @@ class Present(tk.Frame):
                 wellnum (int): Index of well.
                 e (exception): exception that was raised to get here.
             """
-            subplt[row, col].pie([0])
+            subplt[row, col].pie([0], normalize=False)
             warningmessage = (
                 "Issue displaying well "
                 + str(wellnum + 1)
@@ -343,7 +349,9 @@ class Present(tk.Frame):
                 )
             else:
                 myfig, subplt = plot.subplots(
-                    subplotdims[0], subplotdims[1], figsize=dims
+                    subplotdims[0],
+                    subplotdims[1],
+                    figsize=(dims[1] * 2 * 12, dims[0] * 10),
                 )
             for wellnum in range(0, subplotdims[0] * subplotdims[1]):
                 # go to position
@@ -392,16 +400,30 @@ class Present(tk.Frame):
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    draw_filled(
-                        totalcolormap,
-                        welldata,
-                        subplt,
-                        row,
-                        col,
-                    )
+                    if not (any(i < 0 for i in welldata) or all(i == 0 for i in welldata)):
+                        draw_filled(
+                            totalcolormap,
+                            welldata,
+                            subplt,
+                            row,
+                            col,
+                        )
+                    else:
+                        draw_empty(
+                            subplt,
+                            row,
+                            col,
+                            wellnum,
+                            RuntimeWarning(
+                                "Well {wellnum} is blank or contains a negative number.",
+                            ),
+                        )
                 # write numbers accross the top
                 if row == 0:
-                    subplt[row, col].set_title(str(wellnum + 1))
+                    subplt[row, col].set_title(
+                        str(wellnum + 1),
+                        fontsize=90,
+                    )
                 # write letters across the left side
                 if col == 0:
                     subplt[row, col].set_ylabel(
@@ -410,6 +432,7 @@ class Present(tk.Frame):
                         ],
                         rotation=0,
                         labelpad=10,
+                        fontsize=90,
                     )
                 # draw the image over the well
                 if self.image_overlay.get():
@@ -428,12 +451,12 @@ class Present(tk.Frame):
                     end = len(headers)
                 for header in headers[:end]:
                     myfig.text(
-                        0.2 + 0.1 * count,
-                        0.98,
+                        1.05,
+                        0.8 - 0.05 * count,
                         header.replace("\n", ""),
-                        ha="center",
+                        ha="left",
                         va="bottom",
-                        size=12,
+                        size=90,
                         color=totalcolormap[count],
                         path_effects=[pe.withStroke(
                             linewidth=1, foreground='black')],

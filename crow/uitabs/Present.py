@@ -15,6 +15,10 @@ from crow.utils.popupwindows.exclude import excludePopup
 from crow.utils.popupwindows.numberofcutoffs import numberofcutoffsPopup
 from crow.utils.popupwindows.shadebyyield import shadebyyieldPopup
 
+import matplotlib as mpl
+
+mpl.rcParams.update({'figure.max_open_warning': 0})
+
 
 class Present(tk.Frame):
     """
@@ -200,7 +204,7 @@ class Present(tk.Frame):
                 messagebox.showerror("Error!", "Please select a layout.")
 
         def draw_empty(subplt, row, col, wellnum, e):  # pragma: no cover
-            subplt[row, col].pie([0])
+            subplt[row, col].pie([0], normalize=False)
             warningmessage = (
                 "Issue displaying well "
                 + str(wellnum + 1)
@@ -364,7 +368,7 @@ class Present(tk.Frame):
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    try:
+                    if not (any([i < 0 for i in welldata]) or all(i == 0 for i in welldata)):
                         draw_filled(
                             totalcolormap,
                             welldata,
@@ -372,8 +376,16 @@ class Present(tk.Frame):
                             row,
                             col,
                         )
-                    except ValueError as ve:
-                        draw_empty(subplt, row, col, wellnum, ve)
+                    else:
+                        draw_empty(
+                            subplt,
+                            row,
+                            col,
+                            wellnum,
+                            RuntimeWarning(
+                                "Well {wellnum} is blank or contains a negative number.",
+                            ),
+                        )
                 # write numbers accross the top
                 if row == 0:
                     subplt[row, col].set_title(str(wellnum + 1))

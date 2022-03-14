@@ -364,13 +364,16 @@ class Present(tk.Frame):
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    draw_filled(
-                        totalcolormap,
-                        welldata,
-                        subplt,
-                        row,
-                        col,
-                    )
+                    try:
+                        draw_filled(
+                            totalcolormap,
+                            welldata,
+                            subplt,
+                            row,
+                            col,
+                        )
+                    except ValueError as ve:
+                        draw_empty(subplt, row, col, wellnum, ve)
                 # write numbers accross the top
                 if row == 0:
                     subplt[row, col].set_title(str(wellnum + 1))

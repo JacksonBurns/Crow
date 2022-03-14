@@ -3,10 +3,10 @@ import traceback
 
 
 def mylog(e):
-    """
-    General purpose function for writing errors to an external .txt file
+    """General purpose function for writing errors to an external .txt file.
 
-    e: exception raised by Crow
+    Args:
+        e (exception): exception raised by Crow
     """
     debugfile = open("debug.txt", "a")
     debugfile.write("\n")

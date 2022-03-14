@@ -13,6 +13,12 @@ class PrePull(tk.Frame):
     """
 
     def __init__(self, name, crow_globals):
+        """Constructor for PrePull frame.
+
+        Args:
+            name (string): Name for the tab. Unpacked from tk calls.
+            crow_globals (crow_globals): Global variables for Crow.
+        """
         # set up as tab
         tk.Frame.__init__(self, width=460, height=450)
         # lists to place collected data and files to get it from

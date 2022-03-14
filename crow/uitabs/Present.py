@@ -208,6 +208,8 @@ class Present(tk.Frame):
                     )
             else:
                 messagebox.showerror("Error!", "Please select a layout.")
+            # regardless of what happened, close active plots
+            plot.close('all')
 
         def draw_empty(subplt, row, col, wellnum, e):  # pragma: no cover
             """Draws an epty pie when an error is encountered.
@@ -476,7 +478,6 @@ class Present(tk.Frame):
                 webbrowser.open(fname)
             else:
                 plot.show()
-            plot.close()
 
         def pickcolor(colormap, cutoffcol, cutoffvalues, cutoffcolors, currentwell):  # pragma: no cover
             """Based on user inputs, choose which color the well should be.

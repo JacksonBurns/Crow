@@ -1,4 +1,4 @@
-name: Run Present Tests
+name: Run Extended Present Tests
 on:
   push:
     branches: [ main ]

@@ -9,10 +9,22 @@ from crow.utils import ParseXML
 class Pull(tk.Frame):
     """
     Tab of the GC window responsible for pulling data from the entered
-    xml files based on the indicated retention times and variability
+    xml files based on the indicated retention times and variability.
+
+    Args:
+        tk (tk.Frame): Notebook for tab to be placed in.
+
+    Returns:
+        tk.Tk: tkinter master frame after closing.
     """
 
     def __init__(self, name, crow_globals):
+        """Constructor for Pull frame.
+
+        Args:
+            name (string): Name for the tab. Unpacked from tk calls.
+            crow_globals (crow_globals): Global variables for Crow.
+        """
         tk.Frame.__init__(self, width=47, height=450)
         # make place for collected retention times and tolerances to go
         # before being written
@@ -28,6 +40,12 @@ class Pull(tk.Frame):
             self.entryreadorclear("clear")
 
         def pulldatacallback():
+            """Callback for the pull data button, which executes the following:
+            1. Ensure data files have been selected.
+            2. Check that retention times and tolerances are (a) present and (b) compatible.
+            3. Retrieves the data according to user settings.
+            4. Writes the data to a file.
+            """
             # gather the values in the entry boxes
             self.entryreadorclear("read")
             # check for wrong type of data file
@@ -242,8 +260,10 @@ class Pull(tk.Frame):
         self.expname.place(x=170, y=280)
 
         def add_entry_fields():
+            """Convenience function for entry fields.
+            """
             tk.Label(self, text="Retention Time (minutes)").place(x=40, y=40)
-            # assigning and placing have to be on seperate lines because place returns nothing
+            # assigning and placing have to be on seperate lines because place returns None
             self.rt1 = tk.Entry(self)
             self.rt1.place(x=40, y=65)
             self.rt2 = tk.Entry(self)
@@ -279,6 +299,11 @@ class Pull(tk.Frame):
         add_entry_fields()
 
     def entryreadorclear(self, readorclear):
+        """Internal use function for reading or clearing data from entry fields.
+
+        Args:
+            readorclear (string): either read or clear to do that action.
+        """
         if readorclear == "clear":
             self.rt1.delete(0, tk.END)
             self.tol1.delete(0, tk.END)
@@ -334,6 +359,11 @@ class Pull(tk.Frame):
                 )
 
     def isthereoverlap(self):
+        """Check for overlap in retention times and their tolerances.
+
+        Returns:
+            bool: True or False for overlap or no overlap.
+        """
         if len(self.rettimes) == 1:
             return False
         else:

@@ -3,11 +3,19 @@ import tkinter as tk
 
 class cutoffPopup(object):
     """
-    enable the user to make custom cutoff colors, useful for grouping wells
+    Enable the user to make custom cutoff colors, useful for grouping wells
     by selectivity or yield
+
+    Args:
+        object (tk.Top): Base window over which to draw this pop-up.
     """
 
     def __init__(self, master):
+        """Constructor for GUI.
+
+        Args:
+            master (tk.Tk): tkinter UI window.
+        """
         top = self.top = tk.Toplevel(master)
         tk.Label(top, text="For wells below this value:").place(x=0, y=0)
         self.cutoffval = tk.Entry(top)
@@ -20,6 +28,8 @@ class cutoffPopup(object):
         self.closebutton.place(x=0, y=100)
 
     def close(self):
+        """Pack values into attributes and then destroy the window.
+        """
         self.cutoffval = self.cutoffval.get()
         self.cutoffcolor = self.cutoffcolor.get()
         self.top.destroy()

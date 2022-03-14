@@ -10,11 +10,17 @@ Created on Thu Jan 16 19:32:33 2020
 
 class crow_globals():
     """
-    variables which are used by all tabs in the window, such as the path to
-    the server of raw data.
+    Class which initializes itself using the `config.yaml` file, making
+    variables which are used by all tabs of crow accesible in the 'global'
+    namespace (but without using global variables).
     """
 
     def __init__(self, config="config.yaml"):
+        """Opens the configuration file and reads the contents into attritbutes.
+
+        Args:
+            config (str, optional): Configuration file. Defaults to "config.yaml".
+        """
         # open the config file
         if config == "config.yaml":
             resource_path = pkg_resources.resource_filename(

@@ -1,3 +1,4 @@
+from statistics import mean
 import tkinter.colorchooser as cc
 import numpy as np
 import time
@@ -456,7 +457,7 @@ class Present(tk.Frame):
                         header.replace("\n", ""),
                         ha="left",
                         va="bottom",
-                        size=90,
+                        size=mean(subplotdims)*12,
                         color=totalcolormap[count],
                         path_effects=[pe.withStroke(
                             linewidth=1, foreground='black')],

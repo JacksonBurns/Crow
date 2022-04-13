@@ -362,7 +362,9 @@ class Present(tk.Frame):
                     col *= 2
                 # well data
                 welldata = exceldata[wellnum]
-                if self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
+                if not np.any(welldata):
+                    draw_empty(subplt, row, col, wellnum, Exception())
+                elif self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
                     try:
                         if welldata[int(self.excludePopup.excludecol) - 1] < float(
                             self.excludePopup.excludeval
@@ -401,7 +403,7 @@ class Present(tk.Frame):
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    if not (any(i < 0 for i in welldata) or all(i == 0 for i in welldata)):
+                    if not any(i < 0 for i in welldata):
                         draw_filled(
                             totalcolormap,
                             welldata,
@@ -443,6 +445,10 @@ class Present(tk.Frame):
                     subplt[row, col + 1].axis("off")
 
             # write a legend for the colors
+            if subplotdims[0] > subplotdims[1]:
+                horz_offset = 0.97
+            else:
+                horz_offset = 1.05
             with open(crow_globals.datafiles[0], "r") as file:
                 count = 0
                 headers = file.readline().split(",")
@@ -452,7 +458,7 @@ class Present(tk.Frame):
                     end = len(headers)
                 for header in headers[:end]:
                     myfig.text(
-                        1.05,
+                        horz_offset,
                         0.8 - 0.05 * count,
                         header.replace("\n", ""),
                         ha="left",

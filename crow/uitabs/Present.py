@@ -362,7 +362,7 @@ class Present(tk.Frame):
                     col *= 2
                 # well data
                 welldata = exceldata[wellnum]
-                if not np.any(welldata):
+                if all(i == 0 for i in welldata):
                     draw_empty(subplt, row, col, wellnum, Exception())
                 elif self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
                     try:

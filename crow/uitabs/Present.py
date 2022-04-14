@@ -1,3 +1,4 @@
+from statistics import mean
 import tkinter.colorchooser as cc
 import numpy as np
 import time
@@ -361,7 +362,9 @@ class Present(tk.Frame):
                     col *= 2
                 # well data
                 welldata = exceldata[wellnum]
-                if self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
+                if all(i == 0 for i in welldata):
+                    draw_empty(subplt, row, col, wellnum, Exception())
+                elif self.datafilter.get() == 2:  # pragma: no cover # exclude threshold
                     try:
                         if welldata[int(self.excludePopup.excludecol) - 1] < float(
                             self.excludePopup.excludeval
@@ -400,7 +403,7 @@ class Present(tk.Frame):
                     except Exception as e:
                         draw_empty(subplt, row, col, wellnum, e)
                 else:
-                    if not (any(i < 0 for i in welldata) or all(i == 0 for i in welldata)):
+                    if not any(i < 0 for i in welldata):
                         draw_filled(
                             totalcolormap,
                             welldata,
@@ -422,7 +425,7 @@ class Present(tk.Frame):
                 if row == 0:
                     subplt[row, col].set_title(
                         str(wellnum + 1),
-                        fontsize=90,
+                        fontsize=mean(subplotdims)*12,
                     )
                 # write letters across the left side
                 if col == 0:
@@ -432,7 +435,7 @@ class Present(tk.Frame):
                         ],
                         rotation=0,
                         labelpad=10,
-                        fontsize=90,
+                        fontsize=mean(subplotdims)*12,
                     )
                 # draw the image over the well
                 if self.image_overlay.get():
@@ -442,6 +445,10 @@ class Present(tk.Frame):
                     subplt[row, col + 1].axis("off")
 
             # write a legend for the colors
+            if subplotdims[0] > subplotdims[1]:
+                horz_offset = 0.97
+            else:
+                horz_offset = 1.05
             with open(crow_globals.datafiles[0], "r") as file:
                 count = 0
                 headers = file.readline().split(",")
@@ -451,12 +458,12 @@ class Present(tk.Frame):
                     end = len(headers)
                 for header in headers[:end]:
                     myfig.text(
-                        1.05,
+                        horz_offset,
                         0.8 - 0.05 * count,
                         header.replace("\n", ""),
                         ha="left",
                         va="bottom",
-                        size=90,
+                        size=mean(subplotdims)*12,
                         color=totalcolormap[count],
                         path_effects=[pe.withStroke(
                             linewidth=1, foreground='black')],

@@ -425,7 +425,7 @@ class Present(tk.Frame):
                 if row == 0:
                     subplt[row, col].set_title(
                         str(wellnum + 1),
-                        fontsize=90,
+                        fontsize=mean(subplotdims)*12,
                     )
                 # write letters across the left side
                 if col == 0:
@@ -435,7 +435,7 @@ class Present(tk.Frame):
                         ],
                         rotation=0,
                         labelpad=10,
-                        fontsize=90,
+                        fontsize=mean(subplotdims)*12,
                     )
                 # draw the image over the well
                 if self.image_overlay.get():

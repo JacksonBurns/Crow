@@ -6,7 +6,7 @@ import webbrowser
 import tkinter as tk
 from tkinter import messagebox
 import matplotlib.pyplot as plot
-from matplotlib.cbook import get_sample_data
+import matplotlib.image as mpimg
 import matplotlib.patheffects as pe
 from matplotlib.pyplot import savefig
 
@@ -439,8 +439,11 @@ class Present(tk.Frame):
                     )
                 # draw the image over the well
                 if self.image_overlay.get():
-                    im = plot.imread(get_sample_data(
-                        self._img_filenames[wellnum]))
+                    with open(fr"{self._img_filenames[wellnum]}", mode='rb') as file:
+                        im = mpimg.imread(
+                            file,
+                            format='svg',
+                        )
                     subplt[row, col + 1].imshow(im)
                     subplt[row, col + 1].axis("off")
 

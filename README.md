@@ -7,6 +7,7 @@
   <img alt="GitHub Repo Stars" src="https://img.shields.io/github/stars/JacksonBurns/Crow?style=social">
   <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/CrowHTE">
   <img alt="PyPI" src="https://img.shields.io/pypi/v/CrowHTE">
+  <img alt="commits since" src="https://img.shields.io/github/commits-since/JacksonBurns/Crow/latest.svg">
   <img alt="PyPI - License" src="https://img.shields.io/github/license/jacksonburns/crow">
 </p>
 Crow is a software package for retrieving, diagnosing, and presenting High Throughput Experimentation data from various instruments. Designed by Jackson Burns at the University of Delaware Donald Watson Lab in 2019, coded in Python in 2020 and still under active development.

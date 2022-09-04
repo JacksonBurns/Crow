@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>crow.utils package &mdash; Crow 2.0.2 documentation</title>
@@ -14,6 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -65,9 +66,9 @@
            <div itemprop="articleBody">
              
   <section id="crow-utils-package">
-<h1>crow.utils package<a class="headerlink" href="#crow-utils-package" title="Permalink to this headline"></a></h1>
+<h1>crow.utils package<a class="headerlink" href="#crow-utils-package" title="Permalink to this heading"></a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="crow.utils.popupwindows.html">crow.utils.popupwindows package</a><ul>
@@ -83,22 +84,22 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-crow.utils.ParseXML">
-<span id="crow-utils-parsexml-module"></span><h2>crow.utils.ParseXML module<a class="headerlink" href="#module-crow.utils.ParseXML" title="Permalink to this headline"></a></h2>
+<span id="crow-utils-parsexml-module"></span><h2>crow.utils.ParseXML module<a class="headerlink" href="#module-crow.utils.ParseXML" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="crow.utils.ParseXML.ParseXML">
 <span class="sig-prename descclassname"><span class="pre">crow.utils.ParseXML.</span></span><span class="sig-name descname"><span class="pre">ParseXML</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.ParseXML.ParseXML" title="Permalink to this definition"></a></dt>
 <dd><p>One line passthrough to xml element tree.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>filename</strong> (<em>string</em>) – the absolute or relative path to an xml file</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>root of tree</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>etree</p>
 </dd>
 </dl>
@@ -106,10 +107,10 @@
 
 </section>
 <section id="crow-utils-requestfiles-module">
-<h2>crow.utils.RequestFiles module<a class="headerlink" href="#crow-utils-requestfiles-module" title="Permalink to this headline"></a></h2>
+<h2>crow.utils.RequestFiles module<a class="headerlink" href="#crow-utils-requestfiles-module" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-crow.utils.crow_globals">
-<span id="crow-utils-crow-globals-module"></span><h2>crow.utils.crow_globals module<a class="headerlink" href="#module-crow.utils.crow_globals" title="Permalink to this headline"></a></h2>
+<span id="crow-utils-crow-globals-module"></span><h2>crow.utils.crow_globals module<a class="headerlink" href="#module-crow.utils.crow_globals" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="crow.utils.crow_globals.crow_globals">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crow.utils.crow_globals.</span></span><span class="sig-name descname"><span class="pre">crow_globals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'config.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.crow_globals.crow_globals" title="Permalink to this definition"></a></dt>
@@ -122,7 +123,7 @@ namespace (but without using global variables).</p>
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'config.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.crow_globals.crow_globals.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Opens the configuration file and reads the contents into attritbutes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>config</strong> (<em>str</em><em>, </em><em>optional</em>) – Configuration file. Defaults to “config.yaml”.</p>
 </dd>
 </dl>
@@ -132,13 +133,13 @@ namespace (but without using global variables).</p>
 
 </section>
 <section id="module-crow.utils.logger">
-<span id="crow-utils-logger-module"></span><h2>crow.utils.logger module<a class="headerlink" href="#module-crow.utils.logger" title="Permalink to this headline"></a></h2>
+<span id="crow-utils-logger-module"></span><h2>crow.utils.logger module<a class="headerlink" href="#module-crow.utils.logger" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="crow.utils.logger.mylog">
 <span class="sig-prename descclassname"><span class="pre">crow.utils.logger.</span></span><span class="sig-name descname"><span class="pre">mylog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crow.utils.logger.mylog" title="Permalink to this definition"></a></dt>
 <dd><p>General purpose function for writing errors to an external .txt file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>e</strong> (<em>exception</em>) – exception raised by Crow</p>
 </dd>
 </dl>
@@ -146,7 +147,7 @@ namespace (but without using global variables).</p>
 
 </section>
 <section id="module-crow.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-crow.utils" title="Permalink to this headline"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-crow.utils" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 

@@ -1,3 +1,5 @@
+__Crow is no longer maintained - I am leaving the code up in case anyone find it useful for their lab or any new projects!__
+
 <h1 align="center">Crow - Accelerating High Throughput Experimentation</h1> 
 
 <p align="center">  
@@ -10,7 +12,7 @@
   <img alt="commits since" src="https://img.shields.io/github/commits-since/JacksonBurns/Crow/latest.svg">
   <img alt="PyPI - License" src="https://img.shields.io/github/license/jacksonburns/crow">
 </p>
-Crow is a software package for retrieving, diagnosing, and presenting High Throughput Experimentation data from various instruments. Designed by Jackson Burns at the University of Delaware Donald Watson Lab in 2019, coded in Python in 2020 and still under active development.
+Crow is a software package for retrieving, diagnosing, and presenting High Throughput Experimentation data from various instruments. Designed by Jackson Burns at the University of Delaware Donald Watson Lab in 2019, coded in Python in 2020.
 
 ## Installation and Setup
 Crow can be installed from the python package index (PyPi) with the following command:
